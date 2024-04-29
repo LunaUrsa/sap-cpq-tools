@@ -4,10 +4,16 @@
   "version": "1.0",
   "description": "Tools for SAP CPQ",
   "action": {
-    "default_popup": "build/popup.html",
+    "default_popup": "assets/pages/popup.html",
     "default_icon": "assets/images/icon.png"
   },
-  "permissions": ["activeTab"],
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "*://blank.page/*"
+  ],
   "background": {
     "service_worker": "build/background.js"
   },
@@ -17,21 +23,17 @@
       "js": ["build/content.js"]
     }
   ],
-  "icons": { "128": "assets/images/icon_128.png" },
+  "icons": { "128": "assets/images/icon.png" },
   "commands": {
     "activate": {
       "suggested_key": {
-        "default": "Ctrl+Shift+Y",
-        "mac": "Command+Shift+Y"
+        "default": "Ctrl+Space",
+        "mac": "Command+Space"
       },
       "description": "Activate the extension"
-    },
-    "go-to-scripts": {
-      "suggested_key": {
-        "default": "Ctrl+S",
-        "mac": "Command+S"
-      },
-      "description": "Go to scripts URL"
     }
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
   }
 }
