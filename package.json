@@ -1,0 +1,37 @@
+{
+  "name": "sap-cpq-tools",
+  "version": "1.0.0",
+  "description": "Tools for SAP CPQ",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LunaUrsa/sap-cpq-tools.git"
+  },
+  "engines": {
+    "node": "v22.0.0",
+    "npm": "10.5.1"
+  },
+  "author": "Eric Hoftiezer",
+  "license": "AGPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/LunaUrsa/sap-cpq-tools/issues"
+  },
+  "homepage": "https://github.com/LunaUrsa/sap-cpq-tools#readme",
+  "devDependencies": {
+    "@types/chrome": "^0.0.267",
+    "@types/node": "^20.12.7",
+    "@typescript-eslint/eslint-plugin": "^7.7.1",
+    "@typescript-eslint/parser": "^7.7.1",
+    "eslint": "^8.57.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-airbnb-typescript": "^18.0.0",
+    "tsc": "^2.0.4",
+    "tsc-watch": "^6.2.0"
+  },
+  "dependencies": {
+    "typescript": "^5.4.5"
+  }
+}
