@@ -32,6 +32,7 @@
     "tsc-watch": "^6.2.0"
   },
   "dependencies": {
+    "material-components-web": "^14.0.0",
     "typescript": "^5.4.5"
   }
 }

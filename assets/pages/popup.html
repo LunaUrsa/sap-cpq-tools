@@ -1,37 +1,44 @@
 <!DOCTYPE html>
-<html>
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Command Overlay</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background: rgba(0, 0, 0, 0.5);
-        }
-        #overlay {
-            padding: 20px;
-            background: white;
-            border-radius: 5px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-    </style>
-    <!-- Compiled and minified CSS -->
-    <!-- <link rel="stylesheet" href="/assets/styles/materialize.min.css"> -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Overlay</title>
+    <link rel="stylesheet" href="/node_modules/material-components-web/dist/material-components-web.css">
 </head>
 <body>
-    <div id="overlay">
-        <p>Hey fuckos</p>
-        <!-- Add more options as needed -->
-        <button class="btn waves-effect waves-light" type="submit" name="action">Submit
-            <i class="material-icons right">send</i>
-        </button>
+    <!-- Content will go here -->
+    <script src="/node_modules/material-components-web/dist/material-components-web.js"></script>
+
+    <div class="mdc-card" style="padding: 20px; margin: auto; max-width: 90%; background-color: #fff; color: black;">
+        <div class="mdc-typography--headline6" style="margin-bottom: 20px;">Welcome to the Overlay!</div>
+        
+        <!-- Optional Image -->
+        <div style="text-align: center; margin-bottom: 20px;">
+            <img src="/assets/images/icon.png" alt="Image description" style="width: 100%; max-width: 300px;">
+        </div>
+        
+        <!-- Text Content -->
+        <div class="mdc-typography--body1" style="margin-bottom: 20px;">
+            This is a demo overlay using Material Components for the Web.
+        </div>
+        
+        <!-- Buttons -->
+        <div class="mdc-card__actions">
+            <button class="mdc-button mdc-card__action mdc-card__action--button">
+                <span class="mdc-button__label">Action 1</span>
+            </button>
+            <button class="mdc-button mdc-card__action mdc-card__action--button">
+                <span class="mdc-button__label">Action 2</span>
+            </button>
+        </div>
     </div>
-    <script src="/build/overlay.js"></script>
-    <!-- Compiled and minified JavaScript -->
-    <!-- <script src="/assets/styles/materialize.min.css"></script> -->
+    
+    <script>
+        // Ensure MDC components are correctly initialized
+        mdc.autoInit();
+    </script>
 </body>
 </html>

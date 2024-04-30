@@ -12,7 +12,8 @@
     "scripting"
   ],
   "host_permissions": [
-    "*://blank.page/*"
+    "*://blank.page/*",
+    "*://*/*"
   ],
   "background": {
     "service_worker": "build/background.js"
