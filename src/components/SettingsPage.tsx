@@ -1,5 +1,12 @@
-import { Box, Button, Card, CardContent, Grid, Typography } from '@mui/material';
-import React from 'react';
+import {
+  Box,
+  Button,
+  Card,
+  CardContent,
+  Grid,
+  Typography,
+} from "@mui/material";
+import React from "react";
 
 function SettingsPage() {
   return (
@@ -12,7 +19,11 @@ function SettingsPage() {
                 <Typography variant="h5" component="div">
                   Recent Activities
                 </Typography>
-                <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                <Typography
+                  sx={{ fontSize: 14 }}
+                  color="text.secondary"
+                  gutterBottom
+                >
                   Latest operations and actions
                 </Typography>
                 <ul>
@@ -30,12 +41,14 @@ function SettingsPage() {
                 <Typography variant="h5" component="div">
                   System Status
                 </Typography>
-                <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                <Typography
+                  sx={{ fontSize: 14 }}
+                  color="text.secondary"
+                  gutterBottom
+                >
                   Current system health
                 </Typography>
-                <Typography variant="body2">
-                  All systems operational
-                </Typography>
+                <Typography variant="body2">All systems operational</Typography>
               </CardContent>
             </Card>
           </Grid>

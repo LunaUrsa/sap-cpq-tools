@@ -1,20 +1,20 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
-import { HashRouter } from 'react-router-dom';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { HashRouter } from "react-router-dom";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 const theme = createTheme({
   // Customize your theme here
 });
 
-const container = document.getElementById('root');
+const container = document.getElementById("root");
 if (!container) {
-  throw new Error('Root element not found');
+  throw new Error("Root element not found");
 }
-const root = ReactDOM.createRoot(container);  // Ensure 'container' is not null
+const root = ReactDOM.createRoot(container); // Ensure 'container' is not null
 
 root.render(
   <React.StrictMode>

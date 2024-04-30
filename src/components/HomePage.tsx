@@ -1,5 +1,5 @@
-import { Box, Card, CardContent, Grid, Typography } from '@mui/material';
-import React from 'react';
+import { Box, Card, CardContent, Grid, Typography } from "@mui/material";
+import React from "react";
 
 function HomePage() {
   return (
@@ -12,13 +12,19 @@ function HomePage() {
                 <Typography variant="h5" component="div">
                   Important News
                 </Typography>
-                <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+                <Typography
+                  sx={{ fontSize: 14 }}
+                  color="text.secondary"
+                  gutterBottom
+                >
                   Important things to keep in mind
                 </Typography>
                 <ul>
                   <li>Comment your code</li>
                   <li>Add type annotations via comments</li>
-                  <li>Keep the future in mind: ask GPT to make your code better</li>
+                  <li>
+                    Keep the future in mind: ask GPT to make your code better
+                  </li>
                 </ul>
               </CardContent>
             </Card>

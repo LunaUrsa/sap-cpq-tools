@@ -1,9 +1,9 @@
-import React from 'react';
-import { AppBar, Toolbar, Typography, Button } from '@mui/material';
-import HomeIcon from '@mui/icons-material/Home';
-import SettingsIcon from '@mui/icons-material/Settings';
-import CustomizeIcon from '@mui/icons-material/Tune';
-import { Link as RouterLink } from 'react-router-dom';
+import React from "react";
+import { AppBar, Toolbar, Typography, Button } from "@mui/material";
+import HomeIcon from "@mui/icons-material/Home";
+import SettingsIcon from "@mui/icons-material/Settings";
+import CustomizeIcon from "@mui/icons-material/Tune";
+import { Link as RouterLink } from "react-router-dom";
 
 function EnhancedToolbar() {
   return (
@@ -12,13 +12,28 @@ function EnhancedToolbar() {
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
           SAP CPQ Tools
         </Typography>
-        <Button color="inherit" component={RouterLink} to="/" startIcon={<HomeIcon />}>
+        <Button
+          color="inherit"
+          component={RouterLink}
+          to="/"
+          startIcon={<HomeIcon />}
+        >
           Home
         </Button>
-        <Button color="inherit" component={RouterLink} to="/settings" startIcon={<SettingsIcon />}>
+        <Button
+          color="inherit"
+          component={RouterLink}
+          to="/settings"
+          startIcon={<SettingsIcon />}
+        >
           Settings
         </Button>
-        <Button color="inherit" component={RouterLink} to="/customize" startIcon={<CustomizeIcon />}>
+        <Button
+          color="inherit"
+          component={RouterLink}
+          to="/customize"
+          startIcon={<CustomizeIcon />}
+        >
           Customize
         </Button>
       </Toolbar>

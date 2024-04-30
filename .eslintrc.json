@@ -1,0 +1,33 @@
+{
+  "env": {
+    "browser": true, // Set browser global variables
+    "es2021": true, // Modern ECMAScript features
+    "node": true // For build scripts
+  },
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "eslint:recommended", // Use recommended rules from ESLint
+    "plugin:react/recommended", // If using React
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 12, // Allows for the parsing of modern ECMAScript features
+    "sourceType": "module", // Allows for the use of imports
+    "ecmaFeatures": {
+      "jsx": true // If using JSX
+    }
+  },
+  "rules": {
+    // Custom rules e.g., "no-unused-vars": "warn"
+    // "react/react-in-jsx-scope": "off"
+  },
+  "globals": {
+    "chrome": "readonly"
+  },
+  "settings": {
+    "react": {
+      "version": "detect" // Automatically detect the React version
+    }
+  }
+}
