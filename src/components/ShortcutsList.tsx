@@ -1,12 +1,5 @@
 import React, { useEffect, useState } from "react";
-import {
-  List,
-  ListItem,
-  ListItemText,
-  ListItemAvatar,
-  Avatar,
-  IconButton,
-} from "@mui/material";
+import { List, ListItem, ListItemText, IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { v4 as uuidv4 } from "uuid";
 
@@ -24,14 +17,14 @@ const ShortcutsList: React.FC = () => {
         {
           id: uuidv4(),
           name: "Go to Google",
-          shortcut: "Ctrl+G",
-          icon: "/assets/images/icon.png",
+          key: "G",
+          destination: "https://script.google.com/home",
         },
         {
           id: uuidv4(),
           name: "Open Scripts",
-          shortcut: "Ctrl+S",
-          icon: "/assets/images/icon.png",
+          key: "S",
+          destination: "https://script.google.com/home",
         },
       ]);
     }
@@ -59,10 +52,7 @@ const ShortcutsList: React.FC = () => {
             </IconButton>
           }
         >
-          <ListItemAvatar>
-            <Avatar src={shortcut.icon} />
-          </ListItemAvatar>
-          <ListItemText primary={shortcut.name} secondary={shortcut.shortcut} />
+          <ListItemText primary={shortcut.name} secondary={shortcut.key} />
         </ListItem>
       ))}
     </List>

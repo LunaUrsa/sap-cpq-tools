@@ -1,6 +1,10 @@
 interface Shortcut {
   id: string;
   name: string;
-  shortcut: string;
-  icon: string;
+  key: string;
+  destination: string;
 }
+
+type NestedStringMap = {
+  [key: string]: string | NestedStringMap;
+};

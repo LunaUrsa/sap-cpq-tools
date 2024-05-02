@@ -4,7 +4,7 @@ import React from "react";
 
 function ShortcutsPage() {
   return (
-    <div>
+    <div style={{ marginTop: "16px" }}>
       <AddShortcutForm />
       <ShortcutsList />
     </div>
