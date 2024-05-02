@@ -1,0 +1,71 @@
+{
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "eslint.workingDirectories": [
+    {
+      "mode": "auto"
+    }
+  ],
+  "eslint.alwaysShowStatus": true,
+  "cSpell.words": [
+    "bespin",
+    "callidusondemand",
+    "colorforth",
+    "darcula",
+    "darkred",
+    "fancytree",
+    "gruvbox",
+    "icecoder",
+    "largeleft",
+    "leftscript",
+    "liquibyte",
+    "lucario",
+    "mainadminmenu",
+    "monokai",
+    "moxer",
+    "nord",
+    "palenight",
+    "paraiso",
+    "Pricebook",
+    "Pricebooks",
+    "railscasts",
+    "righttrace",
+    "rubyblue",
+    "seti",
+    "shadowfox",
+    "Slct",
+    "smallright",
+    "tracetitle",
+    "ttcn",
+    "uuidv",
+    "webcomcpq",
+    "webcomcpqdev",
+    "webcomcpqprod",
+    "webcomcpqqa",
+    "webcomcpqstg",
+    "webcomcpqtest",
+    "webcomcpquat",
+    "webcomserver",
+    "webcomserverdev",
+    "webcomserverprod",
+    "webcomserverqa",
+    "webcomserverstg",
+    "webcomservertest",
+    "webcomserveruat",
+    "yonce",
+    "zenburn"
+  ],
+  "cSpell.ignoreWords": [
+    "Defn",
+    "Multibranding",
+    "appparams",
+    "craco"
+  ]
+}
