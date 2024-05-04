@@ -9,15 +9,6 @@ jobs:
   release:
     runs-on: ubuntu-latest
     permissions:
-      # actions: write
-      # checks: write
-      # deployments: write
-      # discussions: write
-      # pages: write
-      # pull-requests: write
-      # repository-projects: write
-      # security-events: write
-      # statuses: write
       contents: write
       packages: write
       issues: write
@@ -37,7 +28,8 @@ jobs:
         run: npm run build
 
       - name: Zip Build Folder
-        run: zip -r build.zip build/
+        run: zip -r SAPCPQTools.zip .
+        working-directory: ./build/
 
       - name: Run semantic-release
         run: npx semantic-release

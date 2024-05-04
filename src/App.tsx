@@ -7,6 +7,7 @@ import InfoPage from "./components/InfoPage";
 import { AppBar } from "@mui/material";
 import { Route, Routes } from "react-router-dom";
 import EnhancedToolbar from "./components/Toolbar";
+import ShortcutListener from "./components/ShortcutListener";
 
 function App() {
   // const [title, setTitle] = React.useState("");
@@ -44,6 +45,7 @@ function App() {
   // });
   return (
     <div className="App">
+      <ShortcutListener />
       <AppBar position="static">
         <EnhancedToolbar />
       </AppBar>

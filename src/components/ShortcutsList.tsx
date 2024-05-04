@@ -34,7 +34,7 @@ const ShortcutsList: React.FC<ShortcutsListProps> = ({
 
   // When the user leaves the input field, save the shortcuts to the local storage
   const handleBlur = () => {
-    console.log("Saving shortcuts to localStorage:", shortcuts);
+    // console.log("Saving shortcuts to localStorage:", shortcuts);
     localStorage.setItem("shortcuts", JSON.stringify(shortcuts));
   };
 

@@ -13,11 +13,11 @@
 * Document Live Editor
 * Production warning
 
-#### Workflow
-* Be pretty/handsome
-
-
+## Framework and Libraries
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+We use Material design components from [Material-UI](https://material-ui.com/).
+We use [React Router](https://reactrouter.com/) for routing.
+We use symantic-versioning for versioning.
 
 ## Angular Commit Message Conventions
 
