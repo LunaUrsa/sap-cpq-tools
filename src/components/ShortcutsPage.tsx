@@ -18,9 +18,9 @@ function ShortcutsPage() {
   const addShortcut = () => {
     const newShortcut = {
       id: uuidv4(),
-      name: "",
       key: "",
       destination: "",
+      isError: false,
     };
     setShortcuts([...shortcuts, newShortcut]);
   };

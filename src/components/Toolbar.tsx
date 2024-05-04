@@ -1,7 +1,8 @@
 import React from "react";
-import { AppBar, Toolbar, Typography, Button } from "@mui/material";
+import { AppBar, Toolbar, Typography, Button, IconButton } from "@mui/material";
 import SettingsIcon from "@mui/icons-material/Settings";
 import CustomizeIcon from "@mui/icons-material/Tune";
+import HelpIcon from "@mui/icons-material/Help"; // Imports the help icon
 import { Link as RouterLink } from "react-router-dom";
 
 function EnhancedToolbar() {
@@ -27,6 +28,14 @@ function EnhancedToolbar() {
         >
           Styling
         </Button>
+        <IconButton
+          color="inherit"
+          component={RouterLink}
+          to="/info"
+          sx={{ marginRight: -2 }}
+        >
+          <HelpIcon />
+        </IconButton>
       </Toolbar>
     </AppBar>
   );

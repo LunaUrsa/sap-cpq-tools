@@ -1,8 +1,8 @@
 interface Shortcut {
   id: string;
-  name: string;
   key: string;
   destination: string;
+  isError: boolean;
 }
 
 type NestedStringMap = {

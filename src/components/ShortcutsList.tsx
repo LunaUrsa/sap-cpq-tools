@@ -11,18 +11,6 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import siteMap from "../assets/siteMap.json";
 
-interface Shortcut {
-  id: string;
-  name: string;
-  key: string;
-  destination: string;
-}
-
-interface ShortcutsListProps {
-  shortcuts: Shortcut[];
-  setShortcuts: React.Dispatch<React.SetStateAction<Shortcut[]>>;
-}
-
 const ShortcutsList: React.FC<ShortcutsListProps> = ({
   shortcuts,
   setShortcuts,
@@ -91,20 +79,37 @@ const ShortcutsList: React.FC<ShortcutsListProps> = ({
   // This creates a new shortcut with the given id and value
   // and updates the shortcuts list
   const handleChange = (id: string, field: keyof Shortcut, value: string) => {
-    const updatedShortcuts = shortcuts.map((shortcut) =>
-      shortcut.id === id ? { ...shortcut, [field]: value } : shortcut,
-    );
+    const updatedShortcuts = shortcuts.map((shortcut) => {
+      if (shortcut.id === id) {
+        if (field === "key") {
+          // Check for duplicate keys
+          const isDuplicate = shortcuts.some(
+            (other) => other.key === value && other.id !== id,
+          );
+          return { ...shortcut, [field]: value, isError: isDuplicate };
+        }
+        return { ...shortcut, [field]: value };
+      }
+      return shortcut;
+    });
     setShortcuts(updatedShortcuts);
   };
 
   return (
-    <List>
+    <List dense={true}>
+      {" "}
+      {/* Enable dense layout for the list */}
       {shortcuts.map((shortcut) => (
-        <ListItem key={shortcut.id}>
+        <ListItem key={shortcut.id} dense={true}>
+          {" "}
+          {/* Dense layout for list items */}
           <Grid container spacing={1}>
+            {" "}
+            {/* Reduced spacing between grid items */}
             <Grid item xs={3}>
               <TextField
                 fullWidth
+                size="small" // Smaller field size
                 label="Shortcut"
                 value={shortcut.key}
                 onKeyDown={(e) => shortcutKeyDown(shortcut.id, e)}
@@ -112,27 +117,43 @@ const ShortcutsList: React.FC<ShortcutsListProps> = ({
                   handleChange(shortcut.id, "key", e.target.value)
                 }
                 onBlur={handleBlur}
-                placeholder="Shortcut"
+                placeholder="Shortcut Key"
+                error={shortcut.isError}
+                helperText={
+                  shortcut.isError ? "This key is already in use" : ""
+                }
+                InputProps={{
+                  style: {
+                    borderColor: shortcut.isError ? "#ff1744" : "default",
+                  },
+                }}
+                style={shortcut.isError ? { color: "red" } : {}}
               />
             </Grid>
             <Grid item xs={8}>
               <Select
                 fullWidth
+                size="small" // Smaller select size
                 displayEmpty
-                autoWidth
-                renderValue={(value) => (value !== "" ? value : "Destination")}
                 value={shortcut.destination}
+                placeholder="Select a destination"
                 onChange={(e) =>
                   handleChange(shortcut.id, "destination", e.target.value)
                 }
                 onBlur={handleBlur}
-                placeholder="Destination URL"
+                renderValue={(selected) => {
+                  if (selected === "") {
+                    return <em>Select a destination</em>; // Placeholder text when nothing is selected
+                  }
+                  return selected;
+                }}
               >
                 {renderMenuItems(siteMap)}
               </Select>
             </Grid>
             <Grid item xs={1}>
               <IconButton
+                size="small" // Smaller button size
                 edge="end"
                 aria-label="delete"
                 onClick={() => handleDelete(shortcut.id)}

@@ -3,6 +3,7 @@ import "./App.css";
 // import { DOMMessage, DOMMessageResponse } from "./types";
 import StylingPage from "./components/StylingPage";
 import ShortcutsPage from "./components/ShortcutsPage";
+import InfoPage from "./components/InfoPage";
 import { AppBar } from "@mui/material";
 import { Route, Routes } from "react-router-dom";
 import EnhancedToolbar from "./components/Toolbar";
@@ -52,6 +53,7 @@ function App() {
         <Route path="/#" element={<ShortcutsPage />} />
         <Route path="/shortcuts" element={<ShortcutsPage />} />
         <Route path="/styling" element={<StylingPage />} />
+        <Route path="/info" element={<InfoPage />} />
       </Routes>
     </div>
   );
