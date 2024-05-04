@@ -14,6 +14,7 @@ We use the 'craco.config.js' file to say "compile this file separately and put i
 const host = window.location.host;
 // If we're inside CPQ
 const cpqHostList = [
+  "cpq.cloud.sap",
   "webcomcpq",
   "webcomcpqdev",
   "webcomcpqqa",
@@ -25,6 +26,7 @@ const cpqHostList = [
 const isCPQ = cpqHostList.some((cpqHost) => host.includes(cpqHost));
 
 const workflowHostList = [
+  "workflow.cloud.sap",
   "webcomserver",
   "callidusondemand",
   "webcomserverdev",

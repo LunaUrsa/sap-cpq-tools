@@ -14,8 +14,10 @@
   "content_scripts": [
     {
       "matches": [
-        "http://*/*",
-        "https://*/*"
+        "http://*.cpq.cloud.sap/*",
+        "https://*.cpq.cloud.sap/*",
+        "http://*.workflow.cloud.sap/*",
+        "https://*.workflow.cloud.sap/*"
       ],
       "js": [
         "./static/js/content.js"
