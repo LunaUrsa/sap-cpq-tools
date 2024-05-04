@@ -3,19 +3,21 @@ name: Auto Increment Version
 on:
   push:
     branches:
-      - main  # or your default branch, e.g., master
+      - main
 
 jobs:
   tag:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Fetch all history so tags are available for analysis
+          fetch-depth: '0'
 
-      - name: Configure safe directory
-        run: git config --global --add safe.directory /github/workspace
+      # - name: Configure safe directory
+      #   run: git config --global --add safe.directory /github/workspace
 
       - name: Bump version and push tag
         uses: anothrNick/github-tag-action@1.26.0
