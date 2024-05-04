@@ -8,3 +8,8 @@ interface Shortcut {
 type NestedStringMap = {
   [key: string]: string | NestedStringMap;
 };
+
+interface ShortcutsListProps {
+  shortcuts: Shortcut[];
+  setShortcuts: React.Dispatch<React.SetStateAction<Shortcut[]>>;
+}

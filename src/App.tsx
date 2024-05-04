@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 // import { DOMMessage, DOMMessageResponse } from "./types";
 import HomePage from "./components/HomePage";
-import SettingsPage from "./components/SettingsPage";
+import StylingPage from "./components/StylingPage";
 import ShortcutsPage from "./components/ShortcutsPage";
 import { AppBar } from "@mui/material";
 import { Route, Routes } from "react-router-dom";
@@ -51,8 +51,8 @@ function App() {
         <Route path="/" element={<HomePage />} />
         {/* This is needed to display the home page when the extension is opened */}
         <Route path="/#" element={<HomePage />} />
-        <Route path="/customize" element={<ShortcutsPage />} />
-        <Route path="/settings" element={<SettingsPage />} />
+        <Route path="/shortcuts" element={<ShortcutsPage />} />
+        <Route path="/styling" element={<StylingPage />} />
       </Routes>
     </div>
   );

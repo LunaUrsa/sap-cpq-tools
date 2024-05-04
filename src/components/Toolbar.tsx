@@ -23,7 +23,7 @@ function EnhancedToolbar() {
         <Button
           color="inherit"
           component={RouterLink}
-          to="/settings"
+          to="/shortcuts"
           startIcon={<SettingsIcon />}
         >
           Settings
@@ -31,7 +31,7 @@ function EnhancedToolbar() {
         <Button
           color="inherit"
           component={RouterLink}
-          to="/customize"
+          to="/styling"
           startIcon={<CustomizeIcon />}
         >
           Customize

@@ -1,12 +1,36 @@
+import React, { useState, useEffect } from "react";
 import ShortcutsList from "./ShortcutsList";
-import AddShortcutForm from "./AddShortcutForm";
-import React from "react";
+import { Button } from "@mui/material";
+import { v4 as uuidv4 } from "uuid";
 
 function ShortcutsPage() {
+  const [shortcuts, setShortcuts] = useState<Shortcut[]>([]);
+
+  useEffect(() => {
+    const storedShortcuts = localStorage.getItem("shortcuts");
+    setShortcuts(storedShortcuts ? JSON.parse(storedShortcuts) : []);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("shortcuts", JSON.stringify(shortcuts));
+  }, [shortcuts]);
+
+  const addShortcut = () => {
+    const newShortcut = {
+      id: uuidv4(),
+      name: "",
+      key: "",
+      destination: "",
+    };
+    setShortcuts([...shortcuts, newShortcut]);
+  };
+
   return (
-    <div style={{ marginTop: "16px" }}>
-      <AddShortcutForm />
-      <ShortcutsList />
+    <div>
+      <Button onClick={addShortcut} variant="contained">
+        Add Shortcut
+      </Button>
+      <ShortcutsList shortcuts={shortcuts} setShortcuts={setShortcuts} />
     </div>
   );
 }
