@@ -66,13 +66,6 @@ chrome.runtime.onMessage.addListener(
 );
 
 document.addEventListener("DOMContentLoaded", () => {
-  const newElement = document.createElement("div");
-  newElement.textContent =
-    "This is a new element added by my Chrome Extension!";
-  newElement.style.cssText =
-    "position: fixed; top: 10px; left: 10px; background: orange; padding: 10px; z-index: 1000;";
-  document.body.appendChild(newElement);
-
   if (isCPQ) {
     const cpqScriptToolbar =
       document.querySelector<HTMLDivElement>(".script-toolbar");

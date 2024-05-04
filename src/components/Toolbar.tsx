@@ -1,6 +1,5 @@
 import React from "react";
 import { AppBar, Toolbar, Typography, Button } from "@mui/material";
-import HomeIcon from "@mui/icons-material/Home";
 import SettingsIcon from "@mui/icons-material/Settings";
 import CustomizeIcon from "@mui/icons-material/Tune";
 import { Link as RouterLink } from "react-router-dom";
@@ -15,18 +14,10 @@ function EnhancedToolbar() {
         <Button
           color="inherit"
           component={RouterLink}
-          to="/"
-          startIcon={<HomeIcon />}
-        >
-          Home
-        </Button>
-        <Button
-          color="inherit"
-          component={RouterLink}
           to="/shortcuts"
           startIcon={<SettingsIcon />}
         >
-          Settings
+          Shortcuts
         </Button>
         <Button
           color="inherit"
@@ -34,7 +25,7 @@ function EnhancedToolbar() {
           to="/styling"
           startIcon={<CustomizeIcon />}
         >
-          Customize
+          Styling
         </Button>
       </Toolbar>
     </AppBar>

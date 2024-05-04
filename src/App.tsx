@@ -1,7 +1,6 @@
 import React from "react";
 import "./App.css";
 // import { DOMMessage, DOMMessageResponse } from "./types";
-import HomePage from "./components/HomePage";
 import StylingPage from "./components/StylingPage";
 import ShortcutsPage from "./components/ShortcutsPage";
 import { AppBar } from "@mui/material";
@@ -48,9 +47,9 @@ function App() {
         <EnhancedToolbar />
       </AppBar>
       <Routes>
-        <Route path="/" element={<HomePage />} />
+        <Route path="/" element={<ShortcutsPage />} />
         {/* This is needed to display the home page when the extension is opened */}
-        <Route path="/#" element={<HomePage />} />
+        <Route path="/#" element={<ShortcutsPage />} />
         <Route path="/shortcuts" element={<ShortcutsPage />} />
         <Route path="/styling" element={<StylingPage />} />
       </Routes>

@@ -27,9 +27,9 @@
   "content_security_policy": {
     "extension_pages": "script-src 'self'; object-src 'self'"
   },
-  "icons": {
-    "16": "logo192.png",
-    "48": "logo192.png",
-    "128": "logo192.png"
-  }
+  "icons": [
+    {"16": "logo192.png"},
+    {"48": "logo192.png"},
+    {"128": "logo192.png"}
+  ]
 }

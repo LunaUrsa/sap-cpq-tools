@@ -27,7 +27,7 @@ function ShortcutsPage() {
 
   return (
     <div>
-      <Button onClick={addShortcut} variant="contained">
+      <Button onClick={addShortcut} variant="contained" sx={{ marginTop: 2 }}>
         Add Shortcut
       </Button>
       <ShortcutsList shortcuts={shortcuts} setShortcuts={setShortcuts} />
