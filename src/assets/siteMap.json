@@ -1,4 +1,7 @@
 {
+  "You can also paste a URL here": {
+    "": ""
+  },
   "Home": {
     "Quote List": "<baseUrl>/QuoteList",
     "Product Catalog": "<baseUrl>/Catalogue/CategoryTree.aspx",

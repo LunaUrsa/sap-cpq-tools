@@ -20,7 +20,8 @@ function ShortcutsPage() {
       id: uuidv4(),
       key: "",
       destination: "",
-      isError: false,
+      isUnique: true,
+      isValidDestination: true,
     };
     setShortcuts([...shortcuts, newShortcut]);
   };

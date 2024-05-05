@@ -2,7 +2,8 @@ interface Shortcut {
   id: string;
   key: string;
   destination: string;
-  isError: boolean;
+  isUnique: boolean;
+  isValidDestination: boolean;
 }
 
 interface ShortcutsListProps {

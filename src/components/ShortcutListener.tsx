@@ -30,17 +30,23 @@ const ShortcutListener = () => {
         // For example, if shortcut.destination is "Google > Search", the URL is siteMap.Google.Search
         // Make sure it's type safe
 
-        const url = getNestedProperty(siteMap, shortcut.destination);
-        if (!url) {
+        const urlProperty = getNestedProperty(siteMap, shortcut.destination);
+
+        if (!urlProperty) {
+          // If the URL was not found in the siteMap, see if it's a custom URL
+          if (shortcut.destination.startsWith("http")) {
+            window.location.href = shortcut.destination;
+            return;
+          }
           alert(
-            `Invalid destination for the shortcut: ${shortcut.destination}. Please make an issue or talk to Eric.`,
+            `Invalid destination for the "${shortcut.key}" shortcut. \n${shortcut.destination} is not a valid selection or URL.`,
           );
           return;
         }
 
         // Replace <baseUrl> in the URL with the actual base URL of the current window
         const baseUrl = window.location.origin;
-        const finalUrl = url?.replace("<baseUrl>", baseUrl);
+        const finalUrl = urlProperty?.replace("<baseUrl>", baseUrl);
 
         // alert(`Navigating to: ${finalUrl}`); // Display a message for testing
         window.location.href = finalUrl; // Navigate to the URL associated with the shortcut

@@ -1,20 +1,14 @@
-import React, { useEffect } from "react";
-import {
-  List,
-  ListItem,
-  TextField,
-  IconButton,
-  Select,
-  MenuItem,
-  Grid,
-} from "@mui/material";
+import React, { useEffect, useState } from "react";
+import { List, ListItem, TextField, IconButton, Grid } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import siteMap from "../assets/siteMap.json";
+import Autocomplete from "@mui/material/Autocomplete";
 
 const ShortcutsList: React.FC<ShortcutsListProps> = ({
   shortcuts,
   setShortcuts,
 }) => {
+  const [destination, setDestination] = useState<string>("");
   // Get the shortcut list from the local storage
   useEffect(() => {
     const storedShortcuts = localStorage.getItem("shortcuts");
@@ -46,23 +40,15 @@ const ShortcutsList: React.FC<ShortcutsListProps> = ({
   };
 
   // This handles displaying the menu items in the destination dropdown
-  const renderMenuItems = (
-    map: Record<string, string | Record<string, unknown>>,
-    parentKey = "",
-  ): JSX.Element[] => {
-    return Object.entries(map).flatMap(([key, value]) => {
-      const currentKey = parentKey ? `${parentKey} > ${key}` : key;
-      if (typeof value === "string") {
-        return (
-          <MenuItem key={currentKey} value={currentKey}>
-            {currentKey}
-          </MenuItem>
-        );
-      } else {
-        return renderMenuItems(value as Record<string, string>, currentKey);
+  // Prepare options from siteMap for the Autocomplete component
+  const destinationOptions = Object.entries(siteMap).flatMap(([key, value]) => {
+    return Object.entries(value).map(([subKey]) => {
+      if (subKey) {
+        return `${key} > ${subKey}`;
       }
+      return key;
     });
-  };
+  });
 
   // This takes the keydown event and sets the key value to the key pressed
   const shortcutKeyDown = (
@@ -76,9 +62,16 @@ const ShortcutsList: React.FC<ShortcutsListProps> = ({
     handleChange(id, "key", capitalizedKey);
   };
 
+  function validateURL(url: string): boolean {
+    const pattern =
+      /^(https?:\/\/)([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]+)*\/?$/i;
+    return pattern.test(url);
+  }
+
   // This creates a new shortcut with the given id and value
   // and updates the shortcuts list
   const handleChange = (id: string, field: keyof Shortcut, value: string) => {
+    console.debug("Updating shortcut:", id, field, value);
     const updatedShortcuts = shortcuts.map((shortcut) => {
       if (shortcut.id === id) {
         if (field === "key") {
@@ -86,7 +79,15 @@ const ShortcutsList: React.FC<ShortcutsListProps> = ({
           const isDuplicate = shortcuts.some(
             (other) => other.key === value && other.id !== id,
           );
-          return { ...shortcut, [field]: value, isError: isDuplicate };
+          return { ...shortcut, [field]: value, isDuplicated: isDuplicate };
+        }
+        if (field === "destination") {
+          // Check if the destination is valid
+          const isValidDestination =
+            (destinationOptions.includes(value) && !value.startsWith("You")) ||
+            validateURL(value);
+          console.log("isValidDestination", isValidDestination);
+          return { ...shortcut, [field]: value, isValidDestination };
         }
         return { ...shortcut, [field]: value };
       }
@@ -94,6 +95,8 @@ const ShortcutsList: React.FC<ShortcutsListProps> = ({
     });
     setShortcuts(updatedShortcuts);
   };
+
+  // console.log(shortcuts);
 
   return (
     <List dense={true}>
@@ -118,38 +121,53 @@ const ShortcutsList: React.FC<ShortcutsListProps> = ({
                 }
                 onBlur={handleBlur}
                 placeholder="Shortcut Key"
-                error={shortcut.isError}
+                error={!shortcut.isUnique}
                 helperText={
-                  shortcut.isError ? "This key is already in use" : ""
+                  !shortcut.isUnique ? "This key is already in use" : ""
                 }
                 InputProps={{
                   style: {
-                    borderColor: shortcut.isError ? "#ff1744" : "default",
+                    borderColor: !shortcut.isUnique ? "#ff1744" : "default",
                   },
                 }}
-                style={shortcut.isError ? { color: "red" } : {}}
+                style={!shortcut.isUnique ? { color: "red" } : {}}
               />
             </Grid>
             <Grid item xs={8}>
-              <Select
+              <Autocomplete
                 fullWidth
+                freeSolo // Allows users to enter custom options
                 size="small" // Smaller select size
-                displayEmpty
                 value={shortcut.destination}
-                placeholder="Select a destination"
-                onChange={(e) =>
-                  handleChange(shortcut.id, "destination", e.target.value)
-                }
-                onBlur={handleBlur}
-                renderValue={(selected) => {
-                  if (selected === "") {
-                    return <em>Select a destination</em>; // Placeholder text when nothing is selected
-                  }
-                  return selected;
+                onInputChange={(event, newInputValue) => {
+                  setDestination(newInputValue);
                 }}
-              >
-                {renderMenuItems(siteMap)}
-              </Select>
+                onChange={(e, newValue) =>
+                  handleChange(shortcut.id, "destination", newValue ?? "")
+                }
+                options={destinationOptions}
+                onBlur={() => {
+                  handleChange(shortcut.id, "destination", destination);
+                }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Destination"
+                    variant="outlined"
+                    fullWidth
+                    error={!shortcut.isValidDestination}
+                    helperText={
+                      !shortcut.isValidDestination ? "Invalid URL" : ""
+                    }
+                    inputProps={{
+                      ...params.inputProps,
+                      style: {
+                        color: !shortcut.isValidDestination ? "red" : undefined,
+                      },
+                    }}
+                  />
+                )}
+              />
             </Grid>
             <Grid item xs={1}>
               <IconButton
