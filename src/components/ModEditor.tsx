@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import CodeMirror, { EditorView, EditorState } from "@uiw/react-codemirror";
+import React from "react";
+import CodeMirror, { EditorView } from "@uiw/react-codemirror";
 import { langs } from "@uiw/codemirror-extensions-langs";
 import { autocompletion, CompletionContext } from "@codemirror/autocomplete";
 import {
@@ -7,10 +7,7 @@ import {
   esLint,
   scopeCompletionSource as javascriptCompletionSource,
 } from "@codemirror/lang-javascript";
-import {
-  autoCloseTags as htmlCloseTags,
-  htmlCompletionSource,
-} from "@codemirror/lang-html";
+import { autoCloseTags as htmlCloseTags } from "@codemirror/lang-html";
 import { jsonParseLinter } from "@codemirror/lang-json";
 import { color } from "@uiw/codemirror-extensions-color";
 import { zebraStripes } from "@uiw/codemirror-extensions-zebra-stripes";
@@ -58,11 +55,11 @@ const ModEditor: React.FC<ModEditProps> = ({ mod, setMod, preferences }) => {
   const langData = langs[mod.language as keyof typeof langs];
 
   if (langData) {
-    console.log("Language data:", mod.language);
+    // console.log("Language data:", mod.language);
     extensions.splice(0, 0, langData());
   }
 
-  console.log(extensions);
+  // console.log(extensions);
 
   if (mod.language === "python") {
     lintProcessor = esLint(new eslint.Linter(), config);
@@ -136,7 +133,6 @@ const ModEditor: React.FC<ModEditProps> = ({ mod, setMod, preferences }) => {
           themes[preferences?.codeMirrorTheme as keyof typeof alls] ||
           preferences?.codeMirrorTheme
         }
-        // theme="none"
         basicSetup={{
           lineNumbers: true,
           // highlightActiveLineGutter: true,
@@ -164,7 +160,7 @@ const ModEditor: React.FC<ModEditProps> = ({ mod, setMod, preferences }) => {
           let isValid = true;
           forEachDiagnostic(state, (d) => {
             if (d.severity === "error") {
-              console.log("Error:", d);
+              console.error("Error:", d);
               // setMod(mod.id, "isValidCode", false);
               isValid = false;
             }
@@ -181,7 +177,7 @@ const ModEditor: React.FC<ModEditProps> = ({ mod, setMod, preferences }) => {
           let isValid = true;
           forEachDiagnostic(viewUpdate.state, (d) => {
             if (d.severity === "error") {
-              console.log("Error:", d);
+              console.error("Error:", d);
               // setMod(mod.id, "isValidCode", false);
               isValid = false;
             }

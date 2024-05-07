@@ -54,8 +54,8 @@ const EnhancedToolbar: React.FC<ToolbarProps> = ({
 
   const titles: Record<string, string> = {
     "#/shortcut": "Shortcuts",
-    "#/styling": "Mods",
-    "#/formulas": "Formula Format",
+    "#/mod": "Mods",
+    "#/formula": "Formula Format",
     "#/info": "Information",
   };
 
@@ -78,11 +78,108 @@ const EnhancedToolbar: React.FC<ToolbarProps> = ({
     setShortcuts([...shortcuts, newShortcut]);
   };
 
+  let toolbarIcons;
+  let usedSpace = 4; // 3 for the title and 1 for the menu icon
+  switch (location.hash) {
+    case "#/mod":
+      usedSpace += 5; // 4 for the theme selector and 1 for the add new icon
+      toolbarIcons = (
+        <>
+          {/* Empty space */}
+          <Grid item xs={12 - usedSpace}></Grid>
+          {/* Theme selector */}
+          <Grid item xs={4}>
+            <FormControl
+              fullWidth
+              sx={{
+                mt: 0.5,
+              }}
+            >
+              <InputLabel
+                id="theme-label"
+                sx={{
+                  color: "white",
+                }}
+              >
+                Theme
+              </InputLabel>
+              <Select
+                labelId="theme-label"
+                value={preferences ? preferences.codeMirrorTheme : "abcdef"}
+                label="Theme"
+                onChange={(e) => {
+                  setPreferences({
+                    ...preferences,
+                    codeMirrorTheme: e.target.value,
+                  });
+                }}
+                sx={{
+                  color: "white",
+                  fontSize: "0.875rem", // smaller font size
+                  maxHeight: "40px", // smaller height for the select input
+                  "& .MuiSelect-select": {
+                    // targeting the inner select element
+                    paddingTop: "6px",
+                    paddingBottom: "6px",
+                  },
+                }}
+              >
+                {themeOptions.map((theme) => (
+                  <MenuItem key={theme} value={theme}>
+                    {theme}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+          {/* Add new */}
+          <Grid item xs={1}>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="end"
+              onClick={addStyle}
+              sx={{ mr: 2 }}
+            >
+              <AddCircle />
+            </IconButton>
+          </Grid>
+        </>
+      );
+      break;
+    case "#/shortcut":
+      usedSpace += 1; // 1 for the add new icon
+      toolbarIcons = (
+        <>
+          {/* Empty space */}
+          <Grid item xs={12 - usedSpace}></Grid>
+          {/* Add New */}
+          <Grid item xs={1}>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              edge="end"
+              onClick={addShortcut}
+              sx={{ mr: 2 }}
+            >
+              <AddCircle />
+            </IconButton>
+          </Grid>
+        </>
+      );
+      break;
+    case "#/formula":
+      toolbarIcons = <Grid item xs={12 - usedSpace}></Grid>;
+      break;
+    default:
+      toolbarIcons = <></>;
+  }
+
   return (
     <AppBar position="static">
       <Toolbar>
         <Grid container>
-          <Grid item xs={6}>
+          <Grid item xs={3}>
             <Typography
               variant="h6"
               component="div"
@@ -91,89 +188,13 @@ const EnhancedToolbar: React.FC<ToolbarProps> = ({
               {title}
             </Typography>
           </Grid>
-          {location.hash === "#/styling" ? (
-            <>
-              <Grid item xs={4}>
-                <FormControl
-                  fullWidth
-                  sx={{
-                    mt: 0.5,
-                  }}
-                >
-                  <InputLabel
-                    id="theme-label"
-                    sx={{
-                      color: "white",
-                    }}
-                  >
-                    Theme
-                  </InputLabel>
-                  <Select
-                    labelId="theme-label"
-                    value={preferences ? preferences.codeMirrorTheme : "abcdef"}
-                    label="Theme"
-                    onChange={(e) => {
-                      setPreferences({
-                        ...preferences,
-                        codeMirrorTheme: e.target.value,
-                      });
-                    }}
-                    sx={{
-                      color: "white",
-                      fontSize: "0.875rem", // smaller font size
-                      maxHeight: "40px", // smaller height for the select input
-                      "& .MuiSelect-select": {
-                        // targeting the inner select element
-                        paddingTop: "6px",
-                        paddingBottom: "6px",
-                      },
-                    }}
-                  >
-                    {themeOptions.map((theme) => (
-                      <MenuItem key={theme} value={theme}>
-                        {theme}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Grid>
-              <Grid item xs={1}>
-                <IconButton
-                  color="inherit"
-                  aria-label="open drawer"
-                  edge="end"
-                  onClick={addStyle}
-                  sx={{ mr: 2 }}
-                >
-                  <AddCircle />
-                </IconButton>
-              </Grid>
-            </>
-          ) : null}
-          {location.hash === "#/shortcut" ? (
-            <>
-              <Grid item xs={4}></Grid>
-              <Grid item xs={1}>
-                <IconButton
-                  color="inherit"
-                  aria-label="open drawer"
-                  edge="end"
-                  onClick={addShortcut}
-                  sx={{ mr: 2 }}
-                >
-                  <AddCircle />
-                </IconButton>
-              </Grid>
-            </>
-          ) : null}
-          {location.hash === "#/formula" ? <Grid item xs={5}></Grid> : null}
+          {toolbarIcons}
           <Grid item xs={1}>
             <IconButton
               color="inherit"
               aria-label="open drawer"
-              edge="end"
+              // edge="end"
               onClick={openMenu}
-              sx={{ mr: 2 }}
             >
               <MenuIcon />
             </IconButton>
@@ -190,11 +211,7 @@ const EnhancedToolbar: React.FC<ToolbarProps> = ({
                 <SettingsIcon />
                 Shortcuts
               </MenuItem>
-              <MenuItem
-                onClick={closeMenu}
-                component={RouterLink}
-                to="/styling"
-              >
+              <MenuItem onClick={closeMenu} component={RouterLink} to="/mod">
                 <CustomizeIcon />
                 Mods
               </MenuItem>

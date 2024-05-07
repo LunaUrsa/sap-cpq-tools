@@ -14,10 +14,8 @@
   "content_scripts": [
     {
       "matches": [
-        "http://*.cpq.cloud.sap/*",
-        "https://*.cpq.cloud.sap/*",
-        "http://*.workflow.cloud.sap/*",
-        "https://*.workflow.cloud.sap/*"
+        "*.cpq.cloud.sap/*",
+        "*.workflow.cloud.sap/*"
       ],
       "js": [
         "./static/js/content.js"
@@ -25,7 +23,7 @@
     }
   ],
   "content_security_policy": {
-    "extension_pages": "script-src 'self'; object-src 'self'"
+    "extension_pages": "unsafe-eval script-src 'self'; object-src 'self'"
   },
   "icons": {
     "16":  "logo16.png",

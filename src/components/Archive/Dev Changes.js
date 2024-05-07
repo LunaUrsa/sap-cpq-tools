@@ -760,7 +760,7 @@ function loadJquery() {
 
 function cpqTweaks() {
   $(document).on("keydown", function (e) {
-    console.log(e);
+    // console.log(e);
     // console.log('You pressed: ' + e.key + ' - ' + e.keyCode)
 
     if (e.key === "Enter" && e.ctrlKey === true) {
