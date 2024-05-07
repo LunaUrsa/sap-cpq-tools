@@ -1,5 +1,8 @@
 ### TODO
 
+## Extension
+* make it so the last visited page is what pops up when you activate the extension
+
 #### All
 * Cursor doesnt show on some themes?
 

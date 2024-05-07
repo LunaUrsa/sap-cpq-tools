@@ -9,22 +9,32 @@ const ShortcutsList: React.FC<ShortcutsListProps> = ({
   setShortcuts,
 }) => {
   const [destination, setDestination] = useState<string>("");
-  // Get the shortcut list from the local storage
-  useEffect(() => {
-    const storedShortcuts = localStorage.getItem("shortcuts");
-    if (storedShortcuts) {
-      try {
-        const parsedShortcuts = JSON.parse(storedShortcuts);
-        if (Array.isArray(parsedShortcuts)) {
-          // Check if it's actually an array
-          setShortcuts(parsedShortcuts);
+
+  // This creates a new shortcut with the given id and value
+  // and updates the shortcuts list
+  const handleChange = (id: string, field: keyof Shortcut, value: string) => {
+    const updatedShortcuts = shortcuts.map((shortcut) => {
+      if (shortcut.id === id) {
+        if (field === "key") {
+          // Check for duplicate keys
+          const isDuplicate = shortcuts.some(
+            (other) => other.key === value && other.id !== id,
+          );
+          return { ...shortcut, [field]: value, isDuplicated: isDuplicate };
         }
-      } catch (e) {
-        console.error("Failed to parse shortcuts:", e);
-        // Optionally set to a default value or handle the error
+        if (field === "destination") {
+          // Check if the destination is valid
+          const isValidDestination =
+            (destinationOptions.includes(value) && !value.startsWith("You")) ||
+            validateURL(value);
+          return { ...shortcut, [field]: value, isValidDestination };
+        }
+        return { ...shortcut, [field]: value };
       }
-    }
-  }, [setShortcuts]);
+      return shortcut;
+    });
+    setShortcuts(updatedShortcuts);
+  };
 
   // When the user leaves the input field, save the shortcuts to the local storage
   const handleBlur = () => {
@@ -67,34 +77,6 @@ const ShortcutsList: React.FC<ShortcutsListProps> = ({
       /^(https?:\/\/)([\da-z.-]+)\.([a-z.]{2,6})([/\w .-]+)*\/?$/i;
     return pattern.test(url);
   }
-
-  // This creates a new shortcut with the given id and value
-  // and updates the shortcuts list
-  const handleChange = (id: string, field: keyof Shortcut, value: string) => {
-    console.debug("Updating shortcut:", id, field, value);
-    const updatedShortcuts = shortcuts.map((shortcut) => {
-      if (shortcut.id === id) {
-        if (field === "key") {
-          // Check for duplicate keys
-          const isDuplicate = shortcuts.some(
-            (other) => other.key === value && other.id !== id,
-          );
-          return { ...shortcut, [field]: value, isDuplicated: isDuplicate };
-        }
-        if (field === "destination") {
-          // Check if the destination is valid
-          const isValidDestination =
-            (destinationOptions.includes(value) && !value.startsWith("You")) ||
-            validateURL(value);
-          console.log("isValidDestination", isValidDestination);
-          return { ...shortcut, [field]: value, isValidDestination };
-        }
-        return { ...shortcut, [field]: value };
-      }
-      return shortcut;
-    });
-    setShortcuts(updatedShortcuts);
-  };
 
   // console.log(shortcuts);
 
