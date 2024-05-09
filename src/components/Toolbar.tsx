@@ -53,6 +53,8 @@ const EnhancedToolbar: React.FC<ToolbarProps> = ({
   };
 
   const titles: Record<string, string> = {
+    "": "Shortcuts",
+    "#/": "Shortcuts",
     "#/shortcut": "Shortcuts",
     "#/mod": "Mods",
     "#/formula": "Formula Format",
@@ -79,8 +81,12 @@ const EnhancedToolbar: React.FC<ToolbarProps> = ({
   };
 
   let toolbarIcons;
-  let usedSpace = 4; // 3 for the title and 1 for the menu icon
+  let usedSpace = 5; // 4 for the title and 1 for the menu icon
   switch (location.hash) {
+    case "#/info":
+    case "#/formula":
+      toolbarIcons = <Grid item xs={12 - usedSpace}></Grid>;
+      break;
     case "#/mod":
       usedSpace += 5; // 4 for the theme selector and 1 for the add new icon
       toolbarIcons = (
@@ -147,6 +153,7 @@ const EnhancedToolbar: React.FC<ToolbarProps> = ({
         </>
       );
       break;
+    case "":
     case "#/shortcut":
       usedSpace += 1; // 1 for the add new icon
       toolbarIcons = (
@@ -168,9 +175,6 @@ const EnhancedToolbar: React.FC<ToolbarProps> = ({
         </>
       );
       break;
-    case "#/formula":
-      toolbarIcons = <Grid item xs={12 - usedSpace}></Grid>;
-      break;
     default:
       toolbarIcons = <></>;
   }
@@ -179,7 +183,7 @@ const EnhancedToolbar: React.FC<ToolbarProps> = ({
     <AppBar position="static">
       <Toolbar>
         <Grid container>
-          <Grid item xs={3}>
+          <Grid item xs={4}>
             <Typography
               variant="h6"
               component="div"

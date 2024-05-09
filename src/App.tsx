@@ -49,6 +49,14 @@ const defaultPreferences = { codeMirrorTheme: "dark" } as UserOptions;
 
 const defaultShortcuts = [
   {
+    id: "0",
+    key: "1",
+    destination:
+      "https://help.sap.com/docs/SAP_CPQ/884885f05e6b4c8082254d4d9d63f19b/e5f2e0b33a9e4e7ea2a22e27dba2e76f.html",
+    isUnique: true,
+    isValidDestination: true,
+  },
+  {
     id: "1",
     key: "Q",
     destination: "Home > Quote List",
