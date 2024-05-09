@@ -28,7 +28,7 @@ jobs:
         run: npm run build
 
       - name: Zip Build Folder
-        run: zip -r SAPCPQTools.zip .
+        run: zip -r build.zip .
         working-directory: ./build/
 
       - name: Run semantic-release
