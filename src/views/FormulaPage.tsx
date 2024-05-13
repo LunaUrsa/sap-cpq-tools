@@ -1,5 +1,5 @@
-import React from "react";
-import { Grid } from "@mui/material";
+import { Grid } from "@mui/material"
+import React from "react"
 
 const FormulaPage: React.FC = () => {
   return (
@@ -10,7 +10,7 @@ const FormulaPage: React.FC = () => {
         </Grid>
       </Grid>
     </div>
-  );
-};
+  )
+}
 
-export default FormulaPage;
+export default FormulaPage

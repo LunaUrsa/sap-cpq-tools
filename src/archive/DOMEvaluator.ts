@@ -1,7 +1,7 @@
 import {
   DOMMessage,
   // DOMMessageResponse,
-} from "../types";
+} from "./types";
 
 /*
 With the way chrome extensions work, "content" script is the only way to interact with the DOM of the page.

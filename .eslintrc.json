@@ -8,6 +8,7 @@
   "extends": [
     "eslint:recommended", // Use recommended rules from ESLint
     "plugin:react/recommended", // If using React
+    "plugin:react-hooks/recommended",
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended"
   ],
@@ -20,7 +21,8 @@
   },
   "rules": {
     // Custom rules e.g., "no-unused-vars": "warn"
-    // "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "react/prop-types": "off" // Turn off prop-types rule as we're using TypeScript
   },
   "globals": {
     "chrome": "readonly"

@@ -1,12 +1,13 @@
-import React from "react";
-import ModList from "./ModList";
-import { Grid } from "@mui/material";
+import { Grid } from "@mui/material"
+import React from "react"
+
+import ModList from "../components/ModList"
 
 const ModsPage: React.FC<ModListProps> = ({
   mods,
   setMods,
   preferences,
-  setPreferences,
+  setPreferences
 }) => {
   return (
     <div>
@@ -21,7 +22,7 @@ const ModsPage: React.FC<ModListProps> = ({
         </Grid>
       </Grid>
     </div>
-  );
-};
+  )
+}
 
-export default ModsPage;
+export default ModsPage

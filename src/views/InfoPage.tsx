@@ -1,5 +1,5 @@
-import React from "react";
-import { Typography, Link, Paper, Box } from "@mui/material";
+import { Box, Link, Paper, Typography } from "@mui/material"
+import React from "react"
 
 const InfoPage = () => {
   return (
@@ -13,8 +13,7 @@ const InfoPage = () => {
           <Link
             href="https://linkedin.com/in/erichoftiezer"
             target="_blank"
-            rel="noopener"
-          >
+            rel="noopener">
             <strong>Eric Hoftiezer</strong>
           </Link>{" "}
           to enhance the functionality and user experience of SAP CPQ. It is
@@ -26,8 +25,7 @@ const InfoPage = () => {
           <Link
             href="https://github.com/lunaursa/sap-cpq-tools"
             target="_blank"
-            rel="noopener"
-          >
+            rel="noopener">
             <strong>GitHub</strong>
           </Link>{" "}
           and you are encouraged to contribute! Pull requests are very welcome!
@@ -40,7 +38,7 @@ const InfoPage = () => {
         </Typography>
       </Paper>
     </Box>
-  );
-};
+  )
+}
 
-export default InfoPage;
+export default InfoPage

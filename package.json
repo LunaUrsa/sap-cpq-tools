@@ -5,23 +5,62 @@
   "description": "Tools for SAP CPQ",
   "author": "Eric Hoftiezer",
   "scripts": {
-    "dev": "plasmo dev",
+    "dev": "plasmo dev --verbose",
     "build": "plasmo build",
-    "package": "plasmo package"
+    "package": "plasmo package",
+    "ncu:checkUpdates": "npx npm-check-updates",
+    "ncu:updatePackages": "npx npm-check-updates -u && npm install"
   },
   "dependencies": {
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@mui/icons-material": "^5.15.17",
+    "@mui/lab": "^5.0.0-alpha.170",
+    "@mui/material": "^5.15.17",
+    "@uiw/codemirror-extensions-basic-setup": "^4.22.0",
+    "@uiw/codemirror-extensions-color": "^4.22.0",
+    "@uiw/codemirror-extensions-hyper-link": "^4.22.0",
+    "@uiw/codemirror-extensions-langs": "^4.22.0",
+    "@uiw/codemirror-extensions-zebra-stripes": "^4.22.0",
+    "@uiw/codemirror-themes-all": "^4.22.0",
+    "@uiw/react-codemirror": "^4.22.0",
+    "codemirror": "^6.0.1",
+    "common-tags": "^1.8.2",
     "plasmo": "0.86.2",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-router-dom": "^6.23.0",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@ianvs/prettier-plugin-sort-imports": "4.1.1",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/commit-analyzer": "^12.0.0",
+    "@semantic-release/github": "^10.0.3",
+    "@semantic-release/npm": "^12.0.0",
+    "@semantic-release/release-notes-generator": "^13.0.0",
     "@types/chrome": "0.0.258",
+    "@types/common-tags": "^1.8.4",
     "@types/node": "20.11.5",
     "@types/react": "18.2.48",
     "@types/react-dom": "18.2.18",
+    "@types/uuid": "^9.0.8",
+    "@typescript-eslint/eslint-plugin": "^7.8.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-prettier": "^5.1.3",
+    "eslint-plugin-react": "^7.34.1",
+    "eslint-plugin-react-hooks": "^4.6.2",
     "prettier": "3.2.4",
+    "semantic-release": "^23.0.8",
     "typescript": "5.3.3"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
   "manifest": {
     "host_permissions": [

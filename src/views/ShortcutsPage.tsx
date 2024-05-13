@@ -1,10 +1,11 @@
-import React from "react";
-import ShortcutsList from "./ShortcutsList";
-import { Grid } from "@mui/material";
+import { Grid } from "@mui/material"
+import React from "react"
+
+import ShortcutsList from "../components/ShortcutsList"
 
 const ShortcutsPage: React.FC<ShortcutsListProps> = ({
   shortcuts,
-  setShortcuts,
+  setShortcuts
 }) => {
   return (
     <Grid container>
@@ -12,7 +13,7 @@ const ShortcutsPage: React.FC<ShortcutsListProps> = ({
         <ShortcutsList shortcuts={shortcuts} setShortcuts={setShortcuts} />
       </Grid>
     </Grid>
-  );
-};
+  )
+}
 
-export default ShortcutsPage;
+export default ShortcutsPage
