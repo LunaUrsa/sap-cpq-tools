@@ -1,7 +1,9 @@
 {
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
+    "source.fixAll": "explicit"
   },
+  "eslint.format.enable": true,
+  "editor.defaultFormatter": "dbaeumer.vscode-eslint",
   "eslint.validate": [
     "javascript",
     "javascriptreact",
@@ -13,7 +15,6 @@
       "mode": "auto"
     }
   ],
-  "eslint.alwaysShowStatus": true,
   "cSpell.words": [
     "bespin",
     "callidusondemand",
@@ -41,8 +42,10 @@
     "rubyblue",
     "seti",
     "shadowfox",
+    "sidepanel",
     "Slct",
     "smallright",
+    "tailwindcss",
     "tracetitle",
     "ttcn",
     "uuidv",
@@ -68,5 +71,7 @@
     "Multibranding",
     "appparams",
     "craco"
-  ]
+  ],
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true
 }

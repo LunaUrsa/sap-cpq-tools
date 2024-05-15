@@ -53,3 +53,12 @@ interface ToolbarProps {
   preferences: UserOptions | null;
   setPreferences: React.Dispatch<React.SetStateAction<UserOptions | null>>;
 }
+
+interface RoutingProps {
+  mods: Mod[]
+  setMods: React.Dispatch<React.SetStateAction<Mod[]>>
+  shortcuts: Shortcut[]
+  setShortcuts: React.Dispatch<React.SetStateAction<Shortcut[]>>
+  preferences: UserOptions | null
+  setPreferences: React.Dispatch<React.SetStateAction<UserOptions | null>>
+}

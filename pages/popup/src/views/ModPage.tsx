@@ -1,5 +1,5 @@
 import React from "react";
-import ModList from "./ModList";
+import ModList from "../components/ModList";
 import { Grid } from "@mui/material";
 
 const ModsPage: React.FC<ModListProps> = ({

@@ -1,5 +1,5 @@
 import React from "react";
-import ShortcutsList from "./ShortcutsList";
+import ShortcutsList from "../components/ShortcutsList";
 import { Grid } from "@mui/material";
 
 const ShortcutsPage: React.FC<ShortcutsListProps> = ({

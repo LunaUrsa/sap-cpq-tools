@@ -16,15 +16,29 @@ export default defineConfig({
     },
   },
   base: '',
-  plugins: [react(), isDev && watchRebuildPlugin({ refresh: true })],
+  plugins: [
+    react(),
+    isDev && watchRebuildPlugin({ refresh: true }),
+    // muteWarningsPlugin(warningsToIgnore),
+  ],
   publicDir: resolve(rootDir, 'public'),
   build: {
     outDir: resolve(rootDir, '..', '..', 'dist', 'popup'),
-    sourcemap: isDev,
+    // sourcemap: isDev,
+    sourcemap: true, // Enable source maps in build https://github.com/vitejs/vite/issues/15012
     minify: isProduction,
     reportCompressedSize: isProduction,
     rollupOptions: {
       external: ['chrome'],
+      // This next function warns about source maps, but we can ignore it
+      // https://github.com/vitejs/vite/issues/15012
+      onwarn(warning, defaultHandler) {
+        if (warning.code === 'SOURCEMAP_ERROR') {
+          return
+        }
+
+        defaultHandler(warning)
+      },
     },
   },
   define: {
