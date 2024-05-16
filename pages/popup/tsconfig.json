@@ -10,7 +10,25 @@
     "jsx": "react-jsx",
     "types": [
       "chrome"
-    ]
+    ],
+    // "allowJs": true,
+    // "skipLibCheck": true,
+    // "esModuleInterop": true,
+    // "allowSyntheticDefaultImports": true,
+    // "forceConsistentCasingInFileNames": true,
+    // "lib": [
+    //   "dom",
+    //   "dom.iterable",
+    //   "esnext"
+    // ],
+    // "noFallthroughCasesInSwitch": true,
+    // "module": "esnext",
+    // "moduleResolution": "node",
+    // "resolveJsonModule": true,
+    // "isolatedModules": true,
+    // "noEmit": true,
+    // "strict": true,
+    // "target": "es6",
   },
   "include": [
     "src",

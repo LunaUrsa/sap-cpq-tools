@@ -24,8 +24,8 @@ export default defineConfig({
   publicDir: resolve(rootDir, 'public'),
   build: {
     outDir: resolve(rootDir, '..', '..', 'dist', 'popup'),
-    // sourcemap: isDev,
-    sourcemap: true, // Enable source maps in build https://github.com/vitejs/vite/issues/15012
+    sourcemap: false,
+    // sourcemap: true, // Enable source maps in build https://github.com/vitejs/vite/issues/15012
     minify: isProduction,
     reportCompressedSize: isProduction,
     rollupOptions: {

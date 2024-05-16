@@ -11,12 +11,20 @@ import {
   withErrorBoundary,
   withSuspense,
 } from '@chrome-extension-boilerplate/shared';
-import { MemoryRouter } from "react-router-dom"
+import {
+  // MemoryRouter, 
+  HashRouter,
+} from "react-router-dom"
 // import { DOMMessage, DOMMessageResponse } from "./types";
 import EnhancedToolbar from "./components/Toolbar";
 import ShortcutListener from "./components/ShortcutListener";
 import { stripIndent } from "common-tags";
 import { Routing } from './routes';
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+
+const theme = createTheme({
+  // Customize your theme here
+});
 
 const Popup = () => {
   // const theme = useStorageSuspense(exampleThemeStorage);
@@ -53,6 +61,7 @@ const Popup = () => {
 
   // Load the mods from the local storage when the app is activated
   useEffect(() => {
+    console.log("mods", mods);
     const storedMods = localStorage.getItem("mods");
     if (storedMods) {
       // console.log("storedMods", storedMods);
@@ -80,7 +89,7 @@ const Popup = () => {
       return;
     }
 
-    // console.log("mods", mods);
+    console.log("mods", mods);
     mods.forEach((mod) => {
       if (
         mod.content &&
@@ -91,6 +100,7 @@ const Popup = () => {
         switch (mod.language) {
           case "javascript":
             try {
+              console.log("Executing mod:", mod.name);
               const func = new Function(mod.content);
               func();
             } catch (error) {
@@ -98,6 +108,7 @@ const Popup = () => {
             }
             break;
           case "css": {
+            console.log("Applying CSS mod:", mod.name)
             const style = document.createElement("style");
             style.innerHTML = mod.content;
             document.head.appendChild(style);
@@ -166,60 +177,29 @@ const Popup = () => {
   // });
 
   return (
-    // <MemoryRouter>
-    //   <ShortcutListener />
-    //   <EnhancedToolbar
-    //     mods={mods}
-    //     setMods={setMods}
-    //     shortcuts={shortcuts}
-    //     setShortcuts={setShortcuts}
-    //     preferences={preferences}
-    //     setPreferences={setPreferences}
-    // />
-    //   <div
-    //     className='App'
-    //     style={{
-    //       backgroundColor: theme === 'light' ? '#eee' : '#222',
-    //     }}>
-    //     <header className="App-header" style={{ color: theme === 'light' ? '#222' : '#eee' }}>
-    //       <img src={chrome.runtime.getURL('newtab/logo.svg')} className="App-logo" alt="logo" />
-
-    //       <p>
-    //         Edit <code>pages/popup/src/Popup.tsx</code> and save to update!!!
-    //       </p>
-    //       <a
-    //         className="App-link"
-    //         href="https://reactjs.org"
-    //         target="_blank"
-    //         rel="noopener noreferrer"
-    //         style={{ color: theme === 'light' ? '#0281dc' : undefined, marginBottom: '10px' }}>
-    //         Learn React!
-    //       </a>
-    //       <ToggleButton>Toggle theme</ToggleButton>
-    //     </header>
-    //   </div>
-    // </MemoryRouter>
-    <MemoryRouter>
-      <div className="new-tab">
-        <ShortcutListener />
-        <EnhancedToolbar
-          mods={mods}
-          setMods={setMods}
-          shortcuts={shortcuts}
-          setShortcuts={setShortcuts}
-          preferences={preferences}
-          setPreferences={setPreferences}
-        />
-        <Routing
-          mods={mods}
-          setMods={setMods}
-          shortcuts={shortcuts}
-          setShortcuts={setShortcuts}
-          preferences={preferences}
-          setPreferences={setPreferences}
-        />
-      </div>
-    </MemoryRouter>
+    <HashRouter>
+      <ThemeProvider theme={theme}>
+        <div className=".App">
+          <ShortcutListener />
+          <EnhancedToolbar
+            mods={mods}
+            setMods={setMods}
+            shortcuts={shortcuts}
+            setShortcuts={setShortcuts}
+            preferences={preferences}
+            setPreferences={setPreferences}
+          />
+          <Routing
+            mods={mods}
+            setMods={setMods}
+            shortcuts={shortcuts}
+            setShortcuts={setShortcuts}
+            preferences={preferences}
+            setPreferences={setPreferences}
+          />
+        </div>
+      </ThemeProvider>
+    </HashRouter>
   );
 };
 

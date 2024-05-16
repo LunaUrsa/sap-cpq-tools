@@ -1,61 +1,53 @@
+/* eslint-disable import/namespace */
 import React from "react";
-import CodeMirror, {
-  // EditorView
-} from "@uiw/react-codemirror";
-// import { EditorView } from '@codemirror/view';
+import CodeMirror from "@uiw/react-codemirror";
+import { EditorView } from '@codemirror/view';
 import { langs } from "@uiw/codemirror-extensions-langs";
-import { autocompletion, CompletionContext } from "@codemirror/autocomplete";
+// import { autocompletion, CompletionContext } from "@codemirror/autocomplete";
 import {
-  autoCloseTags as javascriptCloseTags,
-  // esLint,
-  scopeCompletionSource as javascriptCompletionSource,
+  // autoCloseTags as javascriptCloseTags,
+  esLint,
+  // scopeCompletionSource as javascriptCompletionSource,
 } from "@codemirror/lang-javascript";
-import { autoCloseTags as htmlCloseTags } from "@codemirror/lang-html";
-// import { jsonParseLinter } from "@codemirror/lang-json";
-import { color } from "@uiw/codemirror-extensions-color";
-import { zebraStripes } from "@uiw/codemirror-extensions-zebra-stripes";
-import { hyperLink } from "@uiw/codemirror-extensions-hyper-link";
 import {
-  // linter,
+  linter,
   lintGutter,
-  // Diagnostic,
   forEachDiagnostic,
 } from "@codemirror/lint";
 
-// import * as eslint from "eslint-linter-browserify";
+import type { Diagnostic } from "@codemirror/lint";
 
-// import * as themes from "@uiw/codemirror-themes-all";
+import * as eslint from "eslint-linter-browserify";
 
-// const config = {
-//   // eslint configuration
-//   languageOptions: {
-//     // globals: {
-//     //   ...globals.node,
-//     // },
-//     parserOptions: {
-//       ecmaVersion: 2022,
-//       sourceType: "module",
-//     },
-//   },
-//   rules: {
-//     semi: ["error", "never"],
-//   },
-// };
+import * as themes from "@uiw/codemirror-themes-all";
+
+const config = {
+  // eslint configuration
+  languageOptions: {
+    // globals: {
+    //   ...globals.node,
+    // },
+    parserOptions: {
+      ecmaVersion: 2022,
+      sourceType: "module",
+    },
+  },
+  rules: {
+    semi: ["error", "never"],
+  },
+};
 
 /* See https://github.com/uiwjs/react-codemirror for documentation */
 
 const ModEditor: React.FC<ModEditProps> = ({
   mod,
   setMod,
-  // preferences,
+  preferences,
 }) => {
-  // let lintProcessor: ((view: EditorView) => Diagnostic[]) | null = null;
+  let lintProcessor: ((view: EditorView) => Diagnostic[]) | null = null;
 
   const extensions = [
-    color,
-    hyperLink,
-    zebraStripes({ step: 2 }),
-    // linter(lintProcessor),
+    linter(lintProcessor),
     lintGutter(),
   ];
 
@@ -68,61 +60,13 @@ const ModEditor: React.FC<ModEditProps> = ({
 
   // console.log(extensions);
 
-  if (mod.language === "python") {
-    // lintProcessor = esLint(new eslint.Linter(), config);
-    extensions.push(
-      autocompletion({
-        override: [javascriptCompletionSource(CompletionContext)],
-      }),
-    );
-  }
-  if (mod.language === "html") {
-    // lintProcessor = esLint(new eslint.Linter(), config);
-    extensions.push(
-      // autocompletion({
-      //   override: [htmlCompletionSource()],
-      // }),
-      htmlCloseTags,
-    );
+  if (mod.language === "javascript") {
+    lintProcessor = esLint(new eslint.Linter(), config);
   }
 
-  if (mod.language === "javascript") {
-    // lintProcessor = esLint(new eslint.Linter(), config);
-    extensions.push(
-      autocompletion({
-        override: [javascriptCompletionSource(CompletionContext)],
-      }),
-    );
-  }
   if (mod.language === "typescript") {
-    // lintProcessor = esLint(new eslint.Linter(), config);
-    extensions.push(
-      autocompletion({
-        override: [javascriptCompletionSource(CompletionContext)],
-      }),
-    );
+    lintProcessor = esLint(new eslint.Linter(), config);
   }
-  if (mod.language === "jsx") {
-    // lintProcessor = esLint(new eslint.Linter(), config);
-    extensions.push(
-      autocompletion({
-        override: [javascriptCompletionSource(CompletionContext)],
-      }),
-      javascriptCloseTags,
-    );
-  }
-  if (mod.language === "tsx") {
-    // lintProcessor = esLint(new eslint.Linter(), config);
-    extensions.push(
-      autocompletion({
-        override: [javascriptCompletionSource(CompletionContext)],
-      }),
-      javascriptCloseTags,
-    );
-  }
-  // if (mod.language === "json") {
-  //   lintProcessor = jsonParseLinter();
-  // }
 
   return (
     <div>
@@ -134,12 +78,12 @@ const ModEditor: React.FC<ModEditProps> = ({
         height="200px"
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        // theme={
-        //   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        //   // @ts-ignore
-        //   themes[preferences?.codeMirrorTheme as keyof typeof alls] ||
-        //   preferences?.codeMirrorTheme
-        // }
+        theme={
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          themes[preferences?.codeMirrorTheme as keyof typeof themes] ||
+          preferences?.codeMirrorTheme
+        }
         basicSetup={{
           lineNumbers: true,
           // highlightActiveLineGutter: true,
@@ -168,7 +112,7 @@ const ModEditor: React.FC<ModEditProps> = ({
           forEachDiagnostic(state, (d) => {
             if (d.severity === "error") {
               console.error("Error:", d);
-              // setMod(mod.id, "isValidCode", false);
+              setMod(mod.id, "isValidCode", false);
               isValid = false;
             }
           });
@@ -185,7 +129,7 @@ const ModEditor: React.FC<ModEditProps> = ({
           forEachDiagnostic(viewUpdate.state, (d) => {
             if (d.severity === "error") {
               console.error("Error:", d);
-              // setMod(mod.id, "isValidCode", false);
+              setMod(mod.id, "isValidCode", false);
               isValid = false;
             }
           });

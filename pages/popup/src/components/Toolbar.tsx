@@ -1,3 +1,4 @@
+/* eslint-disable import/namespace */
 import React, { useState } from "react";
 import {
   AppBar,
@@ -19,7 +20,7 @@ import { Link as RouterLink } from "react-router-dom";
 import { Functions, AddCircle } from "@mui/icons-material";
 import { v4 as uuidv4 } from "uuid";
 
-// import * as themes from "@uiw/codemirror-themes-all";
+import * as themes from "@uiw/codemirror-themes-all";
 
 const EnhancedToolbar: React.FC<ToolbarProps> = ({
   mods,
@@ -64,10 +65,10 @@ const EnhancedToolbar: React.FC<ToolbarProps> = ({
   // Default title
   const title = titles[location.hash] || "SAP CPQ Tools";
 
-  // const themeOptions = ["dark", "light"]
-  //   .concat(Object.keys(themes))
-  //   .filter((item) => typeof themes[item as keyof typeof themes] !== "function")
-  //   .filter((item) => !/^(defaultSettings)/.test(item as keyof typeof themes));
+  const themeOptions = ["dark", "light"]
+    .concat(Object.keys(themes))
+    .filter((item) => typeof themes[item as keyof typeof themes] !== "function")
+    .filter((item) => !/^(defaultSettings)/.test(item as keyof typeof themes));
 
   const addShortcut = () => {
     const newShortcut = {
@@ -130,11 +131,11 @@ const EnhancedToolbar: React.FC<ToolbarProps> = ({
                   },
                 }}
               >
-                {/* {themeOptions.map((theme) => (
+                {themeOptions.map((theme) => (
                   <MenuItem key={theme} value={theme}>
                     {theme}
                   </MenuItem>
-                ))} */}
+                ))}
               </Select>
             </FormControl>
           </Grid>
