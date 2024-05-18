@@ -36,145 +36,85 @@ const Popup = () => {
   // Load user preferences from the local storage when the app is activated
   // Set the default preferences if there are none
   useEffect(() => {
-    const storedPreferences = localStorage.getItem("userPreferences");
-    if (storedPreferences) {
-      try {
-        const parsedPreferences = storedPreferences
-          ? JSON.parse(storedPreferences)
-          : null;
-        if (parsedPreferences && typeof parsedPreferences === "object") {
-          setPreferences(parsedPreferences);
-        } else setPreferences(defaultPreferences);
-      } catch (error) {
-        console.error("Failed to parse user preferences:", error);
-        setPreferences(defaultPreferences);
-      }
-    } else setPreferences(defaultPreferences);
+    chrome.storage.local.get("userPreferences", (result) => {
+      const storedPreferences = result.userPreferences;
+      if (storedPreferences) {
+        try {
+          const parsedPreferences = JSON.parse(storedPreferences);
+          if (parsedPreferences && typeof parsedPreferences === "object") setPreferences(parsedPreferences);
+          else setPreferences(defaultPreferences);
+        } catch (error) {
+          console.error("Failed to parse user preferences:", error);
+          setPreferences(defaultPreferences);
+        }
+      } else setPreferences(defaultPreferences);
+    });
   }, []);
 
   // If preferences change, save them to the local storage
   useEffect(() => {
     if (preferences) {
-      localStorage.setItem("userPreferences", JSON.stringify(preferences));
+      chrome.storage.local.set({ userPreferences: JSON.stringify(preferences) });
     }
   }, [preferences]);
 
   // Load the mods from the local storage when the app is activated
   useEffect(() => {
-    console.log("mods", mods);
-    const storedMods = localStorage.getItem("mods");
-    if (storedMods) {
-      // console.log("storedMods", storedMods);
-      try {
-        const parsedMods = JSON.parse(storedMods);
-        if (Array.isArray(parsedMods) && parsedMods.length > 0) {
-          // Check if it's actually an array
-          setMods(parsedMods);
-        } else setMods(defaultMods);
-      } catch (e) {
-        console.error("Failed to parse mods:", e);
+    chrome.storage.local.get("mods", (result) => {
+      const storedMods = result.mods;
+      if (storedMods) {
+        try {
+          const parsedMods = JSON.parse(storedMods);
+          if (Array.isArray(parsedMods) && parsedMods.length > 0) {
+            // console.log('Mods found:', parsedMods)
+            setMods(parsedMods);
+          } else {
+            // console.error("Mods list is empty, resetting:")
+            setMods(defaultMods)
+          };
+        } catch (error) {
+          // console.error("Failed to parse mods:", error);
+          setMods(defaultMods);
+        }
+      } else {
+        // console.error('No mods found')
         setMods(defaultMods);
       }
-    } else setMods(defaultMods);
+    });
   }, []);
 
   // If mods change, save them to the local storage
   // ALSO: Execute the mods if they are valid
   useEffect(() => {
-    localStorage.setItem("mods", JSON.stringify(mods));
-
-    // Check if the page we're currently on is part of the hosts list above
-    const currentHost = window.location.hostname;
-    if (!hosts.some((host) => currentHost === host)) {
-      return;
+    if (mods) {
+      chrome.storage.local.set({ mods: JSON.stringify(mods) });
     }
-
-    console.log("mods", mods);
-    mods.forEach((mod) => {
-      if (
-        mod.content &&
-        mod.isEnabled &&
-        mod.isValidCode &&
-        mod.isValidLanguage
-      ) {
-        switch (mod.language) {
-          case "javascript":
-            try {
-              console.log("Executing mod:", mod.name);
-              const func = new Function(mod.content);
-              func();
-            } catch (error) {
-              console.error("Error executing mod:", error);
-            }
-            break;
-          case "css": {
-            console.log("Applying CSS mod:", mod.name)
-            const style = document.createElement("style");
-            style.innerHTML = mod.content;
-            document.head.appendChild(style);
-            break;
-          }
-          default:
-            break;
-        }
-      }
-    });
   }, [mods]);
 
   // Get the shortcut list from the local storage
   useEffect(() => {
-    const storedShortcuts = localStorage.getItem("shortcuts");
-    if (storedShortcuts) {
-      // console.log("storedShortcuts", storedShortcuts);
-      try {
-        const parsedShortcuts = JSON.parse(storedShortcuts);
-        if (Array.isArray(parsedShortcuts) && parsedShortcuts.length > 0) {
-          // Check if it's actually an array
-          setShortcuts(parsedShortcuts);
-        } else setShortcuts(defaultShortcuts);
-      } catch (e) {
-        setShortcuts(defaultShortcuts);
-      }
-    } else setShortcuts(defaultShortcuts);
+    // console.log("shortcuts", shortcuts);
+    chrome.storage.local.get("shortcuts", (result) => {
+      const storedShortcuts = result.shortcuts;
+      if (storedShortcuts) {
+        try {
+          const parsedShortcuts = JSON.parse(storedShortcuts);
+          if (Array.isArray(parsedShortcuts) && parsedShortcuts.length > 0) {
+            setShortcuts(parsedShortcuts);
+          } else setShortcuts(defaultShortcuts);
+        } catch (error) {
+          console.error("Failed to parse shortcuts:", error);
+          setShortcuts(defaultShortcuts);
+        }
+      } else setShortcuts(defaultShortcuts);
+    });
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("shortcuts", JSON.stringify(shortcuts));
+    if (shortcuts) {
+      chrome.storage.local.set({ shortcuts: JSON.stringify(shortcuts) });
+    }
   }, [shortcuts]);
-
-  // const [title, setTitle] = R eact.useState("");
-  // const [headlines, setHeadlines] = React.useState<string[]>([]);
-
-  // React.useEffect(() => {
-  //   /**
-  //    * We can't use "chrome.runtime.sendMessage" for sending messages from React.
-  //    * For sending messages from React we need to specify which tab to send it to.
-  //    */
-  //   chrome.tabs &&
-  //     chrome.tabs.query(
-  //       {
-  //         active: true,
-  //         currentWindow: true,
-  //       },
-  //       (tabs) => {
-  //         /**
-  //          * Sends a single message to the content script(s) in the specified tab,
-  //          * with an optional callback to run when a response is sent back.
-  //          *
-  //          * The runtime.onMessage event is fired in each content script running
-  //          * in the specified tab for the current extension.
-  //          */
-  //         chrome.tabs.sendMessage(
-  //           tabs[0].id ?? 0,
-  //           { type: "GET_DOM" } as DOMMessage,
-  //           (response: DOMMessageResponse) => {
-  //             setTitle(response.title);
-  //             setHeadlines(response.headlines);
-  //           },
-  //         );
-  //       },
-  //     );
-  // });
 
   return (
     <HashRouter>
@@ -219,29 +159,10 @@ const Popup = () => {
 //   );
 // };
 
-// This should match ./public/manifest.json
-const hosts = [
-  "localhost", // For testing
-  "*.cpq.cloud.sap/*",
-  "*.workflow.cloud.sap/*",
-];
-
 const defaultMods = [
   {
     id: "1",
-    name: "Example Script Mod",
-    language: "javascript",
-    content: stripIndent`
-        console.log("Hello, world!");
-      `,
-    isEnabled: true,
-    isValidCode: true,
-    isValidLanguage: true,
-  },
-  {
-    id: "2",
     name: "Example CSS Mod",
-    language: "css",
     content: stripIndent`
         body {
           background: red;
@@ -249,7 +170,6 @@ const defaultMods = [
       `,
     isEnabled: true,
     isValidCode: true,
-    isValidLanguage: true,
   },
 ] as Mod[];
 

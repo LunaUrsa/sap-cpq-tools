@@ -38,15 +38,15 @@ const ShortcutsList: React.FC<ShortcutsListProps> = ({
 
   // When the user leaves the input field, save the shortcuts to the local storage
   const handleBlur = () => {
-    // console.log("Saving shortcuts to localStorage:", shortcuts);
-    localStorage.setItem("shortcuts", JSON.stringify(shortcuts));
+    // console.log("Saving shortcuts to storage:", shortcuts);
+    chrome.storage.local.set({ shortcuts: JSON.stringify(shortcuts) });
   };
 
   // Delete the shortcut with the given id
   const handleDelete = (id: string) => {
     const updatedShortcuts = shortcuts.filter((shortcut) => shortcut.id !== id);
     setShortcuts(updatedShortcuts);
-    localStorage.setItem("shortcuts", JSON.stringify(updatedShortcuts));
+    chrome.storage.local.set({ shortcuts: JSON.stringify(updatedShortcuts) });
   };
 
   // This handles displaying the menu items in the destination dropdown

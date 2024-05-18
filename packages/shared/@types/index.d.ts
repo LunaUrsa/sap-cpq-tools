@@ -16,9 +16,7 @@ interface Mod {
   name: string;
   content: string;
   isEnabled: boolean;
-  isValidLanguage: boolean;
   isValidCode: boolean;
-  language: string;
 }
 
 interface ModListProps {

@@ -24,15 +24,15 @@ const ModList: React.FC<ModListProps> = ({
 
   // When the user leaves the input field, save the mods to the local storage
   const handleBlur = () => {
-    // console.log("Saving mods to localStorage:", mods);
-    localStorage.setItem("mods", JSON.stringify(mods));
+    // console.log("Saving mods to storage:", mods);
+    chrome.storage.local.set({ mods: JSON.stringify(mods) });
   };
 
   // Delete the mod with the given id
   const handleDelete = (id: string) => {
     const updatedMods = mods.filter((mod) => mod.id !== id);
     setMods(updatedMods);
-    localStorage.setItem("mods", JSON.stringify(updatedMods));
+    chrome.storage.local.set({ mods: JSON.stringify(updatedMods) });
   };
 
   // This creates a new mod with the given id and value

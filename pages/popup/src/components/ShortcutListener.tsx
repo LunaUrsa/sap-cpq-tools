@@ -11,14 +11,15 @@ function getNestedProperty(obj: SiteMap, path: string): string | undefined {
 
 const ShortcutListener = () => {
   useEffect(() => {
-    const handleKeyPress = (event: KeyboardEvent) => {
+    const handleKeyPress = async (event: KeyboardEvent) => {
       // Check if the key setting interface is active
       if (document.activeElement?.tagName === "INPUT") {
         return; // Do not proceed if the user is currently typing in an input field (e.g., setting a shortcut key)
       }
 
-      const storedShortcuts = localStorage.getItem("shortcuts");
-      const shortcuts = storedShortcuts ? JSON.parse(storedShortcuts) : [];
+      const storedShortcuts = await chrome.storage.local.get("shortcuts");
+
+      const shortcuts = storedShortcuts ? JSON.parse(storedShortcuts.shortcuts) : [];
 
       // Find a shortcut that matches the pressed key
       const shortcut = shortcuts.find(

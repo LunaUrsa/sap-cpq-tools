@@ -15,7 +15,7 @@ const manifest = {
   name: '__MSG_extensionName__',
   version: packageJson.version,
   description: '__MSG_extensionDescription__',
-  permissions: ['storage', 'sidePanel'],
+  permissions: ['storage', 'sidePanel', 'activeTab', 'scripting'],
   side_panel: {
     default_path: 'sidepanel/index.html',
   },
@@ -24,6 +24,7 @@ const manifest = {
     service_worker: 'background.iife.js',
     type: 'module',
   },
+  host_permissions: ["*://*.cpq.cloud.sap/*", "*://*.workflow.cloud.sap/*", "*://*.example.com/*"],
   action: {
     default_popup: 'popup/index.html',
     default_icon: 'icon-34.png',
@@ -36,16 +37,16 @@ const manifest = {
   },
   content_scripts: [
     {
-      matches: ['http://*/*', 'https://*/*', '<all_urls>'],
+      "matches": ["*://*.cpq.cloud.sap/*", "*://*.workflow.cloud.sap/*", "*://*.example.com/*"],
       js: ['content/index.iife.js'],
     },
     {
-      matches: ['http://*/*', 'https://*/*', '<all_urls>'],
+      "matches": ["*://*.cpq.cloud.sap/*", "*://*.workflow.cloud.sap/*", "*://*.example.com/*"],
       js: ['content-ui/index.iife.js'],
     },
     {
-      matches: ['http://*/*', 'https://*/*', '<all_urls>'],
-      css: ['content.css'], // public folder
+      "matches": ["*://*.cpq.cloud.sap/*", "*://*.workflow.cloud.sap/*", "*://*.example.com/*"],
+      css: ['content.css'], 
     },
   ],
   devtools_page: 'devtools/index.html',
@@ -55,6 +56,11 @@ const manifest = {
       matches: ['*://*/*'],
     },
   ],
+  // "content_security_policy": { 
+  //   // content_scripts: "script-src 'self' 'unsafe-inl ine' 'unsafe-eval' 'wasm-unsafe-eval' 'inline-speculation-rules' http://localhost:* http://127.0.0.1:*; object-src 'self'",
+  //   // extension_pages: "script-src 'self' 'unsafe-eval'; object-src 'self' ;",
+  //   // sandbox: "sandbox allow-scripts allow-forms allow-popups allow-m odals; script-src 'self' 'unsafe-inline' 'unsafe-eval'; child-src 'self';"
+  // },
 };
 
 export default manifest;
