@@ -58,9 +58,32 @@ const manifest = {
   ],
   // "content_security_policy": { 
   //   // content_scripts: "script-src 'self' 'unsafe-inl ine' 'unsafe-eval' 'wasm-unsafe-eval' 'inline-speculation-rules' http://localhost:* http://127.0.0.1:*; object-src 'self'",
-  //   // extension_pages: "script-src 'self' 'unsafe-eval'; object-src 'self' ;",
+  //   // extension_pages: "script-src 'self' 'unsafe-eval'; ob ject-src 'self' ;",
   //   // sandbox: "sandbox allow-scripts allow-forms allow-popups allow-m odals; script-src 'self' 'unsafe-inline' 'unsafe-eval'; child-src 'self';"
   // },
+  commands: {
+    // "Open Last Page": {
+    //   suggested_key: {
+    //     default: 'Ctrl+Shift+S',
+    //     mac: 'Command+Shift+S',
+    //   },
+    //   "description": "Opens the extension to the last page you were on."
+    // },
+    "Open Shortcuts": {
+      suggested_key: {
+        default: 'Ctrl+Space',
+        mac: 'Command+Space',
+      },
+      "description": "Opens the shortcut page."
+    },
+    "Open Formulas": {
+      suggested_key: {
+        default: 'Ctrl+Shift+F',
+        mac: 'Command+Shift+F',
+      },
+      "description": "Opens the formula formatter page."
+    },
+  },
 };
 
 export default manifest;

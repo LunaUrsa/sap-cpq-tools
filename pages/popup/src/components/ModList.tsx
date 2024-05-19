@@ -11,8 +11,6 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import ModEditor from "./ModEditor";
-import Autocomplete from "@mui/material/Autocomplete";
-import { langs } from "@uiw/codemirror-extensions-langs";
 
 const ModList: React.FC<ModListProps> = ({
   mods,
@@ -44,13 +42,6 @@ const ModList: React.FC<ModListProps> = ({
   ) => {
     const updatedMods = mods.map((mod) => {
       if (mod.id === id) {
-        if (field === "language") {
-          const langData = langs[value as keyof typeof langs];
-          if (!langData) {
-            return { ...mod, [field]: value as string, isValidLanguage: false };
-          }
-          return { ...mod, [field]: value as string, isValidLanguage: true };
-        }
         return { ...mod, [field]: value };
       }
       return mod;
@@ -62,6 +53,7 @@ const ModList: React.FC<ModListProps> = ({
 
   // Toggle edit mode
   const handleEditToggle = (modId: string) => {
+    console.log("Edit toggle:", modId);
     if (activeEditId === modId) {
       setActiveEditId(null); // Close editor if it's already open
     } else {
@@ -99,45 +91,6 @@ const ModList: React.FC<ModListProps> = ({
               />
             </Grid>
             <Grid item xs={3}>
-              <Autocomplete
-                fullWidth
-                freeSolo // Allows users to enter custom options
-                size="small" // Smaller select size
-                value={mod.language}
-                onInputChange={(event, newInputValue) => {
-                  handleChange(
-                    mod.id,
-                    "language",
-                    newInputValue.toLowerCase() ?? "",
-                  );
-                }}
-                onChange={(e, newValue) =>
-                  handleChange(
-                    mod.id,
-                    "language",
-                    newValue?.toLowerCase() ?? "",
-                  )
-                }
-                // options={["Javascript", "CSS"]}
-                options={Object.keys(langs).sort((a, b) => a.localeCompare(b))}
-                onBlur={() => handleChange(mod.id, "language", mod.language)}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Language"
-                    variant="outlined"
-                    fullWidth
-                    error={!mod.isValidLanguage}
-                    helperText={!mod.isValidLanguage ? "Invalid language" : ""}
-                    inputProps={{
-                      ...params.inputProps,
-                      mod: {
-                        color: !mod.isValidLanguage ? "red" : undefined,
-                      },
-                    }}
-                  />
-                )}
-              />
             </Grid>
             <Grid item xs={1.5}>
               <Switch
