@@ -39,7 +39,6 @@ const Popup = () => {
     });
 
     chrome.storage.local.get("mods", (result) => {
-      console.log("popup mods", result);
       setMods(JSON.parse(result.mods));
     });
 
@@ -62,6 +61,46 @@ const Popup = () => {
     if (mods) {
       chrome.storage.local.set({ mods: JSON.stringify(mods) });
     }
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      const activeTab = tabs[0];
+      if (!activeTab.id) {
+        return;
+      }
+
+      if (!activeTab.url || activeTab.url.startsWith('chrome://')) {
+        return;
+      }
+
+      mods.forEach((mod: Mod) => {
+        if (
+          mod?.content &&
+          mod?.isEnabled &&
+          mod?.isValidCode
+        ) {
+
+          chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+            const activeTab = tabs[0];
+            if (!activeTab.id) {
+              return;
+            }
+
+            if (!activeTab.url || activeTab.url.startsWith('chrome://')) {
+              // console.error('Cannot i n j  ect scr  ip ts   i nto chrome:// pages or  extension pages.');
+              return;
+            }
+            // console.log("activeTab", activeTab);
+
+            // console.log('Applying mod:', mod.name, mod.content);
+            chrome.scripting.insertCSS({
+              target: { tabId: activeTab.id, allFrames: true },
+              // css: mod.content,
+              css: mod.content,
+            })
+          });
+        }
+      });
+      console.info('SAP CPQ Mods have been applied to this page!')
+    });
   }, [mods]);
 
   useEffect(() => {

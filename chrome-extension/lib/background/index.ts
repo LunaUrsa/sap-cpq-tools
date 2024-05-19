@@ -232,13 +232,12 @@ async function applyMods() {
   const mods = JSON.parse(storage.mods)
 
   if (Array.isArray(mods) && mods.length > 0) {
-    console.log("mods", mods);
+    // console.log("mods", mods);
     mods.forEach((mod: Mod) => {
       if (
-        mod &&
-        mod.content &&
-        mod.isEnabled &&
-        mod.isValidCode
+        mod?.content &&
+        mod?.isEnabled &&
+        mod?.isValidCode
       ) {
 
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
@@ -251,20 +250,20 @@ async function applyMods() {
             // console.error('Cannot i n j  ect scr  ip ts   i nto chrome:// pages or  extension pages.');
             return;
           }
-          console.log("activeTab", activeTab);
+          // console.log("activeTab", activeTab);
 
-          console.log('Applying mod:', mod.name, mod.content);
+          // console.log('Applying mod:', mod.name, mod.content);
           chrome.scripting.insertCSS({
             target: { tabId: activeTab.id, allFrames: true },
             // css: mod.content,
             css: mod.content,
           })
-          console.log('Mod applied')
+          console.info('Mod applied')
         });
       }
     });
   } else {
-    console.log('No mods found')
+    console.info('No mods found')
   };
 
   chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {

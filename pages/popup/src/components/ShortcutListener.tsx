@@ -17,6 +17,8 @@ const ShortcutListener = () => {
         return; // Do not proceed if the user is currently typing in an input field (e.g., setting a shortcut key)
       }
 
+      console.log("Key pressed:", event.key);
+
       const storedShortcuts = await chrome.storage.local.get("shortcuts");
 
       const shortcuts = storedShortcuts ? JSON.parse(storedShortcuts.shortcuts) : [];
@@ -36,7 +38,9 @@ const ShortcutListener = () => {
         if (!urlProperty) {
           // If the URL was not found in the siteMap, see if it's a custom URL
           if (shortcut.destination.startsWith("http")) {
+            // Send the active tab to that URL
             window.location.href = shortcut.destination;
+            window.open(shortcut.destination, "_blank");
             return;
           }
           alert(
@@ -45,12 +49,29 @@ const ShortcutListener = () => {
           return;
         }
 
-        // Replace <baseUrl> in the URL with the actual base URL of the current window
-        const baseUrl = window.location.origin;
-        const finalUrl = urlProperty?.replace("<baseUrl>", baseUrl);
+        // Get the active tab and its url
+        chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+          const activeTab = tabs[0];
+          if (!activeTab.id) {
+            return;
+          }
 
-        // alert(`Navigating to: ${finalUrl}`); // Display a message for testing
-        window.location.href = finalUrl; // Navigate to the URL associated with the shortcut
+          if (!activeTab.url || !activeTab.url.startsWith('http')) {
+            return;
+          }
+
+          const baseUrl = activeTab.url.split("/")[2];
+          console.log("baseUrl", baseUrl);
+
+          // Replace <baseUrl> in the URL with the actual base URL of the current window
+          const finalUrl = `https://${urlProperty?.replace("<baseUrl>", baseUrl)}`;
+          console.log("finalUrl", finalUrl);
+          chrome.tabs.update(activeTab.id, { url: finalUrl })
+
+          // alert(`Navigating to: ${finalUrl}`); // Display a message for testing
+          // window.location.href = finalUrl; // Navigate to the URL associated with the shortcut
+          window.open(finalUrl, "_blank");
+        });
       }
     };
 
