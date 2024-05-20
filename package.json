@@ -5,7 +5,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/LunaUra/sap-cpq-tools.git"
+    "url": "https://github.com/LunaUrsa/sap-cpq-tools/.git"
   },
   "scripts": {
     "clean": "rimraf dist && rimraf .turbo && turbo clean",
