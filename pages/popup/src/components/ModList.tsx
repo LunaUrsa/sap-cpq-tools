@@ -60,7 +60,14 @@ const ModList: React.FC<ModListProps> = ({
     setMods(updatedMods);
   };
 
-  // console.log(mods);
+  const onDragEnd = (result: DropResult) => {
+    if (!result.destination) return;
+    const items = Array.from(mods);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+    setMods(items);
+    chrome.storage.local.set({ shortcuts: JSON.stringify(items) });
+  };
 
   // Toggle edit mode
   const handleEditToggle = (modId: string) => {
@@ -72,40 +79,29 @@ const ModList: React.FC<ModListProps> = ({
     }
   };
 
-  const onDragEnd = (result: DropResult) => {
-    if (!result.destination) return;
-    const items = Array.from(mods);
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
-    setMods(items);
-    chrome.storage.local.set({ shortcuts: JSON.stringify(items) });
-  };
-
   return (
     <DragDropContext onDragEnd={onDragEnd}>
-      <Droppable droppableId="shortcuts">
+      <Droppable droppableId="mods">
         {(provided: DroppableProvided) => (
           <List dense={true} ref={provided.innerRef} {...provided.droppableProps}>
-            {" "}
-            {/* Enable dense layout for the list */}
             {mods.map((mod, index) => (
               <Draggable key={mod.id} draggableId={mod.id} index={index}>
                 {(provided: DraggableProvided) => (
-                  <ListItem key={mod.id} dense={true}
+                  <ListItem
+                    key={mod.id}
+                    dense={true}
                     ref={provided.innerRef}
                     {...provided.draggableProps}
-                    {...provided.dragHandleProps}>
-                    {" "}
-                    {/* Dense layout for list items */}
-                    <Grid container spacing={1}>
-                      <Grid item xs={0.5}>
+                    {...provided.dragHandleProps}
+                  >
+                    <Grid container spacing={1} alignItems="center">
+                      <Grid item xs="auto" style={{ paddingRight: 4, paddingLeft: 4 }}>
                         <DragIndicatorIcon style={{ cursor: 'grab' }} />
                       </Grid>
-                      {" "}
-                      <Grid item xs={5.5}>
+                      <Grid item xs={7}>
                         <TextField
                           fullWidth
-                          size="small" // Smaller field size
+                          size="small"
                           label="Name"
                           value={mod.name}
                           onChange={(e) => handleChange(mod.id, "name", e.target.value)}
@@ -121,21 +117,19 @@ const ModList: React.FC<ModListProps> = ({
                           style={!mod.isValidCode ? { color: "red" } : {}}
                         />
                       </Grid>
-                      <Grid item xs={2.5}>
-                      </Grid>
-                      <Grid item xs={1.5}>
+                      <Grid item xs={2}>
                         <Switch
                           checked={mod.isEnabled}
                           onChange={(e) =>
                             handleChange(mod.id, "isEnabled", e.target.checked)
                           }
-                          color="primary" // Sets the color of the switch when it's turned on
-                          size="medium" // Adjusts the size of the switch
+                          color="primary"
+                          size="medium"
                         />
                       </Grid>
                       <Grid item xs={1}>
                         <IconButton
-                          size="small" // Smaller button size
+                          size="small"
                           edge="end"
                           aria-label="edit"
                           onClick={() => handleEditToggle(mod.id)}
@@ -145,7 +139,7 @@ const ModList: React.FC<ModListProps> = ({
                       </Grid>
                       <Grid item xs={1}>
                         <IconButton
-                          size="small" // Smaller button size
+                          size="small"
                           edge="end"
                           aria-label="delete"
                           onClick={() => handleDelete(mod.id)}
@@ -153,24 +147,24 @@ const ModList: React.FC<ModListProps> = ({
                           <DeleteIcon />
                         </IconButton>
                       </Grid>
-                      <Grid item xs={12}>
-                        <ListItemText
-                          secondary={
-                            activeEditId === mod.id ? (
+                      {activeEditId === mod.id ? (
+                        <Grid item xs={12}>
+                          <ListItemText
+                            secondary={
                               <ModEditor
                                 mod={mod}
                                 setMod={handleChange}
                                 preferences={preferences}
                                 setPreferences={setPreferences}
                               />
-                            ) : (
-                              <></>
-                            )
-                          }
-                          primaryTypographyProps={{ component: "div" }} // Use div instead of p for primary text
-                          secondaryTypographyProps={{ component: "div" }} // Use div instead of p for secondary text
-                        />
-                      </Grid>
+                            }
+                            primaryTypographyProps={{ component: "div" }}
+                            secondaryTypographyProps={{ component: "div" }}
+                          />
+                        </Grid>
+                      ) : (
+                        <></>
+                      )}
                     </Grid>
                   </ListItem>
                 )}

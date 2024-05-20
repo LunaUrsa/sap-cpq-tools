@@ -21,6 +21,20 @@ const ShortcutsList: React.FC<ShortcutsListProps> = ({
 }) => {
   const [destination, setDestination] = useState<string>("");
 
+
+  // When the user leaves the input field, save the shortcuts to the local storage
+  const handleBlur = () => {
+    // console.log("Saving shortcuts to storage:", shortcuts);
+    chrome.storage.local.set({ shortcuts: JSON.stringify(shortcuts) });
+  };
+
+  // Delete the shortcut with the given id
+  const handleDelete = (id: string) => {
+    const updatedShortcuts = shortcuts.filter((shortcut) => shortcut.id !== id);
+    setShortcuts(updatedShortcuts);
+    chrome.storage.local.set({ shortcuts: JSON.stringify(updatedShortcuts) });
+  };
+
   // This creates a new shortcut with the given id and value
   // and updates the shortcuts list
   const handleChange = (id: string, field: keyof Shortcut, value: string) => {
@@ -47,17 +61,13 @@ const ShortcutsList: React.FC<ShortcutsListProps> = ({
     setShortcuts(updatedShortcuts);
   };
 
-  // When the user leaves the input field, save the shortcuts to the local storage
-  const handleBlur = () => {
-    // console.log("Saving shortcuts to storage:", shortcuts);
-    chrome.storage.local.set({ shortcuts: JSON.stringify(shortcuts) });
-  };
-
-  // Delete the shortcut with the given id
-  const handleDelete = (id: string) => {
-    const updatedShortcuts = shortcuts.filter((shortcut) => shortcut.id !== id);
-    setShortcuts(updatedShortcuts);
-    chrome.storage.local.set({ shortcuts: JSON.stringify(updatedShortcuts) });
+  const onDragEnd = (result: DropResult) => {
+    if (!result.destination) return;
+    const items = Array.from(shortcuts);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+    setShortcuts(items);
+    chrome.storage.local.set({ shortcuts: JSON.stringify(items) });
   };
 
   // This handles displaying the menu items in the destination dropdown
@@ -89,15 +99,6 @@ const ShortcutsList: React.FC<ShortcutsListProps> = ({
     return pattern.test(url);
   }
 
-  const onDragEnd = (result: DropResult) => {
-    if (!result.destination) return;
-    const items = Array.from(shortcuts);
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
-    setShortcuts(items);
-    chrome.storage.local.set({ shortcuts: JSON.stringify(items) });
-  };
-
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <Droppable droppableId="shortcuts">
@@ -107,13 +108,14 @@ const ShortcutsList: React.FC<ShortcutsListProps> = ({
               <Draggable key={shortcut.id} draggableId={shortcut.id} index={index}>
                 {(provided: DraggableProvided) => (
                   <ListItem
+                    key={shortcut.id}
                     dense={true}
                     ref={provided.innerRef}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
                   >
-                    <Grid container spacing={1} alignItems="center">
-                      <Grid item xs="auto" style={{ paddingRight: 8 }}>
+                    <Grid container spacing={1} alignItems="center" >
+                      <Grid item xs="auto" style={{ paddingRight: 4, paddingLeft: 4 }}>
                         <DragIndicatorIcon style={{ cursor: 'grab' }} />
                       </Grid>
                       <Grid item xs={3}>
@@ -130,7 +132,7 @@ const ShortcutsList: React.FC<ShortcutsListProps> = ({
                           placeholder="Shortcut Key"
                           error={!shortcut.isUnique}
                           helperText={
-                            !shortcut.isUnique ? "This key is already in use" : ""
+                            !shortcut.isUnique ? "Already in use" : ""
                           }
                           InputProps={{
                             style: {
@@ -140,7 +142,7 @@ const ShortcutsList: React.FC<ShortcutsListProps> = ({
                           style={!shortcut.isUnique ? { color: "red" } : {}}
                         />
                       </Grid>
-                      <Grid item xs={6}>
+                      <Grid item xs={7}>
                         <Autocomplete
                           fullWidth
                           freeSolo
