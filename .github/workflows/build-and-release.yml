@@ -21,14 +21,17 @@ jobs:
         with:
           node-version: '22'
 
+      - name: Install pnpm
+        run: npm install -g pnpm
+
       - name: Install dependencies
-        run: npm ci
+        run: pnpm ci
 
       - name: Build Project
         run: npm run build
 
       - name: Zip Build Folder
-        run: zip -r build.zip ./build/
+        run: zip -r build.zip ./dist/
 
       - name: Run semantic-release
         run: npx semantic-release
