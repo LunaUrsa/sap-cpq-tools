@@ -1,0 +1,44 @@
+{
+  "name": "@chrome-extension-boilerplate/popup",
+  "version": "0.0.1",
+  "description": "chrome extension popup",
+  "private": true,
+  "sideEffects": true,
+  "files": [
+    "dist/**"
+  ],
+  "scripts": {
+    "clean": "rimraf ./dist && rimraf .turbo",
+    "build": "pnpm run clean && tsc --noEmit && vite build",
+    "build:watch": "cross-env __DEV__=true vite build -w --mode development",
+    "dev": "pnpm build:watch",
+    "lint": "eslint . --ext .ts,.tsx",
+    "lint:fix": "pnpm lint --fix",
+    "prettier": "prettier . --write",
+    "type-check": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@chrome-extension-boilerplate/shared": "workspace:*",
+    "@codemirror/autocomplete": "^6.16.0",
+    "@codemirror/lang-css": "^6.2.1",
+    "@codemirror/lint": "^6.7.0",
+    "@codemirror/view": "^6.26.3",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@mui/icons-material": "^5.15.17",
+    "@mui/lab": "^5.0.0-alpha.170",
+    "@mui/material": "^5.15.17",
+    "@types/uuid": "^9.0.8",
+    "@uiw/codemirror-extensions-basic-setup": "^4.22.0",
+    "@uiw/codemirror-themes-all": "^4.22.0",
+    "@uiw/react-codemirror": "^4.22.0",
+    "codemirror": "^6.0.1",
+    "react-router-dom": "^6.23.1",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@chrome-extension-boilerplate/hmr": "workspace:*",
+    "@chrome-extension-boilerplate/tailwindcss-config": "workspace:*",
+    "@chrome-extension-boilerplate/tsconfig": "workspace:*"
+  }
+}
