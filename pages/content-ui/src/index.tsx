@@ -5,7 +5,7 @@ import App from '@src/app';
 import tailwindcssOutput from '@src/tailwind-output.css?inline';
 
 const root = document.createElement('div');
-root.id = 'chrome-extension-boilerplate-react-vite-content-view-root';
+root.id = 'sap-cpq-tools';
 
 // Disable this for now
 // document.body.append(root);
