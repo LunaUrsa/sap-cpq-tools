@@ -55,7 +55,6 @@ const Popup = () => {
   // Navigate to the last visited page if different from the current page
   useEffect(() => {
     if (isInitialMount.current) {
-      isInitialMount.current = false;
       if (currentPage) {
         navigate(currentPage);
       }

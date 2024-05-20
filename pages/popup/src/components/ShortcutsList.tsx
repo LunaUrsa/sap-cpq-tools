@@ -2,13 +2,38 @@ import React, { useState } from "react";
 import { List, ListItem, TextField, IconButton, Grid } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import siteMap from "../assets/siteMap.json";
+import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
 import Autocomplete from "@mui/material/Autocomplete";
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+} from "react-beautiful-dnd";
+import type {
+  DropResult,
+  DraggableProvided,
+  DroppableProvided,
+} from "react-beautiful-dnd";
 
 const ShortcutsList: React.FC<ShortcutsListProps> = ({
   shortcuts,
   setShortcuts,
 }) => {
   const [destination, setDestination] = useState<string>("");
+
+
+  // When the user leaves the input field, save the shortcuts to the local storage
+  const handleBlur = () => {
+    // console.log("Saving shortcuts to storage:", shortcuts);
+    chrome.storage.local.set({ shortcuts: JSON.stringify(shortcuts) });
+  };
+
+  // Delete the shortcut with the given id
+  const handleDelete = (id: string) => {
+    const updatedShortcuts = shortcuts.filter((shortcut) => shortcut.id !== id);
+    setShortcuts(updatedShortcuts);
+    chrome.storage.local.set({ shortcuts: JSON.stringify(updatedShortcuts) });
+  };
 
   // This creates a new shortcut with the given id and value
   // and updates the shortcuts list
@@ -36,17 +61,13 @@ const ShortcutsList: React.FC<ShortcutsListProps> = ({
     setShortcuts(updatedShortcuts);
   };
 
-  // When the user leaves the input field, save the shortcuts to the local storage
-  const handleBlur = () => {
-    // console.log("Saving shortcuts to storage:", shortcuts);
-    chrome.storage.local.set({ shortcuts: JSON.stringify(shortcuts) });
-  };
-
-  // Delete the shortcut with the given id
-  const handleDelete = (id: string) => {
-    const updatedShortcuts = shortcuts.filter((shortcut) => shortcut.id !== id);
-    setShortcuts(updatedShortcuts);
-    chrome.storage.local.set({ shortcuts: JSON.stringify(updatedShortcuts) });
+  const onDragEnd = (result: DropResult) => {
+    if (!result.destination) return;
+    const items = Array.from(shortcuts);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+    setShortcuts(items);
+    chrome.storage.local.set({ shortcuts: JSON.stringify(items) });
   };
 
   // This handles displaying the menu items in the destination dropdown
@@ -78,93 +99,105 @@ const ShortcutsList: React.FC<ShortcutsListProps> = ({
     return pattern.test(url);
   }
 
-  // console.log(shortcuts);
-
   return (
-    <List dense={true}>
-      {" "}
-      {/* Enable dense layout for the list */}
-      {shortcuts.map((shortcut) => (
-        <ListItem key={shortcut.id} dense={true}>
-          {" "}
-          {/* Dense layout for list items */}
-          <Grid container spacing={1}>
-            {" "}
-            {/* Reduced spacing between grid items */}
-            <Grid item xs={3}>
-              <TextField
-                fullWidth
-                size="small" // Smaller field size
-                label="Shortcut"
-                value={shortcut.key}
-                onKeyDown={(e) => shortcutKeyDown(shortcut.id, e)}
-                onChange={(e) =>
-                  handleChange(shortcut.id, "key", e.target.value)
-                }
-                onBlur={handleBlur}
-                placeholder="Shortcut Key"
-                error={!shortcut.isUnique}
-                helperText={
-                  !shortcut.isUnique ? "This key is already in use" : ""
-                }
-                InputProps={{
-                  style: {
-                    borderColor: !shortcut.isUnique ? "#ff1744" : "default",
-                  },
-                }}
-                style={!shortcut.isUnique ? { color: "red" } : {}}
-              />
-            </Grid>
-            <Grid item xs={8}>
-              <Autocomplete
-                fullWidth
-                freeSolo // Allows users to enter custom options
-                size="small" // Smaller select size
-                value={shortcut.destination}
-                onInputChange={(event, newInputValue) => {
-                  setDestination(newInputValue);
-                }}
-                onChange={(e, newValue) =>
-                  handleChange(shortcut.id, "destination", newValue ?? "")
-                }
-                options={destinationOptions}
-                onBlur={() => {
-                  handleChange(shortcut.id, "destination", destination);
-                }}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Destination"
-                    variant="outlined"
-                    fullWidth
-                    error={!shortcut.isValidDestination}
-                    helperText={
-                      !shortcut.isValidDestination ? "Invalid URL" : ""
-                    }
-                    inputProps={{
-                      ...params.inputProps,
-                      style: {
-                        color: !shortcut.isValidDestination ? "red" : undefined,
-                      },
-                    }}
-                  />
+    <DragDropContext onDragEnd={onDragEnd}>
+      <Droppable droppableId="shortcuts">
+        {(provided: DroppableProvided) => (
+          <List dense={true} ref={provided.innerRef} {...provided.droppableProps}>
+            {shortcuts.map((shortcut, index) => (
+              <Draggable key={shortcut.id} draggableId={shortcut.id} index={index}>
+                {(provided: DraggableProvided) => (
+                  <ListItem
+                    key={shortcut.id}
+                    dense={true}
+                    ref={provided.innerRef}
+                    {...provided.draggableProps}
+                    {...provided.dragHandleProps}
+                  >
+                    <Grid container spacing={1} alignItems="center" >
+                      <Grid item xs="auto" style={{ paddingRight: 4, paddingLeft: 4 }}>
+                        <DragIndicatorIcon style={{ cursor: 'grab' }} />
+                      </Grid>
+                      <Grid item xs={3}>
+                        <TextField
+                          fullWidth
+                          size="small"
+                          label="Shortcut"
+                          value={shortcut.key}
+                          onKeyDown={(e) => shortcutKeyDown(shortcut.id, e)}
+                          onChange={(e) =>
+                            handleChange(shortcut.id, "key", e.target.value)
+                          }
+                          onBlur={handleBlur}
+                          placeholder="Shortcut Key"
+                          error={!shortcut.isUnique}
+                          helperText={
+                            !shortcut.isUnique ? "Already in use" : ""
+                          }
+                          InputProps={{
+                            style: {
+                              borderColor: !shortcut.isUnique ? "#ff1744" : "default",
+                            },
+                          }}
+                          style={!shortcut.isUnique ? { color: "red" } : {}}
+                        />
+                      </Grid>
+                      <Grid item xs={7}>
+                        <Autocomplete
+                          fullWidth
+                          freeSolo
+                          size="small"
+                          value={shortcut.destination}
+                          onInputChange={(event, newInputValue) => {
+                            setDestination(newInputValue);
+                          }}
+                          onChange={(e, newValue) =>
+                            handleChange(shortcut.id, "destination", newValue ?? "")
+                          }
+                          options={destinationOptions}
+                          onBlur={() => {
+                            handleChange(shortcut.id, "destination", destination);
+                          }}
+                          renderInput={(params) => (
+                            <TextField
+                              {...params}
+                              label="Destination"
+                              variant="outlined"
+                              fullWidth
+                              error={!shortcut.isValidDestination}
+                              helperText={
+                                !shortcut.isValidDestination ? "Invalid URL" : ""
+                              }
+                              inputProps={{
+                                ...params.inputProps,
+                                style: {
+                                  color: !shortcut.isValidDestination ? "red" : undefined,
+                                },
+                              }}
+                            />
+                          )}
+                        />
+                      </Grid>
+                      <Grid item xs={1}>
+                        <IconButton
+                          size="small"
+                          edge="end"
+                          aria-label="delete"
+                          onClick={() => handleDelete(shortcut.id)}
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </Grid>
+                    </Grid>
+                  </ListItem>
                 )}
-              />
-            </Grid>
-            <Grid item xs={1}>
-              <IconButton
-                size="small" // Smaller button size
-                edge="end"
-                aria-label="delete"
-                onClick={() => handleDelete(shortcut.id)}
-              >
-                <DeleteIcon />
-              </IconButton>
-            </Grid>
-          </Grid>
-        </ListItem>
-      ))}
-    </List>
+              </Draggable>
+            ))}
+            {provided.placeholder}
+          </List>
+        )}
+      </Droppable>
+    </DragDropContext>
   );
 };
 

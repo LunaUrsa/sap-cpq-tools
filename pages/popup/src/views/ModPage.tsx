@@ -10,7 +10,7 @@ const ModsPage: React.FC<ModListProps> = ({
 }) => {
   return (
     <div>
-      <Grid container spacing={1}>
+      <Grid container>
         <Grid item xs={12}>
           <ModList
             mods={mods}
