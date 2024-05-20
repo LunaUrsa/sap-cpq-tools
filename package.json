@@ -60,7 +60,7 @@
   },
   "packageManager": "pnpm@9.1.1",
   "engines": {
-    "node": "v22.0.0",
-    "npm": "10.5.1"
+    "node": "v22.2.0",
+    "pnpm": "9.1.1"
   }
 }
