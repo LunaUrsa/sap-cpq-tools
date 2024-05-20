@@ -22,15 +22,15 @@ interface Mod {
 interface ModListProps {
   mods: Mod[];
   setMods: React.Dispatch<React.SetStateAction<Mod[]>>;
-  preferences: UserOptions | null;
-  setPreferences: React.Dispatch<React.SetStateAction<UserOptions | null>>;
+  preferences: UserOptions;
+  setPreferences: React.Dispatch<React.SetStateAction<UserOptions>>;
 }
 
 interface ModEditProps {
   mod: Mod;
   setMod: (id: string, field: keyof Mod, value: string | boolean) => void;
-  preferences: UserOptions | null;
-  setPreferences: React.Dispatch<React.SetStateAction<UserOptions | null>>;
+  preferences: UserOptions;
+  setPreferences: React.Dispatch<React.SetStateAction<UserOptions>>;
 }
 
 interface SiteMap {
@@ -48,8 +48,17 @@ interface ToolbarProps {
   setMods: React.Dispatch<React.SetStateAction<Mod[]>>;
   shortcuts: Shortcut[];
   setShortcuts: React.Dispatch<React.SetStateAction<Shortcut[]>>;
-  preferences: UserOptions | null;
-  setPreferences: React.Dispatch<React.SetStateAction<UserOptions | null>>;
+  preferences: UserOptions;
+  setPreferences: React.Dispatch<React.SetStateAction<UserOptions>>;
+  currentPage: Page
+  setCurrentPage: React.Dispatch<React.SetStateAction<Page>>
+}
+
+enum Page {
+  MODS = 'mods',
+  SHORTCUTS = 'shortcuts',
+  INFO = 'info',
+  FORMULA = 'formula'
 }
 
 interface RoutingProps {
@@ -57,6 +66,8 @@ interface RoutingProps {
   setMods: React.Dispatch<React.SetStateAction<Mod[]>>
   shortcuts: Shortcut[]
   setShortcuts: React.Dispatch<React.SetStateAction<Shortcut[]>>
-  preferences: UserOptions | null
-  setPreferences: React.Dispatch<React.SetStateAction<UserOptions | null>>
+  preferences: UserOptions
+  setPreferences: React.Dispatch<React.SetStateAction<UserOptions>>
+  currentPage: Page
+  setCurrentPage: React.Dispatch<React.SetStateAction<Page>>
 }

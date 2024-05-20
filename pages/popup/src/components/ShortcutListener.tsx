@@ -56,7 +56,7 @@ const ShortcutListener = () => {
             return;
           }
 
-          if (!activeTab.url || !activeTab.url.startsWith('http')) {
+          if (!activeTab?.url?.startsWith('http')) {
             return;
           }
 

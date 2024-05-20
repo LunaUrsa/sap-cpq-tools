@@ -2,6 +2,7 @@ import '@src/Popup.css';
 import React, {
   useState,
   useEffect,
+  useRef,
   // ComponentPropsWithoutRef 
 } from "react";
 
@@ -11,10 +12,8 @@ import {
   withErrorBoundary,
   withSuspense,
 } from '@chrome-extension-boilerplate/shared';
-import {
-  // MemoryRouter, 
-  HashRouter,
-} from "react-router-dom"
+import { useNavigate } from 'react-router-dom';
+
 // import { DOMMessage, DOMMessageResponse } from "./types";
 import EnhancedToolbar from "./components/Toolbar";
 import { Routing } from './routes';
@@ -27,26 +26,41 @@ const theme = createTheme({
 const Popup = () => {
   // const theme = useStorageSuspense(exampleThemeStorage);
   const [mods, setMods] = useState<Mod[]>([]);
-  const [preferences, setPreferences] = useState<UserOptions | null>(null);
+  const [preferences, setPreferences] = useState<UserOptions>({} as UserOptions);
   const [shortcuts, setShortcuts] = useState<Shortcut[]>([]);
+  // const [isDarkMode, setIsDarkMode] = useState<boolean>(false);
+  const [currentPage, setCurrentPage] = useState<Page>('shortcuts' as Page);
+  const isInitialMount = useRef(true);
 
+  const navigate = useNavigate();
 
-  // Load user preferences from the local storage when the app is activated
-  // Set the default preferences if there are none
+  // Load user preferences, mods, shortcuts, and last page from local storage
   useEffect(() => {
-    chrome.storage.local.get("userPreferences", (result) => {
-      setPreferences(JSON.parse(result.userPreferences));
-    });
-
-    chrome.storage.local.get("mods", (result) => {
-      setMods(JSON.parse(result.mods));
-    });
-
-    // console.log("shortcuts", shortcuts);
-    chrome.storage.local.get("shortcuts", (result) => {
-      setShortcuts(JSON.parse(result.shortcuts));
+    chrome.storage.local.get(["userPreferences", "mods", "shortcuts", "currentPage"], (result) => {
+      if (result.userPreferences) {
+        setPreferences(JSON.parse(result.userPreferences));
+      }
+      if (result.mods) {
+        setMods(JSON.parse(result.mods));
+      }
+      if (result.shortcuts) {
+        setShortcuts(JSON.parse(result.shortcuts));
+      }
+      if (result.currentPage) {
+        setCurrentPage(result.currentPage);
+      }
     });
   }, []);
+
+  // Navigate to the last visited page if different from the current page
+  useEffect(() => {
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      if (currentPage) {
+        navigate(currentPage);
+      }
+    }
+  }, [currentPage, navigate]);
 
   // If preferences change, save them to the local storage
   useEffect(() => {
@@ -63,9 +77,7 @@ const Popup = () => {
     }
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       const activeTab = tabs[0];
-      if (!activeTab.id) {
-        return;
-      }
+
 
       if (!activeTab.url || activeTab.url.startsWith('chrome://')) {
         return;
@@ -78,25 +90,16 @@ const Popup = () => {
           mod?.isValidCode
         ) {
 
-          chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-            const activeTab = tabs[0];
-            if (!activeTab.id) {
-              return;
-            }
+          if (!activeTab.id) {
+            return;
+          }
 
-            if (!activeTab.url || activeTab.url.startsWith('chrome://')) {
-              // console.error('Cannot i n j  ect scr  ip ts   i nto chrome:// pages or  extension pages.');
-              return;
-            }
-            // console.log("activeTab", activeTab);
-
-            // console.log('Applying mod:', mod.name, mod.content);
-            chrome.scripting.insertCSS({
-              target: { tabId: activeTab.id, allFrames: true },
-              // css: mod.content,
-              css: mod.content,
-            })
-          });
+          // console.log('Applying mod:', mod.name, mod.content);
+          chrome.scripting.insertCSS({
+            target: { tabId: activeTab.id, allFrames: true },
+            // css: mod.content,
+            css: mod.content,
+          })
         }
       });
       console.info('SAP CPQ Mods have been applied to this page!')
@@ -109,29 +112,36 @@ const Popup = () => {
     }
   }, [shortcuts]);
 
+  // Save the current page to local storage whenever it changes
+  useEffect(() => {
+    chrome.storage.local.set({ currentPage });
+  }, [currentPage]);
+
   return (
-    <HashRouter>
-      <ThemeProvider theme={theme}>
-        <div className=".App">
-          <EnhancedToolbar
-            mods={mods}
-            setMods={setMods}
-            shortcuts={shortcuts}
-            setShortcuts={setShortcuts}
-            preferences={preferences}
-            setPreferences={setPreferences}
-          />
-          <Routing
-            mods={mods}
-            setMods={setMods}
-            shortcuts={shortcuts}
-            setShortcuts={setShortcuts}
-            preferences={preferences}
-            setPreferences={setPreferences}
-          />
-        </div>
-      </ThemeProvider>
-    </HashRouter>
+    <ThemeProvider theme={theme}>
+      <div className=".App">
+        <EnhancedToolbar
+          mods={mods}
+          setMods={setMods}
+          shortcuts={shortcuts}
+          setShortcuts={setShortcuts}
+          preferences={preferences}
+          setPreferences={setPreferences}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
+        <Routing
+          mods={mods}
+          setMods={setMods}
+          shortcuts={shortcuts}
+          setShortcuts={setShortcuts}
+          preferences={preferences}
+          setPreferences={setPreferences}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
+      </div>
+    </ThemeProvider>
   );
 };
 

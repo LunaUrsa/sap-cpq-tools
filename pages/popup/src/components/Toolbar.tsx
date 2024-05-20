@@ -29,6 +29,8 @@ const EnhancedToolbar: React.FC<ToolbarProps> = ({
   setShortcuts,
   preferences,
   setPreferences,
+  currentPage,
+  setCurrentPage,
 }) => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
@@ -36,9 +38,12 @@ const EnhancedToolbar: React.FC<ToolbarProps> = ({
     setAnchorEl(event.currentTarget);
   };
 
-  const closeMenu = () => {
+  const handleMenuClick = (page: Page) => {
+    console.log('setting page to', page);
+    setCurrentPage(page);
     setAnchorEl(null);
   };
+
 
   const addStyle = () => {
     const newStyle = {
@@ -56,13 +61,13 @@ const EnhancedToolbar: React.FC<ToolbarProps> = ({
   const titles: Record<string, string> = {
     "": "Shortcuts",
     "#/": "Shortcuts",
-    "#/shortcut": "Shortcuts",
-    "#/mod": "Mods",
+    "#/shortcuts": "Shortcuts",
+    "#/mods": "Mods",
     "#/formula": "Formula Format",
     "#/info": "Information",
   };
 
-  // Default title
+  // Default  title
   const title = titles[location.hash] || "SAP CPQ Tools";
 
   const themeOptions = ["dark", "light"]
@@ -83,12 +88,12 @@ const EnhancedToolbar: React.FC<ToolbarProps> = ({
 
   let toolbarIcons;
   let usedSpace = 5; // 4 for the title and 1 for the menu icon
-  switch (location.hash) {
-    case "#/info":
-    case "#/formula":
+  switch (currentPage) {
+    case "info":
+    case "formula":
       toolbarIcons = <Grid item xs={12 - usedSpace}></Grid>;
       break;
-    case "#/mod":
+    case "mods":
       usedSpace += 5; // 4 for the theme selector and 1 for the add new icon
       toolbarIcons = (
         <>
@@ -154,8 +159,7 @@ const EnhancedToolbar: React.FC<ToolbarProps> = ({
         </>
       );
       break;
-    case "":
-    case "#/shortcut":
+    case "shortcuts":
       usedSpace += 1; // 1 for the add new icon
       toolbarIcons = (
         <>
@@ -206,29 +210,29 @@ const EnhancedToolbar: React.FC<ToolbarProps> = ({
             <Menu
               anchorEl={anchorEl}
               open={Boolean(anchorEl)}
-              onClose={closeMenu}
+            // onClose={handleMenuClick(currentPage)}
             >
               <MenuItem
-                onClick={closeMenu}
+                onClick={() => handleMenuClick('shortcuts' as Page)}
                 component={RouterLink}
-                to="/shortcut"
+                to="/shortcuts"
               >
                 <SettingsIcon />
                 Shortcuts
               </MenuItem>
-              <MenuItem onClick={closeMenu} component={RouterLink} to="/mod">
+              <MenuItem onClick={() => handleMenuClick('mods' as Page)} component={RouterLink} to="/mods">
                 <CustomizeIcon />
                 Mods
               </MenuItem>
               <MenuItem
-                onClick={closeMenu}
+                onClick={() => handleMenuClick('formula' as Page)}
                 component={RouterLink}
                 to="/formula"
               >
                 <Functions />
                 Formula Format
               </MenuItem>
-              <MenuItem onClick={closeMenu} component={RouterLink} to="/info">
+              <MenuItem onClick={() => handleMenuClick('info' as Page)} component={RouterLink} to="/info">
                 <HelpIcon />
                 Info
               </MenuItem>

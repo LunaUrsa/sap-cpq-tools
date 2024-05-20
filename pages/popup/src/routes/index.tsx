@@ -28,14 +28,14 @@ export const Routing: React.FC<RoutingProps> = ({
       }
     />
     <Route
-      path="/shortcut"
+      path="/shortcuts"
       element={
         <ShortcutsPage shortcuts={shortcuts} setShortcuts={setShortcuts} />
       }
     />
     <Route path="/formula" element={<FormulaPage />} />
     <Route
-      path="/mod"
+      path="/mods"
       element={
         <ModsPage
           mods={mods}
