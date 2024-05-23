@@ -71,3 +71,7 @@ interface RoutingProps {
   currentPage: Page
   setCurrentPage: React.Dispatch<React.SetStateAction<Page>>
 }
+
+interface FormulaProps {
+  preferences: UserOptions;
+}

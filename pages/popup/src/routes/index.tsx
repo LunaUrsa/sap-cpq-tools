@@ -33,7 +33,7 @@ export const Routing: React.FC<RoutingProps> = ({
         <ShortcutsPage shortcuts={shortcuts} setShortcuts={setShortcuts} />
       }
     />
-    <Route path="/formula" element={<FormulaPage />} />
+    <Route path="/formula" element={<FormulaPage preferences={preferences} />} />
     <Route
       path="/mods"
       element={

@@ -38,8 +38,7 @@ const ShortcutListener = () => {
         if (!urlProperty) {
           // If the URL was not found in the siteMap, see if it's a custom URL
           if (shortcut.destination.startsWith("http")) {
-            // Send the active tab to that URL
-            window.location.href = shortcut.destination;
+            // Open a new tab to that destination
             window.open(shortcut.destination, "_blank");
             return;
           }
@@ -65,8 +64,8 @@ const ShortcutListener = () => {
 
           // Replace <baseUrl> in the URL with the actual base URL of the current window
           const finalUrl = `https://${urlProperty?.replace("<baseUrl>", baseUrl)}`;
-          console.log("finalUrl", finalUrl);
-          chrome.tabs.update(activeTab.id, { url: finalUrl })
+          // console.log("finalUrl", finalUrl);
+          // chrome.tabs.update(activeTab.id, { url: finalUrl })
 
           // alert(`Navigating to: ${finalUrl}`); // Display a message for testing
           // window.location.href = finalUrl; // Navigate to the URL associated with the shortcut
