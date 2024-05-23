@@ -122,18 +122,3 @@ So we need to run the chrome.tabs.query in the background.js and then pass the t
 I've tried various ways to get around this, like "new function('code')" and "eval(code)" but it seems like chrome has locked this down pretty good
 
 I'm sure there's a way to do this, because Tapermonkey does this, but I'm not sure how, and at this point ive spent a few days on this so I'm going to move on to other things.  
-
-### TODO
-
-#### All
-* Cursor doesnt show on some themes?
-
-#### CPQ
-* Make the formula creator window size better
-* Determine where something is used before it's deleted
-* Save and continue button for certain items x2
-* Containers
-* When you save in workflow it takes you to the wrong tab
-* Autocomplete commands
-* Document Live Editor
-* Production warning

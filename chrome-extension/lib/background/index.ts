@@ -279,5 +279,31 @@ async function handleShortcuts() {
   });
 }
 
+async function loadTheme() {
+  const userPreferences = await chrome.storage.local.get("userPreferences");
+  const userPreferencesData = JSON.parse(userPreferences.userPreferences);
+  const codeMirrorTheme = userPreferencesData.codeMirrorTheme;
+
+  // Append CSS to the head
+  const link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.type = "text/css";
+  link.href = `https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/theme/${codeMirrorTheme}.min.css`;
+  document.head.appendChild(link);
+
+  const codeMirror = document.querySelector(".CodeMirror");
+  if (codeMirror) {
+    codeMirror.classList.remove(`cm-s-default`);
+    codeMirror.classList.add(`cm-s-${codeMirrorTheme}`);
+  }
+
+  const traceMirror = document.querySelectorAll(".CodeMirror")[1];
+  if (traceMirror) {
+    traceMirror.classList.remove(`cm-s-default`);
+    traceMirror.classList.add(`cm-s-${codeMirrorTheme}`);
+  }
+}
+
 console.log('Initializing settings')
 initSettings();
+loadTheme();
