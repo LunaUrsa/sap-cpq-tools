@@ -1,4 +1,3 @@
-/* eslint-disable import/namespace */
 import React, { useState } from "react";
 import {
   AppBar,
@@ -7,9 +6,6 @@ import {
   IconButton,
   Menu,
   MenuItem,
-  FormControl,
-  InputLabel,
-  Select,
   Grid,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -20,15 +16,11 @@ import { Link as RouterLink } from "react-router-dom";
 import { Functions, AddCircle } from "@mui/icons-material";
 import { v4 as uuidv4 } from "uuid";
 
-import * as themes from "@uiw/codemirror-themes-all";
-
 const EnhancedToolbar: React.FC<ToolbarProps> = ({
   mods,
   setMods,
   shortcuts,
   setShortcuts,
-  preferences,
-  setPreferences,
   currentPage,
   setCurrentPage,
 }) => {
@@ -70,11 +62,6 @@ const EnhancedToolbar: React.FC<ToolbarProps> = ({
   // Default  title
   const title = titles[location.hash] || "SAP CPQ Tools";
 
-  const themeOptions = ["dark", "light"]
-    .concat(Object.keys(themes))
-    .filter((item) => typeof themes[item as keyof typeof themes] !== "function")
-    .filter((item) => !/^(defaultSettings)/.test(item as keyof typeof themes));
-
   const addShortcut = () => {
     const newShortcut = {
       id: uuidv4(),
@@ -101,48 +88,6 @@ const EnhancedToolbar: React.FC<ToolbarProps> = ({
           <Grid item xs={12 - usedSpace}></Grid>
           {/* Theme selector */}
           <Grid item xs={4}>
-            <FormControl
-              fullWidth
-              sx={{
-                mt: 0.5,
-              }}
-            >
-              <InputLabel
-                id="theme-label"
-                sx={{
-                  color: "white",
-                }}
-              >
-                Theme
-              </InputLabel>
-              <Select
-                labelId="theme-label"
-                value={preferences ? preferences.codeMirrorTheme : "abcdef"}
-                label="Theme"
-                onChange={(e) => {
-                  setPreferences({
-                    ...preferences,
-                    codeMirrorTheme: e.target.value,
-                  });
-                }}
-                sx={{
-                  color: "white",
-                  fontSize: "0.875rem", // smaller font size
-                  maxHeight: "40px", // smaller height for the select input
-                  "& .MuiSelect-select": {
-                    // targeting the inner select element
-                    paddingTop: "6px",
-                    paddingBottom: "6px",
-                  },
-                }}
-              >
-                {themeOptions.map((theme) => (
-                  <MenuItem key={theme} value={theme}>
-                    {theme}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
           </Grid>
           {/* Add new */}
           <Grid item xs={1}>

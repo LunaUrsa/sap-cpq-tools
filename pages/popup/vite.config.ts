@@ -16,11 +16,7 @@ export default defineConfig({
     },
   },
   base: '',
-  plugins: [
-    react(),
-    isDev && watchRebuildPlugin({ refresh: true }),
-    // muteWarningsPlugin(warningsToIgnore),
-  ],
+  plugins: [react(), isDev && watchRebuildPlugin({ refresh: true })],
   publicDir: resolve(rootDir, 'public'),
   build: {
     outDir: resolve(rootDir, '..', '..', 'dist', 'popup'),

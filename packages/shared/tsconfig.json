@@ -9,10 +9,13 @@
         "lib/*"
       ]
     },
-    "types": ["chrome"]
+    "types": [
+      "chrome"
+    ]
   },
   "include": [
     "index.ts",
-    "lib"
+    "lib",
+    "@types"
   ]
 }

@@ -16,6 +16,7 @@
     }
   ],
   "cSpell.words": [
+    "autocorrect",
     "bespin",
     "callidusondemand",
     "codemirror",
@@ -23,6 +24,7 @@
     "darcula",
     "darkred",
     "fancytree",
+    "foldgutter",
     "gruvbox",
     "icecoder",
     "largeleft",

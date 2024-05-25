@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import 'webextension-polyfill';
 import { stripIndent } from "common-tags";
 
@@ -6,7 +7,28 @@ console.log("Edit 'apps/chrome-extension/lib/background/index.ts' and save to re
 
 async function initSettings() {
 
-  const defaultPreferences = { codeMirrorTheme: "dark" } as UserOptions;
+  const defaultUserPreferences = {
+    isDarkMode: true,
+    language: 'en',
+  } as UserOptions;
+
+  const defaultCodePreferences = {
+    autocapitalize: true,
+    autocorrect: true,
+    autofocus: true,
+    foldGutter: true,
+    highlightActiveLine: true,
+    highlightSelectionMatches: true,
+    linting: true,
+    matchTags: true,
+    resize: true,
+    scrollbarStyle: "overlay",
+    shortcuts: {},
+    spellcheck: true,
+    styleActiveLine: true,
+    tabMode: "shift",
+    theme: 'dark',
+  } as CodeMirrorOptions;
 
   const defaultMods = [
     {
@@ -149,6 +171,42 @@ async function initSettings() {
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  function isValidCodeOptions(obj: any): obj is CodeMirrorOptions {
+    const parsedObj = JSON.parse(obj);
+    return (
+      typeof parsedObj === "object" &&
+      parsedObj.autocapitalize &&
+      typeof parsedObj.autocapitalize === "boolean" &&
+      parsedObj.autocorrect &&
+      typeof parsedObj.autocorrect === "boolean" &&
+      parsedObj.autofocus &&
+      typeof parsedObj.autofocus === "boolean" &&
+      parsedObj.foldGutter &&
+      typeof parsedObj.foldGutter === "boolean" &&
+      parsedObj.highlightActiveLine &&
+      typeof parsedObj.highlightActiveLine === "boolean" &&
+      parsedObj.linting &&
+      typeof parsedObj.linting === "boolean" &&
+      parsedObj.matchTags &&
+      typeof parsedObj.matchTags === "boolean" &&
+      parsedObj.resize &&
+      typeof parsedObj.resize === "boolean" &&
+      parsedObj.scrollbarStyle &&
+      typeof parsedObj.scrollbarStyle === "string" &&
+      parsedObj.shortcuts &&
+      typeof parsedObj.shortcuts === "object" &&
+      parsedObj.spellcheck &&
+      typeof parsedObj.spellcheck === "boolean" &&
+      parsedObj.styleActiveLine &&
+      typeof parsedObj.styleActiveLine === "boolean" &&
+      parsedObj.tabMode &&
+      typeof parsedObj.tabMode === "string" &&
+      parsedObj.theme &&
+      typeof parsedObj.theme === "string"
+    );
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   function isValidModList(obj: any): obj is Mod[] {
     const parsedObj = JSON.parse(obj);
     return (
@@ -213,7 +271,8 @@ async function initSettings() {
   }
 
   await Promise.all([
-    loadAndValidateStorageItem('userPreferences', isValidUserOptions, defaultPreferences),
+    loadAndValidateStorageItem('userOptions', isValidUserOptions, defaultUserPreferences),
+    loadAndValidateStorageItem('codeMirrorOptions', isValidCodeOptions, defaultCodePreferences),
     loadAndValidateStorageItem('mods', isValidModList, defaultMods),
     loadAndValidateStorageItem('shortcuts', isValidShortcutList, defaultShortcuts)
   ]);
@@ -279,31 +338,324 @@ async function handleShortcuts() {
   });
 }
 
-async function loadTheme() {
-  const userPreferences = await chrome.storage.local.get("userPreferences");
-  const userPreferencesData = JSON.parse(userPreferences.userPreferences);
-  const codeMirrorTheme = userPreferencesData.codeMirrorTheme;
+async function codeChanges() {
+  // Codemirror version 5.65.14
 
-  // Append CSS to the head
-  const link = document.createElement("link");
-  link.rel = "stylesheet";
-  link.type = "text/css";
-  link.href = `https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/theme/${codeMirrorTheme}.min.css`;
-  document.head.appendChild(link);
-
-  const codeMirror = document.querySelector(".CodeMirror");
-  if (codeMirror) {
-    codeMirror.classList.remove(`cm-s-default`);
-    codeMirror.classList.add(`cm-s-${codeMirrorTheme}`);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  let editor: any = document.querySelector(".CodeMirror");
+  if (!editor) {
+    editor = document.querySelectorAll(".CodeMirror")[1];
   }
 
-  const traceMirror = document.querySelectorAll(".CodeMirror")[1];
-  if (traceMirror) {
-    traceMirror.classList.remove(`cm-s-default`);
-    traceMirror.classList.add(`cm-s-${codeMirrorTheme}`);
+  if (!editor) {
+    console.info("CodeMirror not found");
+    return;
+  }
+
+  // var sapDefaults = {
+  //   "addModeClass": false,
+  //   "allowDropFileTypes": null,
+  //   "autocapitalize": false,
+  //   "autocorrect": false,
+  //   "autofocus": false,
+  //   "configureMouse": null,
+  //   "coverGutterNextToScrollbar": false,
+  //   "cursorBlinkRate": 530,
+  //   "cursorHeight": 1,
+  //   "cursorScrollMargin": 0,
+  //   "direction": "ltr",
+  //   "disableInput": false,
+  //   "dragDrop": true,
+  //   "electricChars": true,
+  //   "extraKeys": {
+  //     "Ctrl-Space": "autocomplete"
+  //   },
+  //   "firstLineNumber": 1,
+  //   "fixedGutter": true,
+  //   "flattenSpans": true,
+  //   "fullScreen": false,
+  //   "gutters": [],
+  //   "hintOptions": null,
+  //   "historyEventDelay": 1250,
+  //   "indentUnit": 4,
+  //   "indentWithTabs": false,
+  //   "inputStyle": "textarea",
+  //   "keyMap": "default",
+  //   "lineNumbers": true,
+  //   "lineSeparator": null,
+  //   "lineWiseCopyCut": true,
+  //   "lineWrapping": true,
+  //   "matchBrackets": true,
+  //   "maxHighlightLength": 10000,
+  //   "mode": {
+  //     "name": "python",
+  //     "singleLineStringErrors": false,
+  //     "version": 3
+  //   },
+  //   "moveInputWithCursor": true,
+  //   "pasteLinesPerSelection": true,
+  //   "phrases": null,
+  //   "pollInterval": 100,
+  //   "resetSelectionOnContextMenu": true,
+  //   "rtlMoveVisually": false,
+  //   "screenReaderLabel": null,
+  //   "scrollbarStyle": "native",
+  //   "selectionsMayTouch": false,
+  //   "showCursorWhenSelecting": false,
+  //   "showTrailingSpace": true,
+  //   "singleCursorHeightPerLine": true,
+  //   "smartIndent": true,
+  //   "specialChars": {},
+  //   "spellcheck": false,
+  //   "tabindex": null,
+  //   "tabMode": "shift",
+  //   "tabSize": 4,
+  //   "theme": "default",
+  //   "undoDepth": 200,
+  //   "value": "",
+  //   "viewportMargin": 10,
+  //   "wholeLineUpdateBefore": true,
+  //   "workDelay": 100,
+  //   "workTime": 100
+  // }
+
+  const storage = await chrome.storage.local.get("codeMirrorOptions");
+  const codeMirrorOptions = JSON.parse(storage.codeMirrorOptions) as CodeMirrorOptions;
+  const codeMirrorTheme = codeMirrorOptions.theme;
+
+  if (codeMirrorOptions.theme) {
+    // Append CSS to the head
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.type = "text/css";
+    link.href = `https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/theme/${codeMirrorTheme}.min.css`;
+    document.head.appendChild(link);
+
+    editor.classList.remove(`cm-s-default`);
+    editor.classList.add(`cm-s-${codeMirrorTheme}`);
+  }
+
+  const gutters = [
+    "CodeMirror-linenumbers",
+  ]
+
+  editor.setOption("autocapitalize", codeMirrorOptions.autocapitalize);
+  editor.setOption("autocorrect", codeMirrorOptions.autocorrect);
+  editor.setOption("autofocus", codeMirrorOptions.autofocus);
+  editor.setOption("foldGutter", codeMirrorOptions.foldGutter);
+  if (codeMirrorOptions.foldGutter) {
+    gutters.push("CodeMirror-foldgutter");
+    // List of script URLs to load
+    [
+      "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/addon/fold/brace-fold.min.js",
+      "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/addon/fold/comment-fold.min.js",
+      "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/addon/fold/foldcode.min.js",
+      "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/addon/fold/foldgutter.min.js",
+      "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/addon/fold/indent-fold.min.js",
+      "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/addon/fold/markdown-fold.min.js",
+      "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/addon/fold/xml-fold.min.js",
+    ].forEach((url) => {
+      const script = document.createElement("script");
+      script.type = 'text/javascript';
+      script.src = url;
+      document.body.appendChild(script);
+    });
+
+    // CSS Urls to load
+    [
+      "https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/addon/fold/foldgutter.min.css"
+    ].forEach((url) => {
+      const link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.type = "text/css";
+      link.href = url;
+      document.head.appendChild(link);
+    });
+  };
+  editor.setOption("highlightActiveLine", codeMirrorOptions.highlightActiveLine);
+  editor.setOption("highlightSelectionMatches", codeMirrorOptions.highlightSelectionMatches);
+  editor.setOption("lint", codeMirrorOptions.linting);  // Need to look into hints
+  if (codeMirrorOptions.linting) gutters.push("CodeMirror-lint-markers");
+  editor.setOption("matchTags", codeMirrorOptions.matchTags);
+  editor.setOption("resize", codeMirrorOptions.resize);
+  editor.setOption("scrollbarStyle", codeMirrorOptions.scrollbarStyle);
+  editor.setOption("spellcheck", codeMirrorOptions.spellcheck);
+  editor.setOption("styleActiveLine", codeMirrorOptions.styleActiveLine);
+  editor.setOption("theme", codeMirrorOptions.theme);
+
+  editor.setOption("gutters", gutters);
+  editor.setOption("hintOptions", { // Need to look into hints
+    completeSingle: false
+  });
+  editor.setOption("extraKeys", {
+    "Ctrl-Q": function (cm: any) {
+      cm.foldCode(cm.getCursor());
+    },
+    "Cmd-Q": function (cm: any) {
+      cm.foldCode(cm.getCursor());
+    },
+    "Ctrl-Space": "autocomplete",
+    "Cmd-Space": "autocomplete",
+    "Ctrl-/": "toggleComment",
+    "Cmd-/": "toggleComment",
+    "Ctrl-F": "findPersistent",
+    "Cmd-F": "findPersistent",
+    "Ctrl-Alt-F": "findPersistentNext",
+    "Cmd-Alt-F": "findPersistentNext",
+    "Ctrl-Shift-F": "findPersistentPrev",
+    "Cmd-Shift-F": "findPersistentPrev",
+    "Ctrl-R": "replace",
+    "Cmd-R": "replace",
+    "Ctrl-Shift-R": "replaceAll",
+    "Cmd-Shift-R": "replaceAll",
+    "Ctrl-G": "jumpToLine",
+    "Cmd-G": "jumpToLine",
+    "Tab": "indentMore",
+  });
+}
+
+async function prodWarning() {
+  const host = window.location.host;
+
+  const modal = host.includes("sandbox")
+    ? `
+  <div id="toolButton">
+      <div class="container-fluid">
+          <div class="row">
+              <div class="col-xs-12">
+                  <a href="#" id='sandboxModal' class="btn btn-info btn-lg" data-toggle="modal" data-target="#devToolModal">
+                      You are in Sandbox!
+                  </a>
+              </div>
+          </div>
+      </div>
+  </div>
+  `
+    : `
+  <div id="toolButton">
+      <div class="container-fluid">
+          <div class="row">
+              <div class="col-xs-12">
+                  <a href="#" id='prodWarningModal' class="btn btn-info btn-lg" data-toggle="modal" data-target="#devToolModal">
+                      You are in Production!
+                  </a>
+              </div>
+          </div>
+      </div>
+  </div>
+  `;
+
+  const respSetup = document.querySelector(".resp-setup");
+  const wrap = document.getElementById("wrap");
+  const body = document.body;
+  if (respSetup) respSetup.innerHTML += modal;
+  if (wrap) wrap.innerHTML += modal;
+  body.innerHTML += modal;
+}
+
+function viewSelector(): void {
+  function changeView(): void {
+    const viewSlct = document.getElementById(
+      "viewPickSlct",
+    ) as HTMLSelectElement;
+    const selectedView = viewSlct.value; // Simplified access to selected value
+    const codeWindow = document.querySelector<HTMLDivElement>(".CodeMirror");
+    const traceWindow = document.getElementById("tracesContainer");
+    const buttonBar = document.querySelector(
+      ".col-sm-6.control-label.text-right",
+    );
+    const traceTitle = document.querySelector(".tracetitle");
+
+    // Clear all classes
+    codeWindow?.classList.remove(
+      "col-sm-6",
+      "col-md-6",
+      "leftscript",
+      "col-sm-8",
+      "col-md-8",
+      "largeleft",
+    );
+    traceWindow?.classList.remove(
+      "righttrace",
+      "col-sm-6",
+      "col-md-6",
+      "col-md-4",
+      "col-sm-4",
+      "smallright",
+      "col-md-12",
+      "col-sm-12",
+    );
+
+    if (selectedView === "Default") {
+      traceWindow?.classList.add("col-md-12", "col-sm-12");
+      traceTitle?.setAttribute("style", "");
+    } else if (selectedView === "Side By Side") {
+      codeWindow?.classList.add("col-sm-6", "col-md-6", "leftscript");
+      traceWindow?.classList.add("righttrace", "col-sm-6", "col-md-6");
+      traceTitle?.setAttribute("style", "display: none;");
+    } else if (selectedView === "Narrow Trace") {
+      codeWindow?.classList.add("col-sm-8", "col-md-8", "largeleft");
+      traceWindow?.classList.add("smallright", "col-sm-4", "col-md-4");
+      traceTitle?.setAttribute("style", "display: none;");
+    }
+
+    // Manage the clear traces button
+    manageClearTracesButton(buttonBar);
+
+    localStorage.setItem("selectedView", selectedView);
+  }
+
+  function manageClearTracesButton(parentElement: Element | null): void {
+    let clearTrace = document.getElementById(
+      "traceControl",
+    ) as HTMLAnchorElement;
+    if (!clearTrace) {
+      clearTrace = document.createElement("a");
+      clearTrace.className = "btn btn-primary btn-sm traceControl";
+      clearTrace.href = "#";
+      clearTrace.role = "button";
+      clearTrace.textContent = "Clear Traces";
+      clearTrace.id = "traceControl";
+      parentElement?.appendChild(clearTrace);
+    }
+  }
+
+  // Creating view selection UI
+  const optionsToolbar = document.getElementById("menuDiv");
+  if (optionsToolbar) {
+    const viewPick = document.createElement("div");
+    viewPick.className = "form-group";
+    viewPick.style.cssText = "float: left; margin-right: 10px";
+
+    const viewPickLabel = document.createElement("label");
+    viewPickLabel.setAttribute("for", "viewPickSlct");
+    viewPickLabel.textContent = "Select View:";
+
+    const viewPickSelect = document.createElement("select");
+    viewPickSelect.className = "form-control";
+    viewPickSelect.id = "viewPickSlct";
+    ["Default", "Side By Side", "Narrow Trace"].forEach((view) => {
+      const option = document.createElement("option");
+      option.textContent = view;
+      option.value = view;
+      viewPickSelect.appendChild(option);
+    });
+
+    viewPick.appendChild(viewPickLabel);
+    viewPick.appendChild(viewPickSelect);
+    optionsToolbar.appendChild(viewPick);
+
+    viewPickSelect.addEventListener("change", changeView);
+
+    // Set the initial view from local storage or default
+    const currentView = localStorage.getItem("selectedView") ?? "Default";
+    viewPickSelect.value = currentView;
+    changeView();
   }
 }
 
 console.log('Initializing settings')
 initSettings();
-loadTheme();
+codeChanges();
+prodWarning();
+viewSelector();

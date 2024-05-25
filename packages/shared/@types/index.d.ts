@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 interface Shortcut {
   id: string;
   key: string;
@@ -39,10 +40,6 @@ interface SiteMap {
   };
 }
 
-interface UserOptions {
-  codeMirrorTheme: string;
-}
-
 interface ToolbarProps {
   mods: Mod[];
   setMods: React.Dispatch<React.SetStateAction<Mod[]>>;
@@ -74,4 +71,31 @@ interface RoutingProps {
 
 interface FormulaProps {
   preferences: UserOptions;
+}
+
+interface UserOptions {
+  isDarkMode: boolean;
+  language: 'en';
+}
+
+interface ExtraKeys {
+  [key: string]: string;
+}
+
+interface CodeMirrorOptions {
+  autocapitalize: boolean;
+  autocorrect: boolean;
+  autofocus: boolean;
+  foldGutter: boolean;
+  highlightActiveLine: boolean;
+  highlightSelectionMatches: boolean;
+  linting: boolean;
+  matchTags: boolean;
+  resize: true;
+  scrollbarStyle: "native" | "null" | "overlay";
+  shortcuts: ExtraKeys;
+  spellcheck: boolean;
+  styleActiveLine: boolean;
+  tabMode: "shift" | "spaces";
+  theme: string;
 }
