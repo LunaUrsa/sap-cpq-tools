@@ -10,37 +10,49 @@ import {
   useEffect,
 } from "react";
 import { FormControl, MenuItem, Select, Switch, Typography, FormControlLabel, Card, Box, Divider, Grid, Input, TextField, Tooltip, Button } from '@mui/material';
-import { sapDefaultPreferences, defaultCodePreferences, codeMirrorThemes, defaultUserPreferences } from '../../../packages/shared/lib/constants';
+import { sapDefaultPreferences, defaultCodePreferences, codeMirrorThemes, defaultUserPreferences, defaultShortcuts, defaultMods } from '../../../packages/shared/lib/constants';
+import { saveToStorage } from '@chrome-extension-boilerplate/shared/lib/utils';
 
 // import * as themes from "@uiw/codemirror-themes-all";
 
 const OptionsPage = () => {
   const [codeMirrorOptions, setCodeMirrorOptions] = useState<CodeMirrorOptions>(defaultCodePreferences);
-
   const [userOptions, setUserOptions] = useState<UserOptions>(defaultUserPreferences);
+  const [shortcuts, setShortcuts] = useState<Shortcut[]>(defaultShortcuts);
+  const [mods, setMods] = useState<Mod[]>(defaultMods);
 
   useEffect(() => {
-    chrome.storage.local.get(["userOptions", "codeMirrorOptions"], (result) => {
+    chrome.storage.local.get(["userOptions", "codeMirrorOptions", "shortcuts", "mods"], (result) => {
       if (result.userOptions) {
         setUserOptions(JSON.parse(result.userOptions));
       }
       if (result.codeMirrorOptions) {
         setCodeMirrorOptions(JSON.parse(result.codeMirrorOptions));
       }
+      if (result.shortcuts) {
+        setShortcuts(JSON.parse(result.shortcuts));
+      }
+      if (result.mods) {
+        setMods(JSON.parse(result.mods));
+      }
     });
   }, []);
 
   useEffect(() => {
-    if (userOptions) {
-      chrome.storage.local.set({ userOptions: JSON.stringify(userOptions) });
-    }
+    saveToStorage("userOptions", userOptions);
   }, [userOptions]);
 
   useEffect(() => {
-    if (codeMirrorOptions) {
-      chrome.storage.local.set({ codeMirrorOptions: JSON.stringify(codeMirrorOptions) });
-    }
+    saveToStorage("codeMirrorOptions", codeMirrorOptions);
   }, [codeMirrorOptions]);
+
+  useEffect(() => {
+    saveToStorage("shortcuts", shortcuts);
+  }, [shortcuts]);
+
+  useEffect(() => {
+    saveToStorage("mods", mods);
+  }, [mods]);
 
   async function revertToSapDefaults() {
     setCodeMirrorOptions(sapDefaultPreferences);
@@ -50,6 +62,16 @@ const OptionsPage = () => {
   async function revertToCustomDefaults() {
     setCodeMirrorOptions(defaultCodePreferences);
     console.log('Reverted to custom defaults')
+  }
+
+  async function revertShortcuts() {
+    setShortcuts(defaultShortcuts);
+    console.log('Reverted shortcuts to ', defaultShortcuts)
+  }
+
+  async function revertMods() {
+    setMods(defaultMods);
+    console.log('Reverted mods')
   }
 
   const themeOptions = Object.values(codeMirrorThemes);
@@ -343,6 +365,32 @@ const OptionsPage = () => {
             {userOptionsConfig.map((option) =>
               generateUserFormControl(option, userOptions, setUserOptions)
             )}
+          </Grid>
+          <Grid container spacing={2}>
+            <Grid item>
+              <Tooltip title="Reset Shortcuts">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  startIcon={<Restore />}
+                  onClick={revertShortcuts}
+                >
+                  Revert Shortcuts
+                </Button>
+              </Tooltip>
+            </Grid>
+            <Grid item>
+              <Tooltip title="Revert Mods">
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  startIcon={<SettingsBackupRestore />}
+                  onClick={revertMods}
+                >
+                  Revert Mods
+                </Button>
+              </Tooltip>
+            </Grid>
           </Grid>
         </Card>
         <Card className="p-4">
