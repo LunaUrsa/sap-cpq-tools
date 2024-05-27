@@ -1,9 +1,10 @@
 import '@src/Popup.css';
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import EnhancedToolbar from "./components/Toolbar";
 import { Routing } from './routes';
+import { saveToStorage } from '@chrome-extension-boilerplate/shared/lib/utils';
 import { withErrorBoundary, withSuspense } from '@chrome-extension-boilerplate/shared';
 
 const theme = createTheme({
@@ -16,7 +17,7 @@ const Popup = () => {
   const [codeMirrorOptions, setCodeMirrorOptions] = useState<CodeMirrorOptions>({} as CodeMirrorOptions);
   const [shortcuts, setShortcuts] = useState<Shortcut[]>([]);
   const [currentPage, setCurrentPage] = useState<Page>('shortcuts' as Page);
-  const isInitialMount = useRef(true);
+  // const isInitialMount = useRef(true);
   const navigate = useNavigate();
 
   console.debug('popup page loaded');
@@ -33,6 +34,7 @@ const Popup = () => {
         setShortcuts(JSON.parse(result.shortcuts));
       }
       if (result.currentPage) {
+        console.debug('setting current page stage from storage', result.currentPage);
         setCurrentPage(result.currentPage);
       }
       if (result.codeMirrorOptions) {
@@ -42,22 +44,14 @@ const Popup = () => {
   }, []);
 
   useEffect(() => {
-    if (isInitialMount.current) {
-      if (currentPage) {
-        navigate(currentPage);
-      }
-      isInitialMount.current = false;
+    if (currentPage) {
+      navigate(currentPage);
     }
   }, [currentPage, navigate]);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const saveToStorage = useCallback((key: string, value: any) => {
-    chrome.storage.local.set({ [key]: JSON.stringify(value) });
-  }, []);
-
   useEffect(() => {
     saveToStorage('userOptions', userOptions);
-  }, [userOptions, saveToStorage]);
+  }, [userOptions]);
 
   useEffect(() => {
     saveToStorage('mods', mods);
@@ -74,17 +68,16 @@ const Popup = () => {
           });
         }
       });
-      console.info('Mods have been applied to this page!');
     });
-  }, [mods, saveToStorage]);
+  }, [mods]);
 
   useEffect(() => {
     saveToStorage('shortcuts', shortcuts);
-  }, [shortcuts, saveToStorage]);
+  }, [shortcuts]);
 
   useEffect(() => {
     saveToStorage('currentPage', currentPage);
-  }, [currentPage, saveToStorage]);
+  }, [currentPage]);
 
   return (
     <ThemeProvider theme={theme}>

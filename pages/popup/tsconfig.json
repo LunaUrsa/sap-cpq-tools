@@ -32,6 +32,7 @@
   },
   "include": [
     "src",
-    "../../packages/shared/@types"
+    "../../packages/shared/@types",
+    "../../packages/shared/lib"
   ]
 }

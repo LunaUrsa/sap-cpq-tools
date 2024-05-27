@@ -389,10 +389,480 @@ export const sapDefaultPreferences: CodeMirrorOptions = {
 export const defaultMods: Mod[] = [
   {
     id: "1",
-    name: "Example CSS Mod",
+    name: "Edit Icon",
     content: `
-      body {
-        background-color: purple !important;
+      img[title="Edit"] {
+        width: 28px;
+      }
+    `,
+    isEnabled: true,
+    isValidCode: true,
+  },
+  {
+    id: "2",
+    name: "Add New Document Pop-up",
+    content: `
+      #popup1 {
+        position: fixed;
+        top: 350px;
+        left: 1100px;
+      }
+    `,
+    isEnabled: true,
+    isValidCode: true,
+  },
+  {
+    id: "3",
+    name: "Product Configuration Layout",
+    content: `
+      #divConfiguratorLayout {
+        width: 1500px;
+      }
+
+      #ctl00_cph1_tabsDiv {
+        width: 100%;
+      }
+    `,
+    isEnabled: true,
+    isValidCode: true,
+  },
+  {
+    id: "4",
+    name: "Document Preview Modal",
+    content: `
+      #preview_popup {
+        position: fixed;
+        top: 20px;
+        height: 900px;
+        width: 1500px;
+      }
+
+      #preview_container {
+        height: 100%;
+      }
+
+      iframe[src*="tempdoc/preview"] {
+        height: 800px;
+        width: 1400px;
+      }
+    `,
+    isEnabled: true,
+    isValidCode: true,
+  },
+  {
+    id: "5",
+    name: "Adding Attributes from Simple Products Modal",
+    content: `
+      #ctl00_cph1_attributeControl_ps_pnlTable {
+        height: 850px;
+        position: fixed;
+        top: 25px;
+      }
+    `,
+    isEnabled: true,
+    isValidCode: true,
+  },
+  {
+    id: "6",
+    name: "Tag Builder",
+    content: `
+      #tab-container-1 {
+        width: 800px;
+      }
+
+      #ddlTags {
+        height: 250px;
+        width: 750px;
+      }
+
+      #PA_ID {
+        width: 750px;
+      }
+
+      #PAV_ID {
+        width: 750px;
+        height: 250px;
+      }
+
+      textarea.consolelook.form-control {
+        height: 200px;
+        width: 750px;
+      }
+
+      #txtResult {
+        height: 300px;
+        width: 762px;
+      }
+    `,
+    isEnabled: true,
+    isValidCode: true,
+  },
+  {
+    id: "7",
+    name: "Product Configuration Fields",
+    content: `
+      textarea.form-control[name*="DynPartNumber"] {
+        height: 150px;
+        width: 600px;
+      }
+    `,
+    isEnabled: true,
+    isValidCode: true,
+  },
+  {
+    id: "8",
+    name: "Rule Text Boxes",
+    content: `
+      #ctl00_cph1_pnlRuleAdministration {
+        width: 1600px;
+      }
+
+      #conditionDiv {
+        width: 550px;
+      }
+
+      textarea.form-control[name*="RuleCondition"] {
+        height: 250px;
+        width: 500px;
+      }
+
+      #actionDiv {
+        width: 550px;
+      }
+
+      #ctl00_cph1_txtRuleAction {
+        height: 250px;
+        width: 500px;
+      }
+    `,
+    isEnabled: true,
+    isValidCode: true,
+  },
+  {
+    id: "9",
+    name: "Script Events",
+    content: `
+      #ctl00_cph1_lbAfterAdding1 {
+        height: 150px;
+        width: 400px;
+      }
+    `,
+    isEnabled: true,
+    isValidCode: true,
+  },
+  {
+    id: "10",
+    name: "Promo Banner on Quote Page",
+    content: `
+      div.alert.alert-info {
+        z-index: 5;
+        opacity: 1;
+        position: fixed;
+        width: 95%;
+        height: 55px;
+        top: 135px;
+      }
+
+      div.quote-page-main-container {
+        margin-top: 55px;
+      }
+    `,
+    isEnabled: true,
+    isValidCode: true,
+  },
+  {
+    id: "11",
+    name: "Save Notifications",
+    content: `
+      #ctl00_cph1_labError {
+        font-weight: bold;
+        font-size: 18pt;
+        position: fixed;
+        left: 1200px;
+        top: 50px;
+        border: solid 1px;
+      }
+    `,
+    isEnabled: true,
+    isValidCode: true,
+  },
+  {
+    id: "12",
+    name: "Window Relocation Formatting",
+    content: `
+      .optsButton {
+        background-color: #f5f5f5;
+      }
+
+      .rowheight_win {
+        height: 675px;
+      }
+
+      .leftscript {
+        height: inherit !important;
+        max-height: 20000px !important;
+        width: 50% !important;
+      }
+
+      .righttrace {
+        display: block !important;
+        height: inherit !important;
+        max-height: 20000px !important;
+        float: right !important;
+      }
+
+      .largeleft {
+        height: inherit !important;
+        max-height: 20000px !important;
+        width: 65% !important;
+      }
+
+      .smallright {
+        height: inherit !important;
+        max-height: 20000px !important;
+        width: 35% !important;
+      }
+
+      .btn_cust1 {
+        margin: 0px 5px 8px 5px !important;
+      }
+
+      .toolbar_margin_match {
+        margin: 10px 0px 10px 0px;
+      }
+    `,
+    isEnabled: true,
+    isValidCode: true,
+  },
+  {
+    id: "13",
+    name: "Script Info",
+    content: `
+      .script-info {
+        width: 50%;
+      }
+
+      .cm-tab {
+        background-color: red !important;
+      }
+
+      #wfOptsButton {
+        width: 10px;
+        width: 70px;
+        margin-left: 20px;
+        margin-right: 5px;
+      }
+    `,
+    isEnabled: true,
+    isValidCode: true,
+  },
+  {
+    id: "14",
+    name: "Prod Warning Popup Format",
+    content: `
+      #toolButton img {
+        width: 100px;
+      }
+
+      #toolButton {
+        position: fixed;
+        width: 100%;
+        bottom: 0px;
+        z-index: 1048;
+      }
+
+      #toolButton .row {
+        float: right;
+        margin-right: 5%;
+        width: 15%;
+      }
+
+      .includeFrame {
+        width: 100%;
+      }
+
+      #devToolModal .modal-dialog {
+        width: 90vw;
+        height: 70vh;
+      }
+
+      #prodWarningModal {
+        background: red;
+      }
+    `,
+    isEnabled: true,
+    isValidCode: true,
+  },
+  {
+    id: "15",
+    name: "Script IDE",
+    content: `
+      #script-ide>div.head.scriptsNavigationDiv>h2 {
+        cursor: pointer;
+      }
+
+      #script-ide-section-editor-output {
+        float: left;
+        width: 100%;
+      }
+
+      #script-ide-section {
+        float: left;
+        width: 100%;
+        margin-top: 5px;
+      }
+
+      #script-ide-tree {
+        width: 100%;
+      }
+
+      #script-ide-section-context>div,
+      .scriptResouceObjectContent,
+      .classInfoMethod {
+        font-size: 20px;
+      }
+
+      #script-ide-section-context {
+        float: left;
+        width: 97%;
+        position: absolute;
+        background-color: #ffff;
+        z-index: 100;
+      }
+
+      .mattblackmenu ul {
+        position: inherit;
+      }
+
+      #script-ide-section-empty {
+        width: 100%;
+      }
+
+      #script-ide {
+        width: 99%;
+        min-height: inherit;
+      }
+
+      #tree {
+        height: inherit;
+      }
+
+      #newActionButtonDiv {
+        position: inherit;
+      }
+
+      .floatLeft {}
+
+      #footer {
+        display: none;
+      }
+
+      .scriptsNavigationDiv h2 {
+        display: block;
+        float: left;
+      }
+
+      .scriptsNavigationDiv a {
+        display: block;
+        float: right;
+        color: #FFFFFF;
+      }
+
+      .scriptsNavigationDiv {
+        height: 20px;
+      }
+
+      #script-ide-section-context.invisible,
+      #script-ide-tree.invisible,
+      #header.invisible {
+        display: none;
+      }
+
+      #moreActionButtonDiv,
+      #script-ide-action-buttons,
+      #draftOpenedMessageDiv {
+        display: inline-block;
+      }
+
+      #script-ide-section-editor {
+        width: 50%;
+        max-width: 50%;
+        float: left;
+        overflow: hidden;
+      }
+
+      #script-ide-section-output {
+        width: 48%;
+        float: left;
+      }
+
+      .scriptsNavigationDiv a {
+        padding: 0 5px 0 5px;
+      }
+
+      .scriptOutputDiv .CodeMirror-wrap {
+        text-align: left;
+        float: left;
+        width: 100%;
+      }
+
+      .scriptOutputDiv {
+        text-align: right;
+        line-height: 32px;
+      }
+
+      #script-ide-section-editor .CodeMirror-wrap {}
+
+      #script-ide-section-history {
+        margin-top: 263px;
+      }
+
+      #script-ide-section-unit-tests {
+        height: 170px;
+      }
+
+      #script-ide-tabs {
+        text-align: right;
+      }
+    `,
+    isEnabled: true,
+    isValidCode: true,
+  },
+  {
+    id: "16",
+    name: "Domain Selector",
+    content: `
+      .select-editable {
+        position:relative; 
+        background-color:white; 
+        border:solid grey 1px;  
+        width:120px; 
+        height:100%;
+      }
+
+      .select-editable select {
+        position:absolute; 
+        top:0px; 
+        left:0px; 
+        font-size:14px; 
+        border:none; 
+        width:120px;
+        margin:0;
+      }
+
+      .select-editable input {
+        position:absolute; 
+        top:0px; 
+        left:0px; 
+        width:90%; 
+        padding:1px; 
+        font-size:12px; 
+        border:none;
+        height: 100%;
+      }
+
+      .select-editable select:focus, .select-editable input:focus {
+        outline:none;
       }
     `,
     isEnabled: true,

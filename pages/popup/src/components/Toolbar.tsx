@@ -15,6 +15,7 @@ import HelpIcon from "@mui/icons-material/Help";
 import { Link as RouterLink } from "react-router-dom";
 import { Functions, AddCircle } from "@mui/icons-material";
 import { v4 as uuidv4 } from "uuid";
+import { saveToStorage } from "@chrome-extension-boilerplate/shared/lib/utils";
 
 const EnhancedToolbar: React.FC<ToolbarProps> = ({
   mods,
@@ -32,10 +33,10 @@ const EnhancedToolbar: React.FC<ToolbarProps> = ({
 
   const handleMenuClick = (page: Page) => {
     console.log('setting page to', page);
+    saveToStorage("currentPage", page);
     setCurrentPage(page);
     setAnchorEl(null);
   };
-
 
   const addStyle = () => {
     const newStyle = {
@@ -59,7 +60,7 @@ const EnhancedToolbar: React.FC<ToolbarProps> = ({
     "#/info": "Information",
   };
 
-  // Default  title
+  // Default title
   const title = titles[location.hash] || "SAP CPQ Tools";
 
   const addShortcut = () => {
@@ -155,7 +156,7 @@ const EnhancedToolbar: React.FC<ToolbarProps> = ({
             <Menu
               anchorEl={anchorEl}
               open={Boolean(anchorEl)}
-            // onClose={handleMenuClick(currentPage)}
+              onClose={() => setAnchorEl(null)}
             >
               <MenuItem
                 onClick={() => handleMenuClick('shortcuts' as Page)}

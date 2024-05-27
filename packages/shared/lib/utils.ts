@@ -1,4 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+export const saveToStorage = (key: string, value: any) => {
+  const storedValue = typeof value === 'string' ? value : JSON.stringify(value);
+  console.log(`Saving ${key} to storage:`, storedValue)
+  chrome.storage.local.set({ [key]: storedValue });
+};
+
 export function isValidUserOptions(obj: any): obj is UserOptions {
   try {
     const parsedObj = JSON.parse(obj);
@@ -40,7 +46,7 @@ export async function loadAndValidateStorageItem<T>(key: string, isValidFunction
     chrome.storage.local.get(key, (result) => {
       const storedData = result[key];
       if (storedData && isValidFunction(storedData)) {
-        console.log(`${key} is valid.`);
+        // console.log(`${key} is valid.`);
         resolve();
       } else {
         console.log(`${key} is invalid or empty, resetting to default.`);
