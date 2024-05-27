@@ -11,7 +11,9 @@ export const Routing: React.FC<RoutingProps> = ({
   shortcuts,
   setShortcuts,
   preferences,
-  setPreferences
+  // setPreferences,
+  codeMirrorOptions,
+  // setCodeMirrorOptions,
 }) => (
   <Routes>
     <Route
@@ -41,10 +43,23 @@ export const Routing: React.FC<RoutingProps> = ({
           mods={mods}
           setMods={setMods}
           preferences={preferences}
-          setPreferences={setPreferences}
+          codeMirrorOptions={codeMirrorOptions}
         />
       }
     />
+    {/* <Route
+      path="/options"
+      element={
+        <OptionsPage
+          mods={mods}
+          setMods={setMods}
+          preferences={preferences}
+          setPreferences={setPreferences}
+          codeMirrorOptions={codeMirrorOptions}
+          setCodeMirrorOptions={setCodeMirrorOptions}
+        />
+      }
+    /> */}
     <Route path="/info" element={<InfoPage />} />
   </Routes>
 )
