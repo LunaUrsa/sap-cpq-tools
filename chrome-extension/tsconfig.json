@@ -22,6 +22,7 @@
     "utils",
     "vite.config.ts",
     "node_modules/@types",
-    "../packages/shared/@types"
+    "../packages/shared/@types",
+    "../packages/shared/lib/constants.ts"
   ],
 }

@@ -26,8 +26,7 @@ import ModEditor from "./ModEditor";
 const ModList: React.FC<ModListProps> = ({
   mods,
   setMods,
-  preferences,
-  setPreferences,
+  codeMirrorOptions,
 }) => {
   const [activeEditId, setActiveEditId] = useState<string | null>(null);
 
@@ -154,8 +153,7 @@ const ModList: React.FC<ModListProps> = ({
                               <ModEditor
                                 mod={mod}
                                 setMod={handleChange}
-                                preferences={preferences}
-                                setPreferences={setPreferences}
+                                codeMirrorOptions={codeMirrorOptions}
                               />
                             }
                             primaryTypographyProps={{ component: "div" }}

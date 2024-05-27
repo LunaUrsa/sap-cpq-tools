@@ -6,7 +6,7 @@ const ModsPage: React.FC<ModListProps> = ({
   mods,
   setMods,
   preferences,
-  setPreferences,
+  codeMirrorOptions,
 }) => {
   return (
     <div>
@@ -16,7 +16,7 @@ const ModsPage: React.FC<ModListProps> = ({
             mods={mods}
             setMods={setMods}
             preferences={preferences}
-            setPreferences={setPreferences}
+            codeMirrorOptions={codeMirrorOptions}
           />
         </Grid>
       </Grid>

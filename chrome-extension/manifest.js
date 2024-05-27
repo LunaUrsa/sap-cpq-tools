@@ -15,7 +15,12 @@ const manifest = {
   name: '__MSG_extensionName__',
   version: packageJson.version,
   description: '__MSG_extensionDescription__',
-  permissions: ['storage', 'sidePanel', 'activeTab', 'scripting'],
+  permissions: [
+    'storage',
+    'sidePanel',
+    'activeTab',
+    'scripting'
+  ],
   side_panel: {
     default_path: 'sidepanel/index.html',
   },
@@ -24,7 +29,7 @@ const manifest = {
     service_worker: 'background.iife.js',
     type: 'module',
   },
-  host_permissions: ["*://*.cpq.cloud.sap/*", "*://*.workflow.cloud.sap/*", "*://*.example.com/*"],
+  host_permissions: ["*://*.cpq.cloud.sap/*", "*://*.workflow.cloud.sap/*", "*://*.codemirror.net/*"],
   action: {
     default_popup: 'popup/index.html',
     default_icon: 'icon-34.png',
@@ -37,15 +42,15 @@ const manifest = {
   },
   content_scripts: [
     {
-      "matches": ["*://*.cpq.cloud.sap/*", "*://*.workflow.cloud.sap/*", "*://*.example.com/*"],
+      "matches": ["*://*.cpq.cloud.sap/*", "*://*.workflow.cloud.sap/*", "*://*.codemirror.net/*"],
       js: ['content/index.iife.js'],
     },
     {
-      "matches": ["*://*.cpq.cloud.sap/*", "*://*.workflow.cloud.sap/*", "*://*.example.com/*"],
+      "matches": ["*://*.cpq.cloud.sap/*", "*://*.workflow.cloud.sap/*", "*://*.codemirror.net/*"],
       js: ['content-ui/index.iife.js'],
     },
     {
-      "matches": ["*://*.cpq.cloud.sap/*", "*://*.workflow.cloud.sap/*", "*://*.example.com/*"],
+      "matches": ["*://*.cpq.cloud.sap/*", "*://*.workflow.cloud.sap/*", "*://*.codemirror.net/*"],
       css: ['content.css'], 
     },
   ],
@@ -84,6 +89,10 @@ const manifest = {
       "description": "Opens the formula formatter page."
     },
   },
+  // "content_security_policy": {
+  //   "extension_pages": "script-src 'self' ; object-src 'self';",
+  //   "content_scripts": "script-src 'self' 'unsafe-inline'; object-src 'self';"
+  // }
 };
 
 export default manifest;

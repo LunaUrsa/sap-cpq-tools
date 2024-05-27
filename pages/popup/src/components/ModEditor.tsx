@@ -12,7 +12,7 @@ import * as themes from "@uiw/codemirror-themes-all";
 const ModEditor: React.FC<ModEditProps> = ({
   mod,
   setMod,
-  preferences,
+  codeMirrorOptions,
 }) => {
   return (
     <div>
@@ -25,8 +25,8 @@ const ModEditor: React.FC<ModEditProps> = ({
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         theme={
-          themes[preferences?.codeMirrorTheme as keyof typeof themes] ||
-          preferences?.codeMirrorTheme
+          themes[codeMirrorOptions?.theme as keyof typeof themes] ||
+          codeMirrorOptions?.theme
         }
         basicSetup={{
           lineNumbers: true,
@@ -53,7 +53,9 @@ const ModEditor: React.FC<ModEditProps> = ({
           css(),
         ]}
         onUpdate={(viewUpdate) => {
-          setMod(mod.id, "content", viewUpdate.state.doc.toString());
+          if (mod.content !== viewUpdate.state.doc.toString()) {
+            setMod(mod.id, "content", viewUpdate.state.doc.toString());
+          }
         }}
       />
     </div>
