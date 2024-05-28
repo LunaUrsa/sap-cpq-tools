@@ -67,27 +67,41 @@ const manifest = {
   //   // sandbox: "sandbox allow-scripts allow-forms allow-popups allow-m odals; script-src 'self' 'unsafe-inline' 'unsafe-eval'; child-src 'self';"
   // },
   commands: {
-    // "Open Last Page": {
+    // "Open Shortcuts": {
     //   suggested_key: {
-    //     default: 'Ctrl+Shift+S',
-    //     mac: 'Command+Shift+S',
+    //     default: 'Ctrl+Space',
+    //     mac: 'Command+Space',
     //   },
-    //   "description": "Opens the extension to the last page you were on."
+    //   "description": "Opens the shortcut page."
     // },
-    "Open Shortcuts": {
-      suggested_key: {
-        default: 'Ctrl+Space',
-        mac: 'Command+Space',
-      },
-      "description": "Opens the shortcut page."
-    },
-    "Open Formulas": {
-      suggested_key: {
-        default: 'Ctrl+Shift+F',
-        mac: 'Command+Shift+F',
-      },
-      "description": "Opens the formula formatter page."
-    },
+    // "Open Mods": {
+    //   // suggested_key: {
+    //   //   default: 'Ctrl+Shift+M',
+    //   //   mac: 'Command+Shift+M',
+    //   // },
+    //   "description": "Opens the mods page."
+    // },
+    // "Open Formulas": {
+    //   // suggested_key: {
+    //   //   default: 'Ctrl+Shift+F',
+    //   //   mac: 'Command+Shift+F',
+    //   // },
+    //   "description": "Opens the formula formatter page."
+    // },
+    // "Open Options": {
+    //   // suggested_key: {
+    //   //   default: 'Ctrl+Shift+O',
+    //   //   mac: 'Command+Shift+O',
+    //   // },
+    //   "description": "Opens the options page."
+    // },
+    // "Open Info": {
+    //   // suggested_key: {
+    //   //   default: 'Ctrl+Shift+I',
+    //   //   mac: 'Command+Shift+I',
+    //   // },
+    //   "description": "Opens the info page."
+    // },
   },
   // "content_security_policy": {
   //   "extension_pages": "script-src 'self' ; object-src 'self';",

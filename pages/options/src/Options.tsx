@@ -39,6 +39,9 @@ const OptionsPage = () => {
   }, []);
 
   useEffect(() => {
+    chrome.sidePanel
+      .setPanelBehavior({ openPanelOnActionClick: userOptions.openInSidePanel })
+      .catch((error) => console.error(error));
     saveToStorage("userOptions", userOptions);
   }, [userOptions]);
 
@@ -87,6 +90,7 @@ const OptionsPage = () => {
   const userOptionsConfig = [
     { label: "Dark Mode", key: "isDarkMode", type: "switch" },
     { label: "Language", key: "language", type: "select", options: ["en", "es", "fr"] },
+    { label: "Open app in side panel", key: "openInSidePanel", type: "switch" },
   ] as Option[];
 
   const codeMirrorOptionsConfig: Option[] = [

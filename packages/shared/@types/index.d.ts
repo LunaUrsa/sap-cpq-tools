@@ -75,6 +75,7 @@ interface FormulaProps {
 interface UserOptions {
   isDarkMode: boolean;
   language: 'en';
+  openInSidePanel: boolean;
 }
 
 type ModeOptions = {

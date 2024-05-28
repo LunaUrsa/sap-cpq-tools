@@ -1,6 +1,7 @@
 export const defaultUserPreferences: UserOptions = {
   isDarkMode: true,
   language: 'en',
+  openInSidePanel: false,
 };
 
 export const codeMirrorThemes = {
