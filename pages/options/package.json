@@ -19,12 +19,7 @@
   },
   "dependencies": {
     "@chrome-extension-boilerplate/shared": "workspace:*",
-    "@emotion/react": "^11.11.4",
-    "@emotion/styled": "^11.11.5",
-    "@mui/icons-material": "^5.15.17",
-    "@mui/lab": "^5.0.0-alpha.170",
-    "@mui/material": "^5.15.17",
-    "@uiw/codemirror-themes-all": "^4.22.0"
+    "@mui/material": "^5.15.17"
   },
   "devDependencies": {
     "@chrome-extension-boilerplate/hmr": "workspace:*",

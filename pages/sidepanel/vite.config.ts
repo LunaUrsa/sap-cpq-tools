@@ -25,6 +25,15 @@ export default defineConfig({
     reportCompressedSize: isProduction,
     rollupOptions: {
       external: ['chrome'],
+      // This next function warns about source maps, but we can ignore it
+      // https://github.com/vitejs/vite/issues/15012
+      onwarn(warning, defaultHandler) {
+        if (warning.code === 'SOURCEMAP_ERROR') {
+          return
+        }
+
+        defaultHandler(warning)
+      },
     },
   },
   define: {

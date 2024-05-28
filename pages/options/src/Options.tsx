@@ -1,7 +1,5 @@
 import '@src/Options.css';
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-// import EnhancedToolbar from "../../popup/src/components/Toolbar";
-// import { Routing } from '../../popup/src/routes';
 import { withErrorBoundary, withSuspense } from '@chrome-extension-boilerplate/shared';
 import OptionsView from '../../popup/src/views/OptionsView';
 
