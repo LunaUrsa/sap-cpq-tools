@@ -7,7 +7,7 @@ import { saveToStorage } from '@chrome-extension-boilerplate/shared/lib/utils';
 import useAppContext from '@chrome-extension-boilerplate/shared/lib/hooks/useAppContext';
 
 
-const OptionsView: React.FC = () => {
+const OptionsPage: React.FC = () => {
   const { userOptions, setUserOptions, codeMirrorOptions, setCodeMirrorOptions, setMods, setShortcuts } = useAppContext();
 
   async function revertToSapDefaults() {
@@ -433,4 +433,4 @@ const OptionsView: React.FC = () => {
   );
 };
 
-export default OptionsView;
+export default OptionsPage;

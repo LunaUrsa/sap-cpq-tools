@@ -4,7 +4,7 @@ import FormulaPage from "../views/FormulaPage"
 import InfoPage from "../views/InfoPage"
 import ModsPage from "../views/ModPage"
 import ShortcutsPage from "../views/ShortcutsPage"
-import OptionsView from "../views/OptionsView"
+import OptionsPage from "../views/OptionsPage"
 
 
 export const Routing: React.FC = () => {
@@ -18,7 +18,7 @@ export const Routing: React.FC = () => {
       <Route path="/shortcuts" element={<ShortcutsPage />} />
       <Route path="/formula" element={<FormulaPage />} />
       <Route path="/mods" element={<ModsPage />} />
-      <Route path="/options" element={<OptionsView />} />
+      <Route path="/options" element={<OptionsPage />} />
       <Route path="/info" element={<InfoPage />} />
     </Routes>
   )
