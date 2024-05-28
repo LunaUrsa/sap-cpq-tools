@@ -1,9 +1,6 @@
 import { createRoot } from 'react-dom/client';
 import '@src/index.css';
-import {
-  // MemoryRouter, 
-  HashRouter,
-} from "react-router-dom"
+import { HashRouter } from "react-router-dom"
 import Popup from '@src/Popup';
 import { AppProvider } from '@chrome-extension-boilerplate/shared/lib/context/AppContext';
 
@@ -13,7 +10,6 @@ function init() {
     throw new Error('Can not find #app-container');
   }
   const root = createRoot(appContainer);
-
   root.render(
     <AppProvider>
       <HashRouter>

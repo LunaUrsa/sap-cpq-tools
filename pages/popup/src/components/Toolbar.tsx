@@ -9,6 +9,7 @@ import {
   Grid,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
+import KeyboardIcon from '@mui/icons-material/Keyboard';
 import SettingsIcon from "@mui/icons-material/Settings";
 import CustomizeIcon from "@mui/icons-material/Tune";
 import HelpIcon from "@mui/icons-material/Help";
@@ -160,7 +161,7 @@ const EnhancedToolbar: React.FC = () => {
                 component={RouterLink}
                 to="/shortcuts"
               >
-                <SettingsIcon />
+                <KeyboardIcon />
                 Shortcuts
               </MenuItem>
               <MenuItem onClick={() => handleMenuClick('mods' as Page)} component={RouterLink} to="/mods">
@@ -174,6 +175,14 @@ const EnhancedToolbar: React.FC = () => {
               >
                 <Functions />
                 Formula Format
+              </MenuItem>
+              <MenuItem
+                onClick={() => handleMenuClick('options' as Page)}
+                component={RouterLink}
+                to="/options"
+              >
+                <SettingsIcon />
+                Options
               </MenuItem>
               <MenuItem onClick={() => handleMenuClick('info' as Page)} component={RouterLink} to="/info">
                 <HelpIcon />

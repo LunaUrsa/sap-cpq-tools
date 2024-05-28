@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect, ReactNode, FC, useMemo } from 'react';
+import { defaultCodePreferences, defaultShortcuts, defaultMods, defaultUserPreferences } from '../constants';
 
 export interface AppContextProps {
   mods: Mod[];
@@ -20,10 +21,10 @@ interface AppProviderProps {
 const AppContext = createContext<AppContextProps | undefined>(undefined);
 
 const AppProvider: FC<AppProviderProps> = ({ children }) => {
-  const [mods, setMods] = useState<Mod[]>([]);
-  const [userOptions, setUserOptions] = useState<UserOptions>({} as UserOptions);
-  const [codeMirrorOptions, setCodeMirrorOptions] = useState<CodeMirrorOptions>({} as CodeMirrorOptions);
-  const [shortcuts, setShortcuts] = useState<Shortcut[]>([]);
+  const [mods, setMods] = useState<Mod[]>(defaultMods);
+  const [userOptions, setUserOptions] = useState<UserOptions>(defaultUserPreferences);
+  const [codeMirrorOptions, setCodeMirrorOptions] = useState<CodeMirrorOptions>(defaultCodePreferences);
+  const [shortcuts, setShortcuts] = useState<Shortcut[]>(defaultShortcuts);
   const [currentPage, setCurrentPage] = useState<Page>('shortcuts' as Page);
 
   useEffect(() => {
