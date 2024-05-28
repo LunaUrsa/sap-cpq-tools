@@ -2,6 +2,7 @@ import 'webextension-polyfill';
 import { loadAndValidateStorageItem, isValidUserOptions, isValidCodeOptions, isValidModList, isValidShortcutList } from '../../../packages/shared/lib/utils';
 import { defaultUserPreferences, defaultCodePreferences, defaultMods, defaultShortcuts } from '../../../packages/shared/lib/constants';
 import customCode from './codeMirrorMods';
+import handleShortcuts from './shortcuts';
 
 // console.log('Background script loaded');
 
@@ -69,22 +70,6 @@ async function injectCode() {
   });
 }
 
-async function handleShortcuts() {
-  // console.info('Handling shortcuts');
-  chrome.commands.onCommand.addListener(async (command) => {
-    console.log(`Command: ${command}`);
-    // switch (command) {
-    //   case 'Open Shortcuts': {
-    //     console.log('Opening shortcuts');
-    //     // await chrome.action.openPop up();
-    //     await chrome.sidePanel.setOptions({ path: 'sidepanel/index.html', enabled: true });
-    //     await chrome.sidePanel.open({ windowId: tab.windowId });
-    //   }
-    // }
-  });
-  // console.log('Shortcuts handled');
-}
-
 async function initSettings() {
   // console.log('Initializing settings');
   await Promise.all([
@@ -103,7 +88,7 @@ async function initSettings() {
   // console.log('Settings initialized, applying mods and handling shortcuts.');
   await injectCss();
   await injectCode();
-  await handleShortcuts();
+  handleShortcuts();
 }
 
 initSettings();
@@ -115,5 +100,6 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
   if (changeInfo.status === 'complete') {
     injectCss();
     injectCode();
+    handleShortcuts();
   }
 });

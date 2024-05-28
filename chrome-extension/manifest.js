@@ -67,13 +67,13 @@ const manifest = {
   //   // sandbox: "sandbox allow-scripts allow-forms allow-popups allow-m odals; script-src 'self' 'unsafe-inline' 'unsafe-eval'; child-src 'self';"
   // },
   commands: {
-    // "Open Shortcuts": {
-    //   suggested_key: {
-    //     default: 'Ctrl+Space',
-    //     mac: 'Command+Space',
-    //   },
-    //   "description": "Opens the shortcut page."
-    // },
+    "Open Shortcuts": {
+      suggested_key: {
+        default: 'Ctrl+Space',
+        mac: 'Command+Space',
+      },
+      "description": "Opens the shortcut page."
+    },
     // "Open Mods": {
     //   // suggested_key: {
     //   //   default: 'Ctrl+Shift+M',
