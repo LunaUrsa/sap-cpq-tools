@@ -1,4 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+
+type Option = {
+  label: string;
+  key: keyof CodeMirrorOptions | keyof UserOptions;
+  type: "switch" | "select" | "number" | "string";
+  tooltip: string;
+  options?: string[];
+};
+
 interface Shortcut {
   id: string;
   key: string;
@@ -51,7 +60,8 @@ enum Page {
   MODS = 'mods',
   SHORTCUTS = 'shortcuts',
   INFO = 'info',
-  FORMULA = 'formula'
+  FORMULA = 'formula',
+  OPTIONS = 'options'
 }
 
 interface RoutingProps {

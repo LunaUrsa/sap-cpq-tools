@@ -53,6 +53,7 @@ const EnhancedToolbar: React.FC = () => {
     "#/": "Shortcuts",
     "#/shortcuts": "Shortcuts",
     "#/mods": "Mods",
+    "#/options": "Options",
     "#/formula": "Formula Format",
     "#/info": "Information",
   };
@@ -75,19 +76,17 @@ const EnhancedToolbar: React.FC = () => {
   let toolbarIcons;
   let usedSpace = 5; // 4 for the title and 1 for the menu icon
   switch (currentPage) {
+    case "options":
     case "info":
     case "formula":
       toolbarIcons = <Grid item xs={12 - usedSpace}></Grid>;
       break;
     case "mods":
-      usedSpace += 5; // 4 for the theme selector and 1 for the add new icon
+      usedSpace += 1; // 1 for the add new icon
       toolbarIcons = (
         <>
           {/* Empty space */}
           <Grid item xs={12 - usedSpace}></Grid>
-          {/* Theme selector */}
-          <Grid item xs={4}>
-          </Grid>
           {/* Add new */}
           <Grid item xs={1}>
             <IconButton
