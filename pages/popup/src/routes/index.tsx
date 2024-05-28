@@ -5,49 +5,39 @@ import InfoPage from "../views/InfoPage"
 import ModsPage from "../views/ModPage"
 import ShortcutsPage from "../views/ShortcutsPage"
 
-export const Routing: React.FC<RoutingProps> = ({
-  mods,
-  setMods,
-  shortcuts,
-  setShortcuts,
-  preferences,
-  // setPreferences,
-  codeMirrorOptions,
-  // setCodeMirrorOptions,
-}) => (
-  <Routes>
-    <Route
-      path="/"
-      element={
-        <ShortcutsPage shortcuts={shortcuts} setShortcuts={setShortcuts} />
-      }
-    />
-    {/* This is needed to display the home page when the extension is opened */}
-    <Route
-      path="/#"
-      element={
-        <ShortcutsPage shortcuts={shortcuts} setShortcuts={setShortcuts} />
-      }
-    />
-    <Route
-      path="/shortcuts"
-      element={
-        <ShortcutsPage shortcuts={shortcuts} setShortcuts={setShortcuts} />
-      }
-    />
-    <Route path="/formula" element={<FormulaPage preferences={preferences} />} />
-    <Route
-      path="/mods"
-      element={
-        <ModsPage
-          mods={mods}
-          setMods={setMods}
-          preferences={preferences}
-          codeMirrorOptions={codeMirrorOptions}
-        />
-      }
-    />
-    {/* <Route
+
+export const Routing: React.FC = () => {
+
+
+  return (
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <ShortcutsPage />
+        }
+      />
+      {/* This is needed to display the home page when the extension is opened */}
+      <Route
+        path="/#"
+        element={
+          <ShortcutsPage />
+        }
+      />
+      <Route
+        path="/shortcuts"
+        element={
+          <ShortcutsPage />
+        }
+      />
+      <Route path="/formula" element={<FormulaPage />} />
+      <Route
+        path="/mods"
+        element={
+          <ModsPage />
+        }
+      />
+      {/* <Route
       path="/options"
       element={
         <OptionsPage
@@ -60,6 +50,7 @@ export const Routing: React.FC<RoutingProps> = ({
         />
       }
     /> */}
-    <Route path="/info" element={<InfoPage />} />
-  </Routes>
-)
+      <Route path="/info" element={<InfoPage />} />
+    </Routes>
+  )
+}

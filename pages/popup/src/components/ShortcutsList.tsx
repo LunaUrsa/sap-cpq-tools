@@ -15,11 +15,14 @@ import type {
   DroppableProvided,
 } from "react-beautiful-dnd";
 
-const ShortcutsList: React.FC<ShortcutsListProps> = ({
-  shortcuts,
-  setShortcuts,
-}) => {
+import useAppContext from '@chrome-extension-boilerplate/shared/lib/hooks/useAppContext';
+import { saveToStorage } from "@chrome-extension-boilerplate/shared/lib/utils";
+
+const ShortcutsList: React.FC = () => {
   const [destination, setDestination] = useState<string>("");
+
+
+  const { shortcuts, setShortcuts } = useAppContext();
 
 
   // When the user leaves the input field, save the shortcuts to the local storage
@@ -32,7 +35,7 @@ const ShortcutsList: React.FC<ShortcutsListProps> = ({
   const handleDelete = (id: string) => {
     const updatedShortcuts = shortcuts.filter((shortcut) => shortcut.id !== id);
     setShortcuts(updatedShortcuts);
-    chrome.storage.local.set({ shortcuts: JSON.stringify(updatedShortcuts) });
+    saveToStorage('shortcuts', updatedShortcuts)
   };
 
   // This creates a new shortcut with the given id and value
@@ -59,6 +62,7 @@ const ShortcutsList: React.FC<ShortcutsListProps> = ({
       return shortcut;
     });
     setShortcuts(updatedShortcuts);
+    saveToStorage('shortcuts', updatedShortcuts)
   };
 
   const onDragEnd = (result: DropResult) => {
@@ -67,7 +71,7 @@ const ShortcutsList: React.FC<ShortcutsListProps> = ({
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
     setShortcuts(items);
-    chrome.storage.local.set({ shortcuts: JSON.stringify(items) });
+    saveToStorage('shortcuts', items)
   };
 
   // This handles displaying the menu items in the destination dropdown

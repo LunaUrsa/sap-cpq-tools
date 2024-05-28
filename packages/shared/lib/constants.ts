@@ -1,3 +1,5 @@
+import { stripIndent } from 'common-tags';
+
 export const defaultUserPreferences: UserOptions = {
   isDarkMode: true,
   language: 'en',
@@ -391,7 +393,7 @@ export const defaultMods: Mod[] = [
   {
     id: "1",
     name: "Edit Icon",
-    content: `
+    content: stripIndent`
       img[title="Edit"] {
         width: 28px;
       }
@@ -402,7 +404,7 @@ export const defaultMods: Mod[] = [
   {
     id: "2",
     name: "Add New Document Pop-up",
-    content: `
+    content: stripIndent`
       #popup1 {
         position: fixed;
         top: 350px;
@@ -415,7 +417,7 @@ export const defaultMods: Mod[] = [
   {
     id: "3",
     name: "Product Configuration Layout",
-    content: `
+    content: stripIndent`
       #divConfiguratorLayout {
         width: 1500px;
       }
@@ -430,7 +432,7 @@ export const defaultMods: Mod[] = [
   {
     id: "4",
     name: "Document Preview Modal",
-    content: `
+    content: stripIndent`
       #preview_popup {
         position: fixed;
         top: 20px;
@@ -453,7 +455,7 @@ export const defaultMods: Mod[] = [
   {
     id: "5",
     name: "Adding Attributes from Simple Products Modal",
-    content: `
+    content: stripIndent`
       #ctl00_cph1_attributeControl_ps_pnlTable {
         height: 850px;
         position: fixed;
@@ -466,7 +468,7 @@ export const defaultMods: Mod[] = [
   {
     id: "6",
     name: "Tag Builder",
-    content: `
+    content: stripIndent`
       #tab-container-1 {
         width: 800px;
       }
@@ -501,7 +503,7 @@ export const defaultMods: Mod[] = [
   {
     id: "7",
     name: "Product Configuration Fields",
-    content: `
+    content: stripIndent`
       textarea.form-control[name*="DynPartNumber"] {
         height: 150px;
         width: 600px;
@@ -513,7 +515,7 @@ export const defaultMods: Mod[] = [
   {
     id: "8",
     name: "Rule Text Boxes",
-    content: `
+    content: stripIndent`
       #ctl00_cph1_pnlRuleAdministration {
         width: 1600px;
       }
@@ -542,7 +544,7 @@ export const defaultMods: Mod[] = [
   {
     id: "9",
     name: "Script Events",
-    content: `
+    content: stripIndent`
       #ctl00_cph1_lbAfterAdding1 {
         height: 150px;
         width: 400px;
@@ -554,7 +556,7 @@ export const defaultMods: Mod[] = [
   {
     id: "10",
     name: "Promo Banner on Quote Page",
-    content: `
+    content: stripIndent`
       div.alert.alert-info {
         z-index: 5;
         opacity: 1;
@@ -574,7 +576,7 @@ export const defaultMods: Mod[] = [
   {
     id: "11",
     name: "Save Notifications",
-    content: `
+    content: stripIndent`
       #ctl00_cph1_labError {
         font-weight: bold;
         font-size: 18pt;
@@ -590,7 +592,7 @@ export const defaultMods: Mod[] = [
   {
     id: "12",
     name: "Window Relocation Formatting",
-    content: `
+    content: stripIndent`
       .optsButton {
         background-color: #f5f5f5;
       }
@@ -638,7 +640,7 @@ export const defaultMods: Mod[] = [
   {
     id: "13",
     name: "Script Info",
-    content: `
+    content: stripIndent`
       .script-info {
         width: 50%;
       }
@@ -660,7 +662,7 @@ export const defaultMods: Mod[] = [
   {
     id: "14",
     name: "Prod Warning Popup Format",
-    content: `
+    content: stripIndent`
       #toolButton img {
         width: 100px;
       }
@@ -697,7 +699,7 @@ export const defaultMods: Mod[] = [
   {
     id: "15",
     name: "Script IDE",
-    content: `
+    content: stripIndent`
       #script-ide>div.head.scriptsNavigationDiv>h2 {
         cursor: pointer;
       }
@@ -832,7 +834,7 @@ export const defaultMods: Mod[] = [
   {
     id: "16",
     name: "Domain Selector",
-    content: `
+    content: stripIndent`
       .select-editable {
         position:relative; 
         background-color:white; 

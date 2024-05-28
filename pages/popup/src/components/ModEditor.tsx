@@ -5,15 +5,20 @@ import {
   css,
 } from "@codemirror/lang-css";
 
-import * as themes from "@uiw/codemirror-themes-all";
+// import * as themes from "@uiw/codemirror-themes-all";
+
+
+// import useAppContext from '@chrome-extension-boilerplate/shared/lib/hooks/useAppContext';
 
 /* See https://github.com/uiwjs/react-codemirror for documentation */
 
 const ModEditor: React.FC<ModEditProps> = ({
   mod,
-  setMod,
-  codeMirrorOptions,
+  handleChange,
 }) => {
+
+  // const { codeMirrorOptions } = useAppContext();
+
   return (
     <div>
       <CodeMirror
@@ -24,10 +29,10 @@ const ModEditor: React.FC<ModEditProps> = ({
         height="200px"
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        theme={
-          themes[codeMirrorOptions?.theme as keyof typeof themes] ||
-          codeMirrorOptions?.theme
-        }
+        // theme={
+        //   themes[codeMirrorOptions?.theme as keyof typeof themes] ||
+        //   codeMirrorOptions?.theme
+        // }
         basicSetup={{
           lineNumbers: true,
           highlightActiveLineGutter: true,
@@ -54,7 +59,7 @@ const ModEditor: React.FC<ModEditProps> = ({
         ]}
         onUpdate={(viewUpdate) => {
           if (mod.content !== viewUpdate.state.doc.toString()) {
-            setMod(mod.id, "content", viewUpdate.state.doc.toString());
+            handleChange(mod.id, "content", viewUpdate.state.doc.toString());
           }
         }}
       />

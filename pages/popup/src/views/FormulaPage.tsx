@@ -3,7 +3,9 @@ import React, { useState } from "react";
 import CodeMirror from "@uiw/react-codemirror";
 import { Grid } from "@mui/material";
 
-import * as themes from "@uiw/codemirror-themes-all";
+// import * as themes from "@uiw/codemirror-themes-all";
+
+// import useAppContext from '@chrome-extension-boilerplate/shared/lib/hooks/useAppContext';
 
 interface TrackingDict {
   Operators: number;
@@ -152,9 +154,10 @@ function revertToRaw(parsedText: string): string {
   return parsedText.replace(/\n/g, '').replace(/\t/g, '').replace(/\r/g, '').trim();
 }
 
-const FormulaPage: React.FC<FormulaProps> = ({
-  preferences,
-}) => {
+const FormulaPage: React.FC = () => {
+
+  // const { codeMirrorOptions } = useAppContext();
+
   const [rawText, setRawText] = useState<string>(`[IF](<*CTX( Quote.CustomField(Customer's Language).AddDays().InUSDateFormat )*>){"True"}{"False"}[ENDIF]`);
   const [formattedText, setFormattedText] = useState(`[IF](
   <*CTX( Quote.CustomField(Customer's Language).AddDays().InUSDateFormat )*>
@@ -196,7 +199,7 @@ const FormulaPage: React.FC<FormulaProps> = ({
             height="12vh"
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
-            theme={themes[preferences?.codeMirrorTheme as keyof typeof themes] || preferences?.codeMirrorTheme}
+            // theme={themes[codeMirrorOptions.theme as keyof typeof themes] || codeMirrorOptions?.theme}
             basicSetup={{
               lineNumbers: true,
               highlightActiveLineGutter: true,
@@ -231,7 +234,7 @@ const FormulaPage: React.FC<FormulaProps> = ({
             height="60vh"
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
-            theme={themes[preferences?.codeMirrorTheme as keyof typeof themes] || preferences?.codeMirrorTheme}
+            // theme={themes[codeMirrorOptions.theme as keyof typeof themes] || codeMirrorOptions?.theme}
             basicSetup={{
               lineNumbers: true,
               highlightActiveLineGutter: true,

@@ -181,10 +181,17 @@ importers:
         version: 10.9.2(@swc/core@1.5.5)(@types/node@20.12.11)(typescript@5.2.2)
 
   packages/shared:
+    dependencies:
+      common-tags:
+        specifier: ^1.8.2
+        version: 1.8.2
     devDependencies:
       '@chrome-extension-boilerplate/tsconfig':
         specifier: workspace:*
         version: link:../tsconfig
+      '@types/common-tags':
+        specifier: ^1.8.4
+        version: 1.8.4
       tsup:
         specifier: 8.0.2
         version: 8.0.2(@swc/core@1.5.5)(postcss@8.4.38)(ts-node@10.9.2(@swc/core@1.5.5)(@types/node@20.12.11)(typescript@5.2.2))(typescript@5.2.2)

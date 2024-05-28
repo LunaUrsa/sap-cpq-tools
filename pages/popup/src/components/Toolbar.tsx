@@ -16,16 +16,11 @@ import { Link as RouterLink } from "react-router-dom";
 import { Functions, AddCircle } from "@mui/icons-material";
 import { v4 as uuidv4 } from "uuid";
 import { saveToStorage } from "@chrome-extension-boilerplate/shared/lib/utils";
+import useAppContext from '@chrome-extension-boilerplate/shared/lib/hooks/useAppContext';
 
-const EnhancedToolbar: React.FC<ToolbarProps> = ({
-  mods,
-  setMods,
-  shortcuts,
-  setShortcuts,
-  currentPage,
-  setCurrentPage,
-}) => {
+const EnhancedToolbar: React.FC = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const { currentPage, setCurrentPage, mods, setMods, shortcuts, setShortcuts } = useAppContext();
 
   const openMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -46,9 +41,10 @@ const EnhancedToolbar: React.FC<ToolbarProps> = ({
       isEnabled: true,
       isValidLanguage: true,
       isValidCode: true,
-      language: "javascript",
+      language: "css",
     };
     setMods([...mods, newStyle]);
+    saveToStorage("mods", [...mods, newStyle]);
   };
 
   const titles: Record<string, string> = {
@@ -72,6 +68,7 @@ const EnhancedToolbar: React.FC<ToolbarProps> = ({
       isValidDestination: true,
     };
     setShortcuts([...shortcuts, newShortcut]);
+    saveToStorage("shortcuts", [...shortcuts, newShortcut]);
   };
 
   let toolbarIcons;

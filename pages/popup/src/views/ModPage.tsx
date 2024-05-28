@@ -2,22 +2,12 @@ import React from "react";
 import ModList from "../components/ModList";
 import { Grid } from "@mui/material";
 
-const ModsPage: React.FC<ModListProps> = ({
-  mods,
-  setMods,
-  preferences,
-  codeMirrorOptions,
-}) => {
+const ModsPage: React.FC = () => {
   return (
     <div>
       <Grid container>
         <Grid item xs={12}>
-          <ModList
-            mods={mods}
-            setMods={setMods}
-            preferences={preferences}
-            codeMirrorOptions={codeMirrorOptions}
-          />
+          <ModList />
         </Grid>
       </Grid>
     </div>

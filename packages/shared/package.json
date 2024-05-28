@@ -19,9 +19,12 @@
     "prettier": "prettier . --write",
     "type-check": "tsc --noEmit"
   },
-  "dependencies": {},
+  "dependencies": {
+    "common-tags": "^1.8.2"
+  },
   "devDependencies": {
     "@chrome-extension-boilerplate/tsconfig": "workspace:*",
+    "@types/common-tags": "^1.8.4",
     "tsup": "8.0.2"
   }
 }

@@ -5,6 +5,7 @@ import {
   HashRouter,
 } from "react-router-dom"
 import Popup from '@src/Popup';
+import { AppProvider } from '@chrome-extension-boilerplate/shared/lib/context/AppContext';
 
 function init() {
   const appContainer = document.querySelector('#app-container');
@@ -14,9 +15,11 @@ function init() {
   const root = createRoot(appContainer);
 
   root.render(
-    <HashRouter>
-      <Popup />
-    </HashRouter>
+    <AppProvider>
+      <HashRouter>
+        <Popup />
+      </HashRouter>
+    </AppProvider >
   );
 }
 

@@ -22,29 +22,41 @@ import type {
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import ModEditor from "./ModEditor";
+import useAppContext from '@chrome-extension-boilerplate/shared/lib/hooks/useAppContext';
+import { saveToStorage } from "@chrome-extension-boilerplate/shared/lib/utils";
 
-const ModList: React.FC<ModListProps> = ({
-  mods,
-  setMods,
-  codeMirrorOptions,
-}) => {
+const ModList: React.FC = () => {
   const [activeEditId, setActiveEditId] = useState<string | null>(null);
+  const { mods, setMods } = useAppContext();
 
-  // When the user leaves the input field, save the mods to the local storage
-  const handleBlur = () => {
-    // console.log("Saving mods to storage:", mods);
-    chrome.storage.local.set({ mods: JSON.stringify(mods) });
-  };
+  const refreshMods = (oldMods: Mod[], newMods: Mod[]) => {
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      const activeTab = tabs[0];
+      if (!activeTab.url || activeTab.url.startsWith('chrome://')) {
+        return;
+      }
 
-  // Delete the mod with the given id
-  const handleDelete = (id: string) => {
-    const updatedMods = mods.filter((mod) => mod.id !== id);
-    setMods(updatedMods);
-    chrome.storage.local.set({ mods: JSON.stringify(updatedMods) });
-  };
+      oldMods.forEach((mod: Mod) => {
+        if (!activeTab.id) return;
+        chrome.scripting.removeCSS({
+          target: { tabId: activeTab.id, allFrames: true },
+          css: mod.content,
+        });
+      });
 
-  // This creates a new mod with the given id and value
-  // and updates the mods list
+      newMods.forEach(async (mod: Mod) => {
+        if (mod?.content && mod?.isEnabled && mod?.isValidCode && activeTab.id) {
+          await chrome.scripting.insertCSS({
+            target: { tabId: activeTab.id, allFrames: true },
+            css: mod.content,
+          });
+        }
+      });
+    });
+    setMods(newMods);
+    saveToStorage('mods', newMods)
+  }
+
   const handleChange = (
     id: string,
     field: keyof Mod,
@@ -56,16 +68,36 @@ const ModList: React.FC<ModListProps> = ({
       }
       return mod;
     });
-    setMods(updatedMods);
+    refreshMods(mods, updatedMods);
+  };
+
+  // When the user leaves the input field, save the mods to the local storage
+  const handleBlur = (
+    id: string,
+    field: keyof Mod,
+    value: string | boolean,
+  ) => {
+    const updatedMods = mods.map((mod) => {
+      if (mod.id === id) {
+        return { ...mod, [field]: value };
+      }
+      return mod;
+    });
+    refreshMods(mods, updatedMods);
+  };
+
+  // Delete the mod with the given id
+  const handleDelete = (id: string) => {
+    const updatedMods = mods.filter((mod) => mod.id !== id);
+    refreshMods(mods, updatedMods);
   };
 
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) return;
-    const items = Array.from(mods);
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
-    setMods(items);
-    chrome.storage.local.set({ shortcuts: JSON.stringify(items) });
+    const updatedMods = Array.from(mods);
+    const [reorderedItem] = updatedMods.splice(result.source.index, 1);
+    updatedMods.splice(result.destination.index, 0, reorderedItem);
+    refreshMods(mods, updatedMods);
   };
 
   // Toggle edit mode
@@ -104,7 +136,7 @@ const ModList: React.FC<ModListProps> = ({
                           label="Name"
                           value={mod.name}
                           onChange={(e) => handleChange(mod.id, "name", e.target.value)}
-                          onBlur={handleBlur}
+                          onBlur={(e) => handleBlur(mod.id, "name", e.target.value)}
                           placeholder="Name"
                           error={!mod.isValidCode}
                           helperText={!mod.isValidCode ? "This code is not valid!" : ""}
@@ -150,11 +182,7 @@ const ModList: React.FC<ModListProps> = ({
                         <Grid item xs={12}>
                           <ListItemText
                             secondary={
-                              <ModEditor
-                                mod={mod}
-                                setMod={handleChange}
-                                codeMirrorOptions={codeMirrorOptions}
-                              />
+                              <ModEditor mod={mod} handleChange={handleChange} />
                             }
                             primaryTypographyProps={{ component: "div" }}
                             secondaryTypographyProps={{ component: "div" }}

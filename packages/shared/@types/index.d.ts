@@ -29,8 +29,7 @@ interface ModListProps {
 
 interface ModEditProps {
   mod: Mod;
-  setMod: (id: string, field: keyof Mod, value: string | boolean) => void;
-  codeMirrorOptions: CodeMirrorOptions
+  handleChange: (id: string, field: keyof Mod, value: string | boolean) => void;
 }
 
 interface SiteMap {
