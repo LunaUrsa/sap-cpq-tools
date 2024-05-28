@@ -5,6 +5,9 @@
     "paths": {
       "@src/*": [
         "src/*"
+      ],
+      "@lib/*": [
+        "../../packages/shared/lib/*"
       ]
     },
     "jsx": "react-jsx",
