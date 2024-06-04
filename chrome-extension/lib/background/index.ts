@@ -103,3 +103,46 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
     handleShortcuts();
   }
 });
+
+// chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+//   // This generic listener is used to handle messages from the content script
+//   console.log('Background script received message:', request)
+//   if (request.action === 'download') {
+//     // When the "open in vscode" button is clicked, the content script sends a message to the background script
+//     // The background script downloads the code and then opens it in VSCode
+//     chrome.downloads.download({
+//       url: request.url,
+//       filename: request.filename,
+//       saveAs: false,
+//       conflictAction: 'overwrite',
+//     }, (downloadId) => {
+//       if (chrome.runtime.lastError) {
+//         console.log(' Sending error response')
+//         sendResponse({ success: false, error: chrome.runtime.lastError.message });
+//         return;
+//       }
+
+//       // Listen for the download to complete
+//       chrome.downloads.onChanged.addListener(function listener(downloadDelta) {
+//         // console.log('Download delta:', downloadDelta)
+//         if (downloadDelta.id === downloadId && downloadDelta.state && downloadDelta.state.current === 'complete') {
+//           // console.log('Download complete:', downloadDelta)
+//           chrome.downloads.search({ id: downloadId }, (results) => {
+//             if (results && results.length > 0) {
+//               // console.log('Download item:', results[0])
+//               // console.log('Sending message to content script: downloadComplete')
+//               // console.log('Sending success response')
+//               sendResponse({
+//                 action: 'downloadComplete',
+//                 filePath: results[0].filename // Note: This is not the full file path, but the download item
+//               });
+//             }
+//           });
+//           // Remove the listener once the download is complete
+//           chrome.downloads.onChanged.removeListener(listener);
+//         }
+//       });
+//     });
+//     return true; // Indicates that the response will be sent asynchronously
+//   }
+// });

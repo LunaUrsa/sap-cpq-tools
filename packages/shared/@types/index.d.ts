@@ -81,10 +81,15 @@ interface FormulaProps {
   preferences: UserOptions;
 }
 
+// interface downloadProps {
+//   hostUrl: string;
+//   destination: string;
+// }
 interface UserOptions {
   isDarkMode: boolean;
   language: 'en';
   openInSidePanel: boolean;
+  // downloadLocations: { [key: string]: string };
 }
 
 type ModeOptions = {
@@ -238,8 +243,39 @@ type CodeMirrorOptions = {
   styleActiveLine: boolean;
   autoCloseTags: boolean;
   closeBrackets: boolean;
+  search: null | {
+    bottom: boolean;
+  },
   // Maybe CM6?
   // highlightActiveLine: boolean;
   // resize: true;
   // shortcuts: ExtraKeys;
 };
+
+// /* for the file reading */
+// interface FileSystemDirectoryHandle {
+//   kind: 'directory';
+//   name: string;
+//   queryPermission(options: FileSystemHandlePermissionDescriptor): Promise<PermissionState>;
+//   requestPermission(options: FileSystemHandlePermissionDescriptor): Promise<PermissionState>;
+//   values(): AsyncIterable<FileSystemHandle>;
+// }
+
+// interface FileSystemFileHandle {
+//   kind: 'file';
+//   name: string;
+//   getFile(): Promise<File>;
+// }
+
+// interface FileSystemHandle {
+//   kind: 'file' | 'directory';
+//   name: string;
+// }
+
+// interface FileSystemHandlePermissionDescriptor {
+//   mode: 'read' | 'readwrite';
+// }
+
+// interface Window {
+//   showDirectoryPicker(options?: OpenFilePickerOptions): Promise<FileSystemDirectoryHandle>;
+// }

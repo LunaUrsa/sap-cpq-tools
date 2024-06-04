@@ -19,7 +19,8 @@ const manifest = {
     'storage',
     'sidePanel',
     'activeTab',
-    'scripting'
+    'scripting',
+    // 'downloads',
   ],
   side_panel: {
     default_path: 'sidepanel/index.html',

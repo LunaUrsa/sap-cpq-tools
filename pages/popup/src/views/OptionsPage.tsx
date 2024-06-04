@@ -6,6 +6,18 @@ import { FormControl, MenuItem, Select, Switch, Typography, Card, Box, Divider, 
 import { userOptionsConfig, codeMirrorOptionsConfig, sapDefaultPreferences, defaultCodePreferences, defaultShortcuts, defaultMods } from '@chrome-extension-boilerplate/shared/lib/constants';
 import { saveToStorage } from '@chrome-extension-boilerplate/shared/lib/utils';
 import useAppContext from '@chrome-extension-boilerplate/shared/lib/hooks/useAppContext';
+// import {
+//   MouseEvent,
+//   useState
+// } from 'react';
+
+// declare module 'react' {
+//   interface InputHTMLAttributes<T> extends HTMLAttributes<T> {
+//     // extends React's HTMLAttributes
+//     directory?: string;
+//     webkitdirectory?: string;
+//   }
+// }
 
 const OptionsPage: React.FC = () => {
   const { userOptions, setUserOptions, codeMirrorOptions, setCodeMirrorOptions, setMods, setShortcuts } = useAppContext();
@@ -101,7 +113,6 @@ const OptionsPage: React.FC = () => {
       [option.key]: value
     });
   };
-
 
   const generateUserFormControl = (
     option: Option,
@@ -246,6 +257,93 @@ const OptionsPage: React.FC = () => {
     );
   };
 
+  // interface SiteMapping {
+  //   host: string;
+  //   filePath: string;
+  // }
+
+  // const [siteMappings, setSiteMappings] = useState<SiteMapping[]>([
+  //   { host: 'website.com', filePath: 'C:/path' }
+  // ]);
+
+  // const handleAddRow = () => {
+  //   setSiteMappings([...siteMappings, { host: '', filePath: '' }]);
+  // };
+
+  // const handleDeleteRow = (index: number) => {
+  //   const newSiteMappings = siteMappings.filter((_, i) => i !== index);
+  //   setSiteMappings(newSiteMappings);
+  // };
+
+  // const handleChange = (index: number, field: keyof SiteMapping, value: string) => {
+  //   const newSiteMappings = [...siteMappings];
+  //   newSiteMappings[index][field] = value;
+  //   setSiteMappings(newSiteMappings);
+  // };
+
+  // const selectFilePath = async (event: MouseEvent<HTMLDivElement>) => {
+  //   console.log('selectFilePath', event);
+
+  //   try {
+  //     if ('showDirectoryPicker' in window) {
+  //       console.log('Directory Picker API is supported in this browser.');
+
+  //       const handle = await window.showDirectoryPicker();
+  //       console.log('Directory selected:', handle);
+
+  //       // Check for permissions
+  //       const permissionStatus = await handle.queryPermission({ mode: 'readwrite' });
+  //       console.log('Permission status:', permissionStatus);
+
+  //       if (permissionStatus === 'granted') {
+  //         // Iterate through the directory entries
+  //         for await (const entry of handle.values()) {
+  //           if (entry.kind === 'file') {
+  //             console.log('File:', entry.name);
+  //             await readTextFile(entry as FileSystemFileHandle);
+  //           } else if (entry.kind === 'directory') {
+  //             console.log('Directory:', entry.name);
+  //             // Handle subdirectory entry
+  //           }
+  //         }
+  //         return handle;
+  //       } else if (permissionStatus === 'prompt') {
+  //         const requestStatus = await handle.requestPermission({ mode: 'readwrite' });
+  //         console.log('Request permission status:', requestStatus);
+
+  //         if (requestStatus === 'granted') {
+  //           // Iterate through the directory entries
+  //           for await (const entry of handle.values()) {
+  //             if (entry.kind === 'file') {
+  //               console.log('File:', entry.name);
+  //               await readTextFile(entry as FileSystemFileHandle);
+  //             } else if (entry.kind === 'directory') {
+  //               console.log('Directory:', entry.name);
+  //               // Handle subdirectory entry
+  //             }
+  //           }
+  //           return handle;
+  //         } else {
+  //           console.error('Permission to access directories was not granted.');
+  //         }
+  //       } else {
+  //         console.error('Permission to access directories was denied.');
+  //       }
+  //     } else {
+  //       console.error('Directory Picker API is not supported in this browser.');
+  //     }
+  //   } catch (error) {
+  //     console.error('Error selecting directory:', error);
+  //   }
+  //   return null;
+  // };
+
+  // const readTextFile = async (fileHandle: FileSystemFileHandle) => {
+  //   const file = await fileHandle.getFile();
+  //   const text = await file.text();
+  //   console.log('File content:', text);
+  // };
+
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
       <Box className="space-y-6">
@@ -254,11 +352,6 @@ const OptionsPage: React.FC = () => {
             Extension Options
           </Typography>
           <Divider className="mb-4" />
-          <Grid container spacing={2}>
-            {userOptionsConfig.map((option) =>
-              generateUserFormControl(option, userOptions)
-            )}
-          </Grid>
           <Grid container spacing={2}>
             <Grid item xs={12} md={6}>
               <Tooltip title="Reset Shortcuts">
@@ -287,6 +380,59 @@ const OptionsPage: React.FC = () => {
               </Tooltip>
             </Grid>
           </Grid>
+          <Grid container spacing={2}>
+            {userOptionsConfig.map((option) =>
+              generateUserFormControl(option, userOptions)
+            )}
+          </Grid>
+          {/* <Grid container spacing={2}>
+            <Container>
+              <Toolbar>
+                <Typography variant="h6" style={{ flexGrow: 1 }}>
+                  Code Download Locations
+                </Typography>
+                <Button color="primary" variant="contained" startIcon={<Add />} onClick={handleAddRow}>
+                  Add Row
+                </Button>
+              </Toolbar>
+              {/* <Box mt={2}>
+                {siteMappings.map((mapping, index) => (
+                  <Grid container spacing={2} alignItems="center" key={index}>
+                    <Grid item xs={5}>
+                      <TextField
+                        label="Host"
+                        fullWidth
+                        value={mapping.host}
+                        onChange={(e) => handleChange(index, 'host', e.target.value)}
+                      />
+                    </Grid>
+                    <Grid item xs={5}>
+                      <TextField
+                        label="File Path"
+                        fullWidth
+                        value={mapping.filePath}
+                        onClick={(e) => selectFilePath(e)}
+                      // onClick={() => document.getElementById(`folderInput-${index}`)?.click()}
+                      />
+                       <input // Webkit stuff only supports the "upload" button
+                        type="file"
+                        id={`folderInput-${index}`}
+                        style={{ display: 'none' }}
+                        webkitdirectory=""
+                        onChange={(e) => handleFolderSelect(index, e)}
+                      /> 
+                    </Grid>
+                    <Grid item xs={2}>
+                      <IconButton color="secondary" onClick={() => handleDeleteRow(index)}>
+                        <Delete />
+                      </IconButton>
+                    </Grid>
+                  </Grid>
+                ))}
+              </Box>
+            </Container>
+
+          </Grid> */}
         </Card>
         <Card className="p-4">
           <Typography variant="h4" gutterBottom>

@@ -4,6 +4,7 @@ export const defaultUserPreferences: UserOptions = {
   isDarkMode: true,
   language: 'en',
   openInSidePanel: false,
+  // downloadLocations: {},
 };
 
 export const codeMirrorThemes = {
@@ -227,6 +228,9 @@ export const defaultCodePreferences: CodeMirrorOptions = {
   styleActiveLine: true,
   autoCloseTags: true,
   closeBrackets: true,
+  search: {
+    'bottom': false,
+  }
   // Maybe CM6?
   // highlightActiveLine: true,
   // shortcuts: {},
@@ -376,13 +380,14 @@ export const sapDefaultPreferences: CodeMirrorOptions = {
   // tabMode: "shift",
   // wholeLineUpdateBefore: true,
   // My custom options
-  foldGutter: true,
-  matchTags: true,
-  linting: true,
-  highlightSelectionMatches: true,
-  styleActiveLine: true,
+  foldGutter: false,
+  matchTags: false,
+  linting: false,
+  highlightSelectionMatches: false,
+  styleActiveLine: false,
   autoCloseTags: false,
   closeBrackets: false,
+  search: null,
   // Maybe CM6?
   // highlightActiveLine: true,
   // shortcuts: {},
