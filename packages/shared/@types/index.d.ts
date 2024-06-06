@@ -175,7 +175,7 @@ type CodeMirrorOptions = {
   // Standard options
   // value: string;
   // mode: ModeOptions | string;
-  pythonVersion: 2 | 3;
+  // pythonVersion: 2 | 3;
   lineSeparator: string | null;
   theme: CodeMirrorTheme;
   indentUnit: number;
@@ -184,9 +184,9 @@ type CodeMirrorOptions = {
   indentWithTabs: boolean;
   electricChars: boolean;
   // specialChars: RegExp;
-  direction: "ltr" | "rtl";
-  rtlMoveVisually: boolean;
-  // keyMap: string;
+  // direction: "ltr" | "rtl";
+  // rtlMoveVisually: boolean;
+  keyMap: string;
   // extraKeys: ExtraKeys;
   // configureMouse: null | Record<string, unknown>;
   lineWrapping: boolean;
@@ -194,7 +194,7 @@ type CodeMirrorOptions = {
   firstLineNumber: number;
   // gutters: string[];
   fixedGutter: boolean;
-  // scrollbarStyle: "native" | "null" | "overlay";
+  scrollbarStyle: "native" | "null" | "overlay" | "simple";
   coverGutterNextToScrollbar: boolean;
   // inputStyle: string;
   // screenReaderLabel: string | null;
@@ -210,7 +210,7 @@ type CodeMirrorOptions = {
   // Minor options
   // dragDrop: boolean;
   // allowDropFileTypes: string[] | null;
-  cursorBlinkRate: number;
+  // cursorBlinkRate: number;
   cursorScrollMargin: number;
   // cursorHeight: number;
   // singleCursorHeightPerLine: boolean;
@@ -222,13 +222,12 @@ type CodeMirrorOptions = {
   // addModeClass: boolean;
   maxHighlightLength: number;
   viewportMargin: number;
-  spellcheck: boolean;
-  autocapitalize: boolean;
-  autocorrect: boolean;
+  spellCheck: boolean;
+  autoCapitalize: boolean;
+  autoCorrect: boolean;
   // fullScreen: boolean;
   // SAP addons
   // hintOptions: null | Record<string, unknown>;
-  matchBrackets: boolean;
   showTrailingSpace: boolean;
   // SAP custom options
   // disableInput: boolean;
@@ -236,20 +235,30 @@ type CodeMirrorOptions = {
   // tabMode: "shift" | "spaces";
   // wholeLineUpdateBefore: boolean;
   // My custom options
-  foldGutter: boolean;
+  foldCode: boolean;
   matchTags: boolean;
   linting: boolean;
   highlightSelectionMatches: boolean;
   styleActiveLine: boolean;
-  autoCloseTags: boolean;
-  closeBrackets: boolean;
-  search: null | {
-    bottom: boolean;
-  },
+  search: boolean;
   // Maybe CM6?
   // highlightActiveLine: boolean;
   // resize: true;
   // shortcuts: ExtraKeys;
+  markSelection: boolean;
+  selectionPointer: boolean;
+  continueComment: boolean;
+  autoComplete: boolean;
+  autoCloseBrackets: boolean;
+  // autoCloseTags: boolean;
+  // continueList: boolean;
+  matchBrackets: boolean;
+  matchTags: boolean;
+  jumpToLine: boolean;
+  matchesOnScrollbar: boolean;
+  comments: boolean;
+  continueComments: boolean;
+  scrollPastEnd: boolean;
 };
 
 // /* for the file reading */
