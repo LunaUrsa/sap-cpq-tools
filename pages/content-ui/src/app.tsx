@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback, useRef } from 'react';
-import { FormControl, Grid, IconButton, InputLabel, MenuItem, Select, Tooltip } from '@mui/material';
+import { Button, FormControl, Grid, IconButton, InputLabel, MenuItem, Select, Tooltip } from '@mui/material';
 import type { SelectChangeEvent } from '@mui/material';
 import {
   // ZoomOutMap,
@@ -11,11 +11,7 @@ import {
 import '@mui/material/styles';
 import useAppContext from '@chrome-extension-boilerplate/shared/lib/hooks/useAppContext';
 import { saveToStorage } from '@chrome-extension-boilerplate/shared/lib/utils';
-
 import FullScreenAlert from './FullScreenAlert';
-
-
-
 
 export default function App() {
   const { userOptions, setUserOptions } = useAppContext();
@@ -25,6 +21,8 @@ export default function App() {
   // console.log('selectedWorkbenchView:', selectedWorkbenchView)
   const [selectedScriptingView, setSelectedScriptingView] = useState(userOptions.scriptingView || 'Default');
   // console.log('selectedScriptingView:', selectedScriptingView)
+
+  const [isWorkbench, setIsWorkbench] = useState<boolean>(false);
 
   const [showFullScreenAlert, setShowFullScreenAlert] = useState(true);
   const [isFullScreenAlertOpen, setIsFullScreenAlertOpen] = useState(false);
@@ -59,6 +57,7 @@ export default function App() {
     }
     if (toolbarRef.current) {
       originalToolbarStyle.current = toolbarRef.current.style.cssText;
+      setIsWorkbench(true);
     }
     // Retrieve userOptions from storage when the component mounts
     chrome.storage.local.get("userOptions", (result) => {
@@ -92,7 +91,6 @@ export default function App() {
   const handleViewChange = useCallback((event: SelectChangeEvent<WorkbenchViews | ScriptingViews>) => {
     console.log('handleViewChange:', event.target.value)
     console.log('userOptions:', userOptions)
-    const isWorkbench = (toolbarRef.current !== null);
     const view = event.target.value;
     if (isWorkbench) {
       userOptions.workbenchView = view as WorkbenchViews;
@@ -180,10 +178,10 @@ export default function App() {
       traceTitleRef.current.style.cssText = '';
 
       // Optionally remove the clear traces button if necessary
-      const clearTrace = document.getElementById("traceControl");
-      if (clearTrace) {
-        clearTrace.parentElement?.removeChild(clearTrace);
-      }
+      // const clearTrace = document.getElementById("traceControl");
+      // if (clearTrace) {
+      //   clearTrace.parentElement?.removeChild(clearTrace);
+      // }
 
     }
   }, []);
@@ -296,12 +294,8 @@ export default function App() {
       // Just for funzies we add something to the trace container by default
       // traceBodyRef.current.textContent = 'oh hi there';
 
-      // traceTitleRef.current.style.display = 'none';
+      traceTitleRef.current.style.display = 'none';
       console.log('traceTitleRef:', traceTitleRef.current);
-
-      // Manage the clear traces button
-      manageClearTracesButton();
-
     } else {
       console.error('Trace window or title not found');
     }
@@ -372,27 +366,21 @@ export default function App() {
 
       // traceTitleRef.current.style.display = 'none';
       console.log('traceTitleRef:', traceTitleRef.current);
-
-      // Manage the clear traces button
-      manageClearTracesButton();
     } else {
       console.error('Trace window or title not found');
     }
   }, []);
 
-  function manageClearTracesButton(): void {
-    // let clearTrace = document.getElementById("traceControl") as HTMLAnchorElement;
-    if (buttonBarRef.current && traceTitleRef.current) {
-      // clearTrace = document.createElement("a");
-      traceTitleRef.current.className = "btn btn-primary btn-sm traceControl";
-      // clearTrace.href = "#";
-      // clearTrace.role = "button";
-      // clearTrace.setAttribute("data-bind", "click: clearTraces"); // Use setAttribute to set the data-bind attribute
-      // clearTrace.textContent = "Clear Traces";
-      // clearTrace.id = "traceControl";
-      buttonBarRef.current.appendChild(traceTitleRef.current);
+  const handleClick = (event: React.MouseEvent) => {
+    console.log('Clear traces button clicked')
+    event.preventDefault();
+    const clearLink = document.querySelector('.tracetitle a') as HTMLAnchorElement;
+    console.log('clearLink:', clearLink)
+    if (clearLink) {
+      clearLink.click();
+      console.log('Clear traces button clicked')
     }
-  }
+  };
 
   const handleFullScreenAlertClose = (doNotShowAgain: boolean) => {
     setIsFullScreenAlertOpen(false);
@@ -421,8 +409,6 @@ export default function App() {
         handleNarrowTraceEditor();
         break;
     }
-    // Manage the clear traces button
-    manageClearTracesButton();
     // console.log('selectedWorkbenchView finished')
   }, [
     selectedWorkbenchView,
@@ -451,9 +437,6 @@ export default function App() {
         handleFullScreenEditor();
         break;
     }
-
-    // Manage the clear traces button
-    manageClearTracesButton();
   }, [
     selectedScriptingView,
     handleDefaultEditor,
@@ -503,6 +486,22 @@ export default function App() {
             </Select>
           </FormControl>
         </Grid>
+        {isWorkbench && (
+          <Button
+            onClick={handleClick}
+            tabIndex={0}
+            style={{
+              display: 'inline-block',
+              cursor: 'pointer',
+              border: '1px solid #ccc',
+              padding: '5px 10px',
+              borderRadius: '5px',
+              backgroundColor: '#f0f0f0'
+            }}
+          >
+            Clear Traces
+          </Button>
+        )}
         <Grid item>
           <Tooltip title="Fold All Code">
             <IconButton size="small" onClick={() => document.getElementById('foldCode')?.click()} style={{ width: '40px', height: '40px' }}>
