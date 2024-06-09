@@ -85,10 +85,25 @@ interface FormulaProps {
 //   hostUrl: string;
 //   destination: string;
 // }
+
+enum WorkbenchViews {
+  Default = 'Default',
+  SideBySide = 'Side By Side',
+  NarrowTrace = 'Narrow Trace'
+}
+
+enum ScriptingViews {
+  Default = 'Default',
+  Fullscreen = 'Fullscreen',
+  Expanded = 'Expanded'
+}
+
 interface UserOptions {
   isDarkMode: boolean;
   language: 'en';
   openInSidePanel: boolean;
+  workbenchView: WorkbenchViews;
+  scriptingView: ScriptingViews;
   // downloadLocations: { [key: string]: string };
 }
 

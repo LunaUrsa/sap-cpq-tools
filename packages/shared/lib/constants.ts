@@ -4,6 +4,8 @@ export const defaultUserPreferences: UserOptions = {
   isDarkMode: true,
   language: 'en',
   openInSidePanel: false,
+  workbenchView: 'Default' as WorkbenchViews,
+  scriptingView: 'Default' as ScriptingViews,
   // downloadLocations: {},
 };
 

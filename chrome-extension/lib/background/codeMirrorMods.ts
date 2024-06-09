@@ -306,7 +306,7 @@ export default async function codeMirrorMods(codeMirrorOptions: CodeMirrorOption
     console.error('CodeMirror instance not found after retries');
     return;
   }
-  console.log('CodeMirror instance found:', editor)
+  // console.log('CodeMirror instance found:', editor)
 
   // Loads js and css addon files
   const loadAddon = async (addon: {
@@ -340,7 +340,7 @@ export default async function codeMirrorMods(codeMirrorOptions: CodeMirrorOption
 
   // Adds a hidden element to the page that allows the extension to read the code
   const addHiddenElement = (editor: CodeMirror.Editor) => {
-    console.log('addHiddenElement')
+    // console.log('addHiddenElement')
     // The editor instance is not available outside this script, so if we want the content of the editor
     // we need to create a new element on the page that the content script can read. 
 
@@ -376,7 +376,7 @@ export default async function codeMirrorMods(codeMirrorOptions: CodeMirrorOption
 
   // Applies the options on the user's options page
   const applyCodeMirrorOptions = async (editor: CodeMirror.Editor) => {
-    console.log('applyCodeMirrorOptions')
+    // console.log('applyCodeMirrorOptions')
     for (const [key, value] of Object.entries(codeMirrorOptions)) {
       try {
         editor.setOption(key as keyof EditorConfiguration, value);
@@ -384,11 +384,11 @@ export default async function codeMirrorMods(codeMirrorOptions: CodeMirrorOption
         console.error('Failed to set option:', key, value, error);
       }
     }
-    console.log('Options set:', codeMirrorOptions)
+    // console.log('Options set:', codeMirrorOptions)
   };
 
   const addToolbar = async () => {
-    console.debug('addToolbar')
+    // console.debug('addToolbar')
     // We need to add a new, hidden, toolbar to the webpage that will contain buttons that the user will not see
     // This is because we cannot interact with the CodeMirror instance from the extension popup directly
     // The extension will add visible toolbar in the Content UI script that the user will click on
@@ -459,7 +459,7 @@ export default async function codeMirrorMods(codeMirrorOptions: CodeMirrorOption
   // CodeMirror options
   const gutters = ["CodeMirror-linenumbers"];
 
-  console.log('codeMirrorOptions:', codeMirrorOptions)
+  // console.log('codeMirrorOptions:', codeMirrorOptions)
   if (!basicThemes.includes(codeMirrorOptions.theme)) {
     // console.log('Loading custom theme:', codeMirrorOptions.theme)
     await loadAddon({
@@ -501,7 +501,7 @@ export default async function codeMirrorMods(codeMirrorOptions: CodeMirrorOption
   // console.log('autoCloseBrackets loaded')
 
   if (codeMirrorOptions.matchTags) {
-    console.log('matchTags loading', cmFiles.matchtags)
+    // console.log('matchTags loading', cmFiles.matchtags)
     await loadAddon(cmFiles.matchtags)
     // console.log('matchTags loaded')
   }

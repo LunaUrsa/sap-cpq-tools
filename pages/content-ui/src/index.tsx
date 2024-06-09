@@ -7,24 +7,17 @@ import { AppProvider } from '@chrome-extension-boilerplate/shared/lib/context/Ap
 
 const root = document.createElement('div');
 root.id = 'sap-cpq-tools';
+root.style.paddingBottom = '10px';
 
-// document.body.append(root);
 const editorElement = document.getElementsByClassName('CodeMirror')[0];
 editorElement?.parentElement?.prepend(root);
 
-const rootIntoShadow = document.createElement('div');
-rootIntoShadow.id = 'shadow-root';
-
-const shadowRoot = root.attachShadow({ mode: 'open' });
-shadowRoot.appendChild(rootIntoShadow);
-
-/** Inject styles into shadow dom */
 const styleElement = document.createElement('style');
 styleElement.innerHTML = tailwindcssOutput;
-shadowRoot.appendChild(styleElement);
+document.head.appendChild(styleElement);
 
-createRoot(rootIntoShadow).render(
+createRoot(root).render(
   <AppProvider>
     <App />
-  </AppProvider >
+  </AppProvider>
 );
