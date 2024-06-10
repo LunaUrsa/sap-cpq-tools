@@ -8,7 +8,15 @@ export default async function codeMirrorMods(codeMirrorOptions: CodeMirrorOption
 
   // Declare constants
   const basicThemes = ["default", "light", "dark"];
-  const codeMirrorVersion = "5.65.16";
+  /* Okay so for some reason SAP uses multiple versions of codemirror. The most recent is version 6.
+   4.0.3, the first 4.X version available
+   > Script workbench
+   > Custom actions
+   > Product Scripts
+   5.65.14, the second-to-last 5.X version available
+   > Global scripts 
+  */
+  const codeMirrorVersion = "5.65.14";
   const cdnBaseUrl = `https://cdnjs.cloudflare.com/ajax/libs/codemirror/${codeMirrorVersion}/`;
   const cmFiles = {
     "main": {
@@ -309,33 +317,38 @@ export default async function codeMirrorMods(codeMirrorOptions: CodeMirrorOption
   // console.log('CodeMirror instance found:', editor)
 
   // Loads js and css addon files
-  const loadAddon = async (addon: {
-    scripts: string[];
-    css: string[];
-  }) => {
-    // console.log('loadAddon')
-    const loadResource = (tag: 'script' | 'link', url: string) => {
+  const loadAddon = async (addon: { scripts: string[]; css: string[] }) => {
+    const loadResource = (tag: 'script' | 'link', url: string): Promise<void> => {
       return new Promise<void>((resolve, reject) => {
         const element = document.createElement(tag);
+
         if (tag === 'script') {
-          (element as HTMLScriptElement).type = 'text/javascript';
-          (element as HTMLScriptElement).src = url;
+          Object.assign(element, {
+            type: 'text/javascript',
+            src: url,
+          });
         } else {
-          (element as HTMLLinkElement).rel = 'stylesheet';
-          (element as HTMLLinkElement).type = 'text/css';
-          (element as HTMLLinkElement).href = url;
+          Object.assign(element, {
+            rel: 'stylesheet',
+            type: 'text/css',
+            href: url,
+          });
         }
+
         element.onload = () => resolve();
         element.onerror = () => reject(new Error(`Failed to load ${url}`));
-        document.body.appendChild(element);
+        document.head.appendChild(element); // Use head instead of body for better practice
       });
     };
 
-    const promises = [];
-    promises.push(...addon.scripts.map(url => loadResource('script', url)));
-    // console.log('addon.css:', addon.css)
-    promises.push(...addon.css.map(url => loadResource('link', url)));
-    await Promise.all(promises);
+    try {
+      const scriptPromises = addon.scripts.map(url => loadResource('script', url));
+      const cssPromises = addon.css.map(url => loadResource('link', url));
+      await Promise.all([...scriptPromises, ...cssPromises]);
+      console.log('All resources loaded successfully');
+    } catch (error) {
+      console.error('Error loading resources:', error);
+    }
   };
 
   // Adds a hidden element to the page that allows the extension to read the code
@@ -530,8 +543,32 @@ export default async function codeMirrorMods(codeMirrorOptions: CodeMirrorOption
     await loadAddon(cmFiles.fold);
     gutters.push("CodeMirror-foldgutter");
   }
+
   editor.setOption('foldGutter' as keyof EditorConfiguration, codeMirrorOptions.foldCode);
   // console.log('foldcode loaded')
+
+  // Wait for the DOM to be fully loaded
+
+  // const textarea = document.getElementsByClassName('form-control')[1] as HTMLElement;
+  // // Wait for the DOM to be fully loaded
+  // const codeMirrorInstance = $(textarea).data('CodeMirrorInstance');
+
+  // if (codeMirrorInstance) {
+  //   // Update the CodeMirror instance options to enable foldGutter
+  //   codeMirrorInstance.setOption('gutters', ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]);
+  //   codeMirrorInstance.setOption('foldGutter', true);
+
+  //   // Optionally, you can also specify fold functions (e.g., brace-fold, comment-fold)
+  //   // codeMirrorInstance.setOption('foldOptions', {
+  //   //   rangeFinder: (CodeMirror as any).fold.combine((CodeMirror as any).fold.brace, CodeMirror.fold.comment)
+  //   // });
+
+  //   // Refresh the CodeMirror instance to apply the new options
+  //   codeMirrorInstance.refresh();
+  //   console.log('CodeMirror instance updated.')
+  // } else {
+  //   console.error('CodeMirror instance not found.');
+  // }
 
   // Autocomplete
   if (codeMirrorOptions.autoComplete) {
