@@ -36,6 +36,7 @@ export default function App() {
   const traceBodyRef = useRef<HTMLElement | null>(null);
   const traceTitleRef = useRef<HTMLElement | null>(null);
   const buttonBarRef = useRef<HTMLElement | null>(null);
+  const workbenchTitleRef = useRef<HTMLElement | null>(null);
 
   const originalEditorStyle = useRef<string>('');
   const originalToolbarStyle = useRef<string>('');
@@ -51,6 +52,7 @@ export default function App() {
     traceBodyRef.current = document.querySelector('#tracesContainer table tbody') as HTMLElement;
     traceTitleRef.current = document.querySelector('.tracetitle') as HTMLElement;
     buttonBarRef.current = document.querySelector('.col-sm-6.control-label.text-right') as HTMLElement;
+    workbenchTitleRef.current = document.querySelector('#scriptDebuggerContainer div div h3') as HTMLElement;
 
     if (editorRef.current) {
       originalEditorStyle.current = editorRef.current.style.cssText;
@@ -232,8 +234,12 @@ export default function App() {
   }, [handleEscape]);
 
   const handleSideBySideEditor = useCallback(() => {
-    if (editorRef.current && traceRef.current && traceTitleRef.current && traceBodyRef.current && editorInfoRef.current) {
-
+    if (editorRef.current
+      && traceRef.current
+      && traceTitleRef.current
+      && traceBodyRef.current
+      && editorInfoRef.current
+      && workbenchTitleRef.current) {
       let wrapper = document.getElementById('editor-trace-wrapper');
       if (!wrapper) {
         wrapper = document.createElement('div');
@@ -293,6 +299,8 @@ export default function App() {
 
       // Just for funzies we add something to the trace container by default
       // traceBodyRef.current.textContent = 'oh hi there';
+
+      workbenchTitleRef.current.style.display = 'none';
 
       traceTitleRef.current.style.display = 'none';
       console.log('traceTitleRef:', traceTitleRef.current);
@@ -537,6 +545,7 @@ export default function App() {
           </IconButton>
         </Tooltip>
       </Grid>
+      <FullScreenAlert open={isFullScreenAlertOpen} onClose={handleFullScreenAlertClose} />
     </Grid>
   );
 }
