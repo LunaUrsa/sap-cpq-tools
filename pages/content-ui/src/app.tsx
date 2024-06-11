@@ -115,7 +115,7 @@ export default function App() {
       });
       setSelectedScriptingView(view as ScriptingViews);
     }
-  }, [setUserOptions, userOptions]);
+  }, [setUserOptions, userOptions, isWorkbench]);
 
   const handleEscape = useCallback((event: KeyboardEvent) => {
     if (event.key === 'Escape' && editorRef.current && toolbarRef.current) {
@@ -458,66 +458,85 @@ export default function App() {
   ].filter(Boolean); // Filter out any false/null values
 
   const selectedView = workbenchView ? selectedWorkbenchView : selectedScriptingView;
-
   return (
-    <div style={{ display: 'flex', gap: '8px', marginTop: '16px', background: 'white' }}>
-      <Grid container direction="row" spacing={2}>
-        <Grid item xs={12} sm={6} md={4} lg={2}>
-          <FormControl fullWidth variant="outlined">
-            <InputLabel id="viewPickSlctLabel">Select View</InputLabel>
-            <Select
-              labelId="viewPickSlctLabel"
-              id="viewPickSlct"
-              value={selectedView}
-              onChange={handleViewChange}
-              label="Select View"
-              sx={{
-                height: '40px', // Adjust the height of the Select component
-              }}
-              MenuProps={{
-                MenuListProps: {
-                  sx: {
-                    padding: '0px',
-                  },
+    <Grid container direction="row" spacing={2} alignItems="center">
+      <Grid item xs={12} sm={6} md={4} lg={2}>
+        <FormControl fullWidth variant="outlined">
+          <InputLabel id="viewPickSlctLabel">Select View</InputLabel>
+          <Select
+            labelId="viewPickSlctLabel"
+            id="viewPickSlct"
+            value={selectedView}
+            onChange={handleViewChange}
+            label="Select View"
+            sx={{
+              height: '40px', // Adjust the height of the Select component
+            }}
+            MenuProps={{
+              MenuListProps: {
+                sx: {
+                  padding: '0px',
                 },
-              }}
-            >
-              {menuOptions}
-            </Select>
-          </FormControl>
-        </Grid>
-        {isWorkbench && (
+              },
+            }}
+          >
+            {menuOptions}
+          </Select>
+        </FormControl>
+      </Grid>
+      {isWorkbench && (
+        <Grid item>
           <Button
             onClick={handleClick}
             tabIndex={0}
-            style={{
-              display: 'inline-block',
-              cursor: 'pointer',
-              border: '1px solid #ccc',
-              padding: '5px 10px',
+            variant="outlined"
+            sx={{
+              height: '40px', // Match the height of the Select component
+              padding: '0 16px', // Adjust padding to match Material-UI buttons
               borderRadius: '5px',
-              backgroundColor: '#f0f0f0'
+              backgroundColor: '#f0f0f0',
+              borderColor: '#ccc',
+              display: 'flex',
+              alignItems: 'center',
+              lineHeight: 'normal', // Ensure text vertical alignment
             }}
           >
             Clear Traces
           </Button>
-        )}
-        <Grid item>
-          <Tooltip title="Fold All Code">
-            <IconButton size="small" onClick={() => document.getElementById('foldCode')?.click()} style={{ width: '40px', height: '40px' }}>
-              <KeyboardArrowUp fontSize="small" style={{ color: 'blue' }} />
-            </IconButton>
-          </Tooltip>
         </Grid>
-        <Grid item>
-          <Tooltip title="UnFold All Code">
-            <IconButton size="small" onClick={() => document.getElementById('unfoldCode')?.click()} style={{ width: '40px', height: '40px' }}>
-              <KeyboardArrowDown fontSize="small" style={{ color: 'blue' }} />
-            </IconButton>
-          </Tooltip>
-        </Grid>
+      )}
+      <Grid item>
+        <Tooltip title="Fold All Code">
+          <IconButton
+            size="medium"
+            onClick={() => document.getElementById('foldCode')?.click()}
+            sx={{
+              width: '40px',
+              height: '40px',
+              border: '1px solid #ccc',
+              borderRadius: '5px',
+            }}
+          >
+            <KeyboardArrowUp fontSize="small" sx={{ color: 'blue' }} />
+          </IconButton>
+        </Tooltip>
       </Grid>
-      <FullScreenAlert open={isFullScreenAlertOpen} onClose={handleFullScreenAlertClose} />
-    </div>
+      <Grid item>
+        <Tooltip title="UnFold All Code">
+          <IconButton
+            size="medium"
+            onClick={() => document.getElementById('unfoldCode')?.click()}
+            sx={{
+              width: '40px',
+              height: '40px',
+              border: '1px solid #ccc',
+              borderRadius: '5px',
+            }}
+          >
+            <KeyboardArrowDown fontSize="small" sx={{ color: 'blue' }} />
+          </IconButton>
+        </Tooltip>
+      </Grid>
+    </Grid>
   );
 }
