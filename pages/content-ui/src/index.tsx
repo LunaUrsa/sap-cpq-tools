@@ -9,8 +9,8 @@ const root = document.createElement('div');
 root.id = 'sap-cpq-tools';
 root.style.paddingBottom = '10px';
 
-const editorElement = document.getElementsByClassName('CodeMirror')[0];
-editorElement?.parentElement?.prepend(root);
+const toolbarElement = document.getElementsByClassName('script-toolbar')[0];
+toolbarElement?.prepend(root);
 
 const styleElement = document.createElement('style');
 styleElement.innerHTML = tailwindcssOutput;

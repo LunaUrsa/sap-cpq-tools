@@ -6,6 +6,7 @@ export const defaultUserPreferences: UserOptions = {
   openInSidePanel: false,
   workbenchView: 'Default' as WorkbenchViews,
   scriptingView: 'Default' as ScriptingViews,
+  scriptingMode: 'Standard' as ScriptingModes,
   // downloadLocations: {},
 };
 

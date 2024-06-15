@@ -98,12 +98,18 @@ enum ScriptingViews {
   Expanded = 'Expanded'
 }
 
+enum ScriptingModes {
+  Standard = 'Standard',
+  Test = 'Test'
+}
+
 interface UserOptions {
   isDarkMode: boolean;
   language: 'en';
   openInSidePanel: boolean;
   workbenchView: WorkbenchViews;
   scriptingView: ScriptingViews;
+  scriptingMode: ScriptingModes;
   // downloadLocations: { [key: string]: string };
 }
 
