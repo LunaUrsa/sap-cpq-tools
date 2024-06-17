@@ -1,56 +1,33 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useEffect, useState, useCallback, useRef } from 'react';
+import {
+  withErrorBoundary,
+  withSuspense,
+} from '@chrome-extension-boilerplate/shared';
 // import ReactDOM from 'react-dom';
 import {
-  Button, Box, FormControl, Grid, IconButton, InputLabel, MenuItem, Select, Tooltip, Typography, TextareaAutosize
+  Box,
+  Button, FormControl, Grid, InputLabel, MenuItem, Select, Typography,
 } from '@mui/material';
-import { ResizableBox, ResizeCallbackData } from 'react-resizable';
-import 'react-resizable/css/styles.css'; // Import the resizable styles
 import type { SelectChangeEvent } from '@mui/material';
 import {
-  // ZoomOutMap,
-  // ZoomInMap,
   // Fullscreen,
-  KeyboardArrowUp,
-  KeyboardArrowDown,
+  // KeyboardArrowUp,
+  // KeyboardArrowDown,
   PlayArrow, Clear, Code, Functions, Api, Search
 } from '@mui/icons-material';
 import '@mui/material/styles';
 import useAppContext from '@chrome-extension-boilerplate/shared/lib/hooks/useAppContext';
 import { saveToStorage } from '@chrome-extension-boilerplate/shared/lib/utils';
-import FullScreenAlert from './FullScreenAlert';
-
+// import FullScreenAlert from './FullScreenAlert';
 // import * as monaco from 'monaco-editor';
-// import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
-// import jsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker';
-// import cssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker';
-// import htmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker';
-// import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker';
 // import Editor, { loader } from '@monaco-editor/react';
-
-// self.MonacoEnvironment = {
-//   getWorker(_, label) {
-//     if (label === 'json') {
-//       return new jsonWorker();
-//     }
-//     if (label === 'css' || label === 'scss' || label === 'less') {
-//       return new cssWorker();
-//     }
-//     if (label === 'html' || label === 'handlebars' || label === 'razor') {
-//       return new htmlWorker();
-//     }
-//     if (label === 'typescript' || label === 'javascript') {
-//       return new tsWorker();
-//     }
-//     return new editorWorker();
-//   },
-// };
 
 // loader.config({ monaco });
 
 // loader.init();
 
-export default function App() {
+const App = () => {
   const { userOptions, setUserOptions } = useAppContext();
   // console.log('init userOptions:', userOptions)
 
@@ -150,39 +127,35 @@ export default function App() {
       && workbenchTitleRef.current
       && scriptToolbarRef.current
       && toolbarRef.current) {
-      let wrapper = document.getElementById('editor-trace-wrapper');
-      if (!wrapper) {
-        wrapper = document.createElement('div');
-        wrapper.id = 'editor-trace-wrapper';
-        wrapper.style.display = 'flex';
-        wrapper.style.flexDirection = 'row';
-        wrapper.style.width = '100%';
+      // Move the editor into the box
+      const editorWrapper = document.getElementById('custom-editor') as HTMLElement;
+      editorWrapper.appendChild(editorRef.current);
+      editorRef.current.style.height = '100%'
+      editorRef.current.style.maxHeight = '100%';
+      // Move the trace into the box
+      const traceWrapper = document.getElementById('custom-trace') as HTMLElement;
+      traceRef.current.style.height = '100%'
+      traceRef.current.style.maxHeight = '100%';
+      traceWrapper.appendChild(traceRef.current);
 
-        // Append the editor and trace containers to the wrapper
-        editorRef.current.parentElement?.insertBefore(wrapper, editorInfoRef.current);
-      }
+      // const parentContainer = editorRef.current.parentElement;
 
-      wrapper.appendChild(editorRef.current);
-      wrapper.appendChild(traceRef.current);
+      // if (parentContainer) {
+      //   // Apply flexbox to the parent container
+      //   parentContainer.style.display = 'flex';
+      //   parentContainer.style.flexDirection = 'row';
+      //   parentContainer.style.width = '100%';
+      // }
 
-      const parentContainer = editorRef.current.parentElement;
-
-      if (parentContainer) {
-        // Apply flexbox to the parent container
-        parentContainer.style.display = 'flex';
-        parentContainer.style.flexDirection = 'row';
-        parentContainer.style.width = '100%';
-      }
-
-      editorRef.current.classList.remove('col-sm-8', 'col-md-8', 'col-md-12', 'col-sm-12');
-      editorRef.current.classList.add('col-sm-6', 'col-md-6');
-      // editorRef.current.style.display = 'inline-flex'; //  breaks scroll placement in shifted view
-      editorRef.current.style.height = 'calc(100vh - 225px)';
-      // editorRef.current.style.maxHeight = '500px';
-      editorRef.current.style.display = 'block';
-      editorRef.current.style.float = 'left';
-      editorRef.current.style.width = '50%';
-      console.log('editorRef:', editorRef.current);
+      // editorRef.current.classList.remove('col-sm-8', 'col-md-8', 'col-md-12', 'col-sm-12');
+      // editorRef.current.classList.add('col-sm-6', 'col-md-6');
+      // // editorRef.current.style.display = 'inline-flex'; //  breaks scroll placement in shifted view
+      // editorRef.current.style.height = 'calc(100vh - 225px)';
+      // // editorRef.current.style.maxHeight = '500px';
+      // editorRef.current.style.display = 'block';
+      // editorRef.current.style.float = 'left';
+      // editorRef.current.style.width = '50%';
+      // console.log('editorRef:', editorRef.current);
 
       // editorInfoRef.current.classList.remove('text-right');
       // editorInfoRef.current.classList.add('text-left');
@@ -191,115 +164,54 @@ export default function App() {
       // editorInfoRef.current.style.maxHeight = '20000px';
       // editorInfoRef.current.style.float = 'left';
       // editorInfoRef.current.style.width = '50%';
-      editorInfoRef.current.style.display = 'none';
-      // console.log('editorRef:', editorRef.current);
+      // editorInfoRef.current.style.display = 'none';
+      // // console.log('editorRef:', editorRef.current);
 
-      traceRef.current.classList.remove('col-md-4', 'col-sm-4', 'col-md-12', 'col-sm-12');
-      traceRef.current.classList.add('col-sm-6', 'col-md-6');
-      traceRef.current.style.display = 'block';
-      traceRef.current.style.height = 'calc(100vh - 225px)';
-      traceRef.current.style.maxHeight = 'calc(100vh - 225px)';
-      traceRef.current.style.float = 'right';
-      traceRef.current.style.width = '50%';
-      console.log('traceRef:', traceRef.current);
+      // traceRef.current.classList.remove('col-md-4', 'col-sm-4', 'col-md-12', 'col-sm-12');
+      // traceRef.current.classList.add('col-sm-6', 'col-md-6');
+      // traceRef.current.style.display = 'block';
+      // traceRef.current.style.height = 'calc(100vh - 225px)';
+      // traceRef.current.style.maxHeight = 'calc(100vh - 225px)';
+      // traceRef.current.style.float = 'right';
+      // traceRef.current.style.width = '50%';
+      // console.log('traceRef:', traceRef.current);
 
       // Normally the trace element doesn't appear until there is something to display
 
       // Get the parent of the traceRef element and make it display by default
-      if (traceRef.current.parentElement?.parentElement) {
-        traceRef.current.parentElement.parentElement.style.display = ''; // Used to be 'none'
-      }
+      // if (traceRef.current.parentElement?.parentElement) {
+      //   traceRef.current.parentElement.parentElement.style.display = ''; // Used to be 'none'
+      // }
 
       // Just for funzies we add something to the trace container by default
 
       //       traceBodyRef.current.textContent = `
-      //                           SAP CPQ REBORN
-
-      //                 (                           )
-      //           ) )( (                           ( ) )( (
-      //        ( ( ( )  ) )                     ( (   (  ) )(
-      //       ) )     ,,\\                     ///,,       ) (
-      //    (  ((    (\\\\//                     \\////)      )
-      //     ) )    (-(__//                       \\__)-)     (
-      //    (((   ((-(__||                         ||__)-))    ) )
-      //   ) )   ((-(-(_||           \`\`\`\\__        ||_)-)-))   ((
-      //   ((   ((-(-(/(/\\        \`\`; 9.- \`      //\\)\\)-)-))    )
-      //    )   (-(-(/(/(/\\      \`\`;;;;-\\~      //\\)\\)\\)-)-)   (  )
-      //  ( (   ((-(-(/(/(/\\======,:;:;:;:,======/\\)\\)\\)-)-))   )
-      //     )  \`(((-(/(/(/(//////:%%%%%%%:\\\\\\)\\)\\)\\)-)))\`  ( (
-      //    ((   \`((-(/(/(/(\`uuuu:WWWWWWWWW:uuuu\`)\\)\\)\\)-))\`    )
-      //      ))  \`((-(/(/(/(\`|||:wwwwwwwww:|||\`)\\)\\)\\)-))\`    ((
-      //     ( ((   \`((((/(/(\`uuu:WWWWWWWWW:uuu\`)\\)\\))))\`     ))
-      //         ))   \`\`:::UUUUUU:wwwwwwwww:UUUUUU:::\`\`     (( )
-      //           ((      \`\`\`\`\`\`\`\\uuuuuuuu/\`\`\`\`\`\`         ))
-      //            ))            \`JJJJJJJJJ\`           ((
-      //              ((            LLLLLLLLLLL         ))
-      //                ))         ///|||||||\\       ((
-      //                  ))      (/(/(/(^)\\)\\)\\)       ((
-      //                   ((                           ))
-      //                     ((                       ((
-      //                       ( )( ))( ( ( ) )( ) (()
+      // ⠀⠀⠀⠀⢀⣴⢿⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+      // ⠀⠀⠀⢀⡾⠁⡞⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+      // ⠀⠀⢠⢺⠃⢸⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+      // ⠀⢠⠏⢸⡄⠈⣇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+      // ⠀⢸⡀⢸⡄⠀⠹⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+      // ⢀⡜⡇⠈⣿⡀⠀⠙⢄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+      // ⢸⠀⢳⠄⠹⣿⡄⠀⠈⢦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+      // ⣸⠆⢸⣧⡄⢸⣿⣶⠀⢠⠙⢦⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+      // ⠀⠷⡀⠹⣷⣄⣻⣿⡟⠺⣷⡀⠉⠓⢤⡀⠀⠀⠀⠀⠀⠀⠀⠀
+      // ⢧⠀⣶⣄⡘⢿⣦⣽⣿⣄⠈⢱⡦⠀⠀⠉⠓⢤⡀⠀⠀⠀⠀⠀
+      // ⠘⣇⠈⠻⣷⡜⢻⣧⠉⠻⣄⠈⢻⣶⣴⠶⡄⠀⠙⡆⠀⠀⠀⠀
+      // ⠀⢻⠉⣄⠈⢿⣿⣿⣷⠀⠀⣶⣤⣀⣷⣀⠀⠀⠀⣸⠀⠀⠀⠀
+      // ⠀⠀⢧⡈⢿⣥⣍⣿⠉⠉⠃⢶⣦⣿⠀⠀⠀⠀⡚⠋⠀⠀⠀⠀
+      // ⠀⠀⠈⠳⣤⣈⠛⠻⢷⣦⣤⡄⣶⣾⣿⠃⠀⠀⠛⢦⡄⠀⠀⠀
+      // ⠀⠀⠀⠀⠀⠉⠒⠒⣾⠋⠁⠀⣈⣽⣿⣷⡆⠀⠀⠀⠘⡄⠀⠀
+      // ⠀⠀⠀⠀⠀⠀⠀⠀⠹⠦⢴⠋⠁⠀⠹⣿⣿⣿⠀⠀⠀⠙⣄⠀
+      // ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠻⢤⠴⠋⠀⡀⠛⠿⠟⡇⠠⠤⠤⠷
+      // ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠐⠤⠴⣇⣠⣏⣰⠁⠀⠀⠀⠀
       // `;
 
       // traceBodyRef.current.textContent = `SAP CPQ REBORN`;
-
-      // Move the toolbar ref to be in the scriptToolbarRef, but the second element in the list
-      scriptToolbarRef.current.insertBefore(toolbarRef.current, scriptToolbarRef.current.children[1]);
-
-
 
       // const handleEditorChange = (value: string | undefined, event: monaco.editor.IModelContentChangedEvent) => {
       //   console.log('here is the current model value:', value);
       //   console.log('here is the event:', event);
       // };
-
-      // Create a portal for MyComponent
-      // const componentElement = document.createElement('div');
-      // scriptToolbarRef.current.insertBefore(componentElement, scriptToolbarRef.current.children[1]);
-      // ReactDOM.createPortal(<Editor
-      //   height="100%"
-      //   defaultLanguage="python"
-      //   defaultValue="if (true):
-      //     print('Hello World')
-      //     else:
-      //     print('Bye World')"
-      //   onChange={handleEditorChange}
-      //   options={{
-      //     wordWrap: 'bounded',
-      //     rulers: [120],
-      //   }}
-      // />, componentElement);
-
-      // // Make the mode selector smaller
-      // const modeDiv = scriptToolbarRef.current.querySelector('div form div') as HTMLElement
-      // modeDiv.classList.remove('col-sm-10');
-      // modeDiv.classList.add('col-sm-8');
-
-      // const modeSelector = scriptToolbarRef.current.querySelector('div form div select') as HTMLElement
-      // modeSelector.style.width = '100px';
-      // modeSelector.style.minWidth = '100px';
-
-      // 
-      // const runMenu = scriptToolbarRef.current.querySelector('.col-sm-6') as HTMLElement
-      // runMenu.style.display = 'None';
-
-      // const buttonMenu = scriptToolbarRef.current.querySelector('.col-sm-5') as HTMLElement
-      // buttonMenu.style.display = 'None';
-
-      // Move around classes to make things fit better
-      // scriptToolbarRef.current.children[0].classList.remove('col-sm-6');
-      // scriptToolbarRef.current.children[0].classList.add('col-sm-3');
-      // scriptToolbarRef.current.children[2].classList.remove('col-sm-6');
-      // scriptToolbarRef.current.children[2].classList.add('col-sm-5');
-
-      (scriptToolbarRef.current.children[1] as HTMLElement).style.display = 'None';
-      (scriptToolbarRef.current.children[2] as HTMLElement).style.display = 'None';
-
-      // Hide the workbench title, useless wasted space
-      workbenchTitleRef.current.style.display = 'none';
-
-      traceTitleRef.current.style.display = 'none';
-      console.log('traceTitleRef:', traceTitleRef.current);
     } else {
       console.error('Trace window or title not found');
     }
@@ -406,6 +318,11 @@ export default function App() {
     }
   };
 
+  const handleCustomClick = (event: React.MouseEvent) => {
+    console.log('Custom Snippets button clicked')
+    event.preventDefault();
+  };
+
   const handleAliasClick = (event: React.MouseEvent) => {
     console.log('Alias snippets button clicked')
     event.preventDefault();
@@ -449,208 +366,241 @@ export default function App() {
     }
   };
 
-  const handleResize = (event: React.SyntheticEvent<Element>, data: ResizeCallbackData) => {
-    setEditorWidth((data.size.width / window.innerWidth) * 100);
-  };
+  // const handleResize = (event: React.SyntheticEvent<Element>, data: ResizeCallbackData) => {
+  //   setEditorWidth((data.size.width / window.innerWidth) * 100);
+  // };
 
   if (isWorkbench) {
     handleSideBySideEditor();
   }
 
+  // const handleEditorChange = (value: string | undefined, event: monaco.editor.IModelContentChangedEvent) => {
+  //   console.log('here is the current model value:', value);
+  //   console.log('here is the event:', event);
+  // };
+
   return (
-    <>
+    <Box sx={{ border: '1px solid #ccc', padding: '5px', borderRadius: '8px', margin: '5px', backgroundColor: '#f9f9f9', height: 'calc(100vh - 15px)', boxSizing: 'border-box' }}>
+      {/* Toolbar */}
       <Grid container direction="row" spacing={2} alignItems="center" sx={{ paddingBottom: '10px' }}>
-        {isWorkbench && (
-          <>
-            <Grid item>
-              <Button
-                onClick={handleRunClick}
-                tabIndex={0}
-                variant="contained"
-                color="primary"
-                sx={{
-                  height: '30px',
-                  padding: '0 16px',
-                  borderRadius: '5px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  lineHeight: 'normal',
-                  fontSize: '14px',
-                }}
-                startIcon={<PlayArrow />}
-              >
-                <Typography sx={{ textTransform: 'none', fontSize: 'inherit' }}>Run</Typography>
-              </Button>
-            </Grid>
-            <Grid item>
-              <FormControl variant="outlined" sx={{ minWidth: '120px', fontSize: '14px' }}>
-                <InputLabel id="modePickSlctLabel">Mode</InputLabel>
-                <Select
-                  labelId="modePickSlctLabel"
-                  id="modePickSlct"
-                  value={scriptingMode}
-                  onChange={handleModeChange}
-                  label="Mode"
-                  sx={{
-                    height: '30px',
-                    fontSize: '14px',
-                  }}
-                  MenuProps={{
-                    MenuListProps: {
-                      sx: {
-                        padding: '0px',
-                      },
-                    },
-                  }}
-                >
-                  <MenuItem key="standard" value="Standard">Standard</MenuItem>
-                  <MenuItem key="test" value="Test">Test</MenuItem>
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item>
-              <Button
-                onClick={handleTraceClearClick}
-                tabIndex={0}
-                variant="contained"
-                color="secondary"
-                sx={{
-                  height: '30px',
-                  padding: '0 16px',
-                  borderRadius: '5px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  lineHeight: 'normal',
-                  fontSize: '14px',
-                }}
-                startIcon={<Clear />}
-              >
-                <Typography sx={{ textTransform: 'none', fontSize: 'inherit' }}>Clear Trace</Typography>
-              </Button>
-            </Grid>
-            <Grid item>
-              <Button
-                onClick={handleFoldClick}
-                tabIndex={0}
-                variant="outlined"
-                sx={{
-                  height: '30px',
-                  padding: '0 16px',
-                  borderRadius: '5px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  lineHeight: 'normal',
-                  fontSize: '14px',
-                }}
-                startIcon={<KeyboardArrowUp />}
-              >
-                <Typography sx={{ textTransform: 'none', fontSize: 'inherit' }}>Fold</Typography>
-              </Button>
-            </Grid>
-            <Grid item>
-              <Button
-                onClick={handleFullScreenClick}
-                tabIndex={0}
-                variant="outlined"
-                sx={{
-                  height: '30px',
-                  padding: '0 16px',
-                  borderRadius: '5px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  lineHeight: 'normal',
-                  fontSize: '14px',
-                }}
-                startIcon={<KeyboardArrowDown />}
-              >
-                <Typography sx={{ textTransform: 'none', fontSize: 'inherit' }}>Fullscreen</Typography>
-              </Button>
-            </Grid>
-            <Grid item sx={{ marginLeft: 'auto', display: 'flex', gap: 1 }}>
-              <Button
-                onClick={handlePythonClick}
-                tabIndex={0}
-                variant="outlined"
-                sx={{
-                  height: '30px',
-                  padding: '0 8px',
-                  borderRadius: '5px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  lineHeight: 'normal',
-                  fontSize: '12px',
-                  backgroundColor: '#e0e0e0',
-                }}
-                startIcon={<Code />}
-              >
-                <Typography sx={{ textTransform: 'none', fontSize: 'inherit' }}>Python</Typography>
-              </Button>
-              <Button
-                onClick={handleAliasClick}
-                tabIndex={0}
-                variant="outlined"
-                sx={{
-                  height: '30px',
-                  padding: '0 8px',
-                  borderRadius: '5px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  lineHeight: 'normal',
-                  fontSize: '12px',
-                  backgroundColor: '#e0e0e0',
-                }}
-                startIcon={<Functions />}
-              >
-                <Typography sx={{ textTransform: 'none', fontSize: 'inherit' }}>Alias</Typography>
-              </Button>
-              <Button
-                onClick={handleApiClick}
-                tabIndex={0}
-                variant="outlined"
-                sx={{
-                  height: '30px',
-                  padding: '0 8px',
-                  borderRadius: '5px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  lineHeight: 'normal',
-                  fontSize: '12px',
-                  backgroundColor: '#e0e0e0',
-                }}
-                startIcon={<Api />}
-              >
-                <Typography sx={{ textTransform: 'none', fontSize: 'inherit' }}>API</Typography>
-              </Button>
-              <Button
-                onClick={handleApiExplorerClick}
-                tabIndex={0}
-                variant="outlined"
-                sx={{
-                  height: '30px',
-                  padding: '0 8px',
-                  borderRadius: '5px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  lineHeight: 'normal',
-                  fontSize: '12px',
-                  backgroundColor: '#e0e0e0',
-                }}
-                startIcon={<Search />}
-              >
-                <Typography sx={{ textTransform: 'none', fontSize: 'inherit' }}>Explorer</Typography>
-              </Button>
-            </Grid>
-          </>
-        )}
-        <FullScreenAlert open={isFullScreenAlertOpen} onClose={handleFullScreenAlertClose} />
+        <Grid item>
+          <Button
+            onClick={handleRunClick}
+            tabIndex={0}
+            variant="contained"
+            color="primary"
+            sx={{
+              height: '30px',
+              padding: '0 16px',
+              borderRadius: '5px',
+              display: 'flex',
+              alignItems: 'center',
+              lineHeight: 'normal',
+              fontSize: '14px',
+            }}
+            startIcon={<PlayArrow />}
+          >
+            <Typography sx={{ textTransform: 'none', fontSize: 'inherit' }}>Run</Typography>
+          </Button>
+        </Grid>
+        <Grid item>
+          <FormControl variant="outlined" sx={{ minWidth: '120px', fontSize: '14px' }}>
+            <InputLabel id="modePickSlctLabel">Mode</InputLabel>
+            <Select
+              labelId="modePickSlctLabel"
+              id="modePickSlct"
+              value={scriptingMode}
+              onChange={handleModeChange}
+              label="Mode"
+              sx={{
+                height: '30px',
+                fontSize: '14px',
+              }}
+              MenuProps={{
+                MenuListProps: {
+                  sx: {
+                    padding: '0px',
+                  },
+                },
+              }}
+            >
+              <MenuItem key="standard" value="Standard">Standard</MenuItem>
+              <MenuItem key="test" value="Test">Test</MenuItem>
+            </Select>
+          </FormControl>
+        </Grid>
+        <Grid item>
+          <Button
+            onClick={handleTraceClearClick}
+            tabIndex={0}
+            variant="contained"
+            color="secondary"
+            sx={{
+              height: '30px',
+              padding: '0 16px',
+              borderRadius: '5px',
+              display: 'flex',
+              alignItems: 'center',
+              lineHeight: 'normal',
+              fontSize: '14px',
+            }}
+            startIcon={<Clear />}
+          >
+            <Typography sx={{ textTransform: 'none', fontSize: 'inherit' }}>Clear Trace</Typography>
+          </Button>
+        </Grid>
+        {/* <Grid item>
+          <Button
+            onClick={handleFoldClick}
+            tabIndex={0}
+            variant="outlined"
+            sx={{
+              height: '30px',
+              padding: '0 16px',
+              borderRadius: '5px',
+              display: 'flex',
+              alignItems: 'center',
+              lineHeight: 'normal',
+              fontSize: '14px',
+            }}
+            startIcon={<KeyboardArrowUp />}
+          >
+            <Typography sx={{ textTransform: 'none', fontSize: 'inherit' }}>Fold</Typography>
+          </Button>
+        </Grid> */}
+        {/* <Grid item>
+          <Button
+            onClick={handleFullScreenClick}
+            tabIndex={0}
+            variant="outlined"
+            sx={{
+              height: '30px',
+              padding: '0 16px',
+              borderRadius: '5px',
+              display: 'flex',
+              alignItems: 'center',
+              lineHeight: 'normal',
+              fontSize: '14px',
+            }}
+            startIcon={<Fullscreen />}
+          >
+            <Typography sx={{ textTransform: 'none', fontSize: 'inherit' }}>Fullscreen</Typography>
+          </Button>
+        </Grid> */}
+        <Grid item sx={{ marginLeft: 'auto', display: 'flex', gap: 1 }}>
+          {/* <Button
+            onClick={handleCustomClick}
+            tabIndex={0}
+            variant="outlined"
+            sx={{
+              height: '30px',
+              padding: '0 8px',
+              borderRadius: '5px',
+              display: 'flex',
+              alignItems: 'center',
+              lineHeight: 'normal',
+              fontSize: '12px',
+              backgroundColor: '#e0e0e0',
+            }}
+            startIcon={<Code />}
+          >
+            <Typography sx={{ textTransform: 'none', fontSize: 'inherit' }}>Custom</Typography>
+          </Button> */}
+          <Button
+            onClick={handlePythonClick}
+            tabIndex={0}
+            variant="outlined"
+            sx={{
+              height: '30px',
+              padding: '0 8px',
+              borderRadius: '5px',
+              display: 'flex',
+              alignItems: 'center',
+              lineHeight: 'normal',
+              fontSize: '12px',
+              backgroundColor: '#e0e0e0',
+            }}
+            startIcon={<Code />}
+          >
+            <Typography sx={{ textTransform: 'none', fontSize: 'inherit' }}>Python</Typography>
+          </Button>
+          <Button
+            onClick={handleAliasClick}
+            tabIndex={0}
+            variant="outlined"
+            sx={{
+              height: '30px',
+              padding: '0 8px',
+              borderRadius: '5px',
+              display: 'flex',
+              alignItems: 'center',
+              lineHeight: 'normal',
+              fontSize: '12px',
+              backgroundColor: '#e0e0e0',
+            }}
+            startIcon={<Functions />}
+          >
+            <Typography sx={{ textTransform: 'none', fontSize: 'inherit' }}>Alias</Typography>
+          </Button>
+          <Button
+            onClick={handleApiClick}
+            tabIndex={0}
+            variant="outlined"
+            sx={{
+              height: '30px',
+              padding: '0 8px',
+              borderRadius: '5px',
+              display: 'flex',
+              alignItems: 'center',
+              lineHeight: 'normal',
+              fontSize: '12px',
+              backgroundColor: '#e0e0e0',
+            }}
+            startIcon={<Api />}
+          >
+            <Typography sx={{ textTransform: 'none', fontSize: 'inherit' }}>API</Typography>
+          </Button>
+          <Button
+            onClick={handleApiExplorerClick}
+            tabIndex={0}
+            variant="outlined"
+            sx={{
+              height: '30px',
+              padding: '0 8px',
+              borderRadius: '5px',
+              display: 'flex',
+              alignItems: 'center',
+              lineHeight: 'normal',
+              fontSize: '12px',
+              backgroundColor: '#e0e0e0',
+            }}
+            startIcon={<Search />}
+          >
+            <Typography sx={{ textTransform: 'none', fontSize: 'inherit' }}>Explorer</Typography>
+          </Button>
+        </Grid>
+
       </Grid>
-      <Grid id='editor-trace-wrapper' container direction="row" style={{
-        width: '100%',
-        // height: 'calc(100vh - 48px)', 
-        display: 'flex',
-        flexDirection: 'row'
-      }} alignItems="stretch">
+      {/* Editor */}
+      <Grid container direction="row" sx={{ width: '100%', height: 'calc(100vh - 80px)', display: 'flex', flexDirection: 'row' }} alignItems="stretch">
+        <Grid item id='custom-editor' sx={{ width: '50%', height: '100%' }}>
+          {/* <Editor
+            height="100%"
+            width="50%"
+            language="python"
+            theme={'vs-dark'}
+            defaultValue="if (true):\n  print('Hello World')\nelse:\n  print('Bye World')"
+            // onChange={handleEditorChange}
+            options={{
+              wordWrap: 'bounded',
+              rulers: [120],
+            }}
+          /> */}
+        </Grid>
+        <Grid item id='custom-trace' sx={{ width: '50%', height: '100%' }}></Grid>
       </Grid>
-    </>
+    </Box>
   );
 }
+
+export default withErrorBoundary(withSuspense(App, <div> Loading ... </div>), <div> Error Occur </div>);
