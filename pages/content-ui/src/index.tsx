@@ -7,7 +7,6 @@ import { AppProvider } from '@chrome-extension-boilerplate/shared/lib/context/Ap
 
 const root = document.createElement('div');
 root.id = 'sap-cpq-tools';
-root.style.paddingBottom = '10px';
 
 const toolbarElement = document.getElementsByClassName('script-toolbar')[0];
 toolbarElement?.prepend(root);
