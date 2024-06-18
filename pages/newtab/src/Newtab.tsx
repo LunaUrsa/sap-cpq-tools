@@ -1,51 +1,63 @@
 import '@src/Newtab.css';
 import '@src/Newtab.scss';
 import {
-  exampleThemeStorage,
-  useStorageSuspense,
   withErrorBoundary,
   withSuspense,
 } from '@chrome-extension-boilerplate/shared';
-import { ComponentPropsWithoutRef } from 'react';
+import * as monaco from 'monaco-editor';
+import editorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
+import jsonWorker from 'monaco-editor/esm/vs/language/json/json.worker?worker';
+import cssWorker from 'monaco-editor/esm/vs/language/css/css.worker?worker';
+import htmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker';
+import tsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker';
+import Editor, { loader } from '@monaco-editor/react';
 
-const Newtab = () => {
-  const theme = useStorageSuspense(exampleThemeStorage);
-
-  return (
-    <div className="App" style={{ backgroundColor: theme === 'light' ? '#eee' : '#222' }}>
-      <header className="App-header" style={{ color: theme === 'light' ? '#222' : '#eee' }}>
-        <img src={chrome.runtime.getURL('newtab/logo.svg')} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>pages/newtab/src/Newtab.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-          style={{ color: theme === 'light' ? '#0281dc' : undefined, marginBottom: '10px' }}>
-          Learn React
-        </a>
-        <h6>The color of this paragraph is defined using SASS.</h6>
-        <ToggleButton>Toggle theme</ToggleButton>
-      </header>
-    </div>
-  );
+self.MonacoEnvironment = {
+  getWorker(_, label) {
+    if (label === 'json') {
+      return new jsonWorker();
+    }
+    if (label === 'css' || label === 'scss' || label === 'less') {
+      return new cssWorker();
+    }
+    if (label === 'html' || label === 'handlebars' || label === 'razor') {
+      return new htmlWorker();
+    }
+    if (label === 'typescript' || label === 'javascript') {
+      return new tsWorker();
+    }
+    return new editorWorker();
+  },
 };
 
-const ToggleButton = (props: ComponentPropsWithoutRef<'button'>) => {
-  const theme = useStorageSuspense(exampleThemeStorage);
+loader.config({ monaco });
+
+loader.init();
+
+const Newtab = () => {
+  const handleEditorChange = (value: string | undefined, event: monaco.editor.IModelContentChangedEvent) => {
+    console.log('here is the current model value:', value);
+    console.log('here is the event:', event);
+  };
+
   return (
-    <button
-      className={
-        props.className +
-        ' ' +
-        'font-bold mt-4 py-1 px-4 rounded shadow hover:scale-105 ' +
-        (theme === 'light' ? 'bg-white text-black' : 'bg-black text-white')
-      }
-      onClick={exampleThemeStorage.toggle}>
-      {props.children}
-    </button>
+    <div className="App">
+      <div style={{ height: '70vh', margin: '20px 0' }}>
+        <Editor
+          height="100%"
+          defaultLanguage="python"
+          defaultValue="if (true):
+          print('Hello World')
+          else:
+          print('Bye World')"
+          onChange={handleEditorChange}
+          options={{
+            wordWrap: 'bounded',
+            rulers: [120],
+          }}
+        />
+      </div>
+    </div>
   );
 };
 
