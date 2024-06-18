@@ -9,8 +9,8 @@ import {
   Box,
   Button, FormControl, Grid, InputLabel, MenuItem, Select, Typography,
 } from '@mui/material';
-import { stripIndent } from 'common-tags';
-import { python } from '@codemirror/lang-python';
+// import { stripIndent } from 'common-tags';
+// import { python } from '@codemirror/lang-python';
 import type { SelectChangeEvent } from '@mui/material';
 import {
   // Fullscreen,
@@ -19,10 +19,10 @@ import {
   PlayArrow, Clear, Code, Functions, Api, Search
 } from '@mui/icons-material';
 import '@mui/material/styles';
-import CodeMirror from "@uiw/react-codemirror";
+// import CodeMirror, { useCodeMirror } from "@uiw/react-codemirror";
 import useAppContext from '@chrome-extension-boilerplate/shared/lib/hooks/useAppContext';
 import { saveToStorage } from '@chrome-extension-boilerplate/shared/lib/utils';
-import { cdnBaseUrl } from '@chrome-extension-boilerplate/shared/lib/constants';
+// import { cdnBaseUrl } from '@chrome-extension-boilerplate/shared/lib/constants';
 // import MonacoEditor from '@uiw/react-monacoeditor';
 // import FullScreenAlert from './FullScreenAlert';
 // import * as monaco from 'monaco-editor';
@@ -168,11 +168,11 @@ const App = () => {
       && scriptToolbarRef.current
       && toolbarRef.current) {
       // Move the editor into the box
-      // const editorWrapper = document.getElementById('custom-editor') as HTMLElement;
-      // editorWrapper.appendChild(editorRef.current);
-      // editorRef.current.style.height = '50%'
-      // editorRef.current.style.maxHeight = '50%';
-      editorRef.current.style.display = 'None'
+      const editorWrapper = document.getElementById('custom-editor') as HTMLElement;
+      editorWrapper.appendChild(editorRef.current);
+      editorRef.current.style.height = '100%'
+      editorRef.current.style.maxHeight = '100%';
+      // editorRef.current.style.display = 'None'
       // Move the trace into the box
       const traceWrapper = document.getElementById('custom-trace') as HTMLElement;
       traceRef.current.style.height = '100%'
@@ -181,13 +181,13 @@ const App = () => {
 
       const basicThemes = ["default", "light", "dark"];
       // console.log('codeMirrorOptions:', codeMirrorOptions)
-      if (!basicThemes.includes(codeMirrorOptions.theme)) {
-        // console.log('Loading custom theme:', codeMirrorOptions.theme)
-        await loadAddon({
-          scripts: [],
-          css: [`${cdnBaseUrl}theme/${codeMirrorOptions.theme}.min.css`],
-        })
-      };
+      // if (!basicThemes.includes(codeMirrorOptions.theme)) {
+      //   // console.log('Loading custom theme:', codeMirrorOptions.theme)
+      //   await loadAddon({
+      //     scripts: [],
+      //     css: [`${cdnBaseUrl}theme/${codeMirrorOptions.theme}.min.css`],
+      //   })
+      // };
 
       // const parentContainer = editorRef.current.parentElement;
 
@@ -442,6 +442,63 @@ const App = () => {
     }
   }, []);
 
+  // const CodeMirrorEditor = () => {
+  //   const editor = useRef<HTMLDivElement>(null);
+  //   // const { setContainer } = useCodeMirror({
+  //   //   container: editor.current,
+  //   //   extensions: [python()],
+  //   //   value: userOptions.workbenchCode || '',
+  //   //   height: 'calc(100vh - 80px)',
+  //   //   autoFocus: true,
+  //   //   theme: 'dark',
+  //   //   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  //   //   // @ts-ignore
+  //   //   // theme: {themes[codeMirrorOptions.theme as keyof typeof themes] || codeMirrorOptions?.theme}
+  //   //   // theme: {dracula}
+  //   //   basicSetup: {
+  //   //     lineNumbers: true,
+  //   //     highlightActiveLineGutter: true,
+  //   //     highlightSpecialChars: true,
+  //   //     history: true,
+  //   //     foldGutter: true,
+  //   //     drawSelection: true,
+  //   //     dropCursor: true,
+  //   //     allowMultipleSelections: true,
+  //   //     indentOnInput: true,
+  //   //     syntaxHighlighting: true,
+  //   //     bracketMatching: true,
+  //   //     closeBrackets: true,
+  //   //     autocompletion: true,
+  //   //     rectangularSelection: true,
+  //   //     crosshairCursor: true,
+  //   //     highlightActiveLine: true,
+  //   //     highlightSelectionMatches: true,
+  //   //     closeBracketsKeymap: true,
+  //   //     defaultKeymap: true,
+  //   //     searchKeymap: true,
+  //   //     historyKeymap: true,
+  //   //     foldKeymap: true,
+  //   //     completionKeymap: true,
+  //   //     lintKeymap: true,
+  //   //     tabSize: 2,
+  //   //   },
+  //   //   onUpdate: (viewUpdate) => {
+  //   //     handleRawUpdate(viewUpdate.state.doc.toString());
+  //   //   },
+  //   //   // onBlur: handleRawBlur,
+  //   //   className: "border rounded-md shadow-sm"
+  //   // });
+
+  //   useEffect(() => {
+  //     if (editor.current) {
+  //       setContainer(editor.current);
+  //     }
+  //   }, [editor.current]);
+
+  //   return <div ref={editor} />;
+  // };
+
+
   return (
     <Box sx={{ border: '1px solid #ccc', padding: '5px', borderRadius: '8px', margin: '5px', backgroundColor: '#f9f9f9', height: 'calc(100vh - 15px)', boxSizing: 'border-box' }}>
       {/* Toolbar */}
@@ -647,50 +704,51 @@ const App = () => {
       {/* Editor */}
       <Grid container direction="row" sx={{ width: '100%', height: 'calc(100vh - 80px)', display: 'flex', flexDirection: 'row' }} alignItems="stretch">
         <Grid item id='custom-editor' sx={{ width: '50%', height: '100%' }}>
-          <CodeMirror
-            value={userOptions.workbenchCode || ''}
-            height='calc(100vh - 80px)'
-            autoFocus={true}
-            theme='dark'
-            // lang='python'
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            // theme={themes[codeMirrorOptions.theme as keyof typeof themes] || codeMirrorOptions?.theme}
-            // theme={dracula}
-            extensions={[python()]}
-            basicSetup={{
-              lineNumbers: true,
-              highlightActiveLineGutter: true,
-              highlightSpecialChars: true,
-              history: true,
-              foldGutter: true,
-              drawSelection: true,
-              dropCursor: true,
-              allowMultipleSelections: true,
-              indentOnInput: true,
-              syntaxHighlighting: true,
-              bracketMatching: true,
-              closeBrackets: true,
-              autocompletion: true,
-              rectangularSelection: true,
-              crosshairCursor: true,
-              highlightActiveLine: true,
-              highlightSelectionMatches: true,
-              closeBracketsKeymap: true,
-              defaultKeymap: true,
-              searchKeymap: true,
-              historyKeymap: true,
-              foldKeymap: true,
-              completionKeymap: true,
-              lintKeymap: true,
-              tabSize: 2,
-            }}
-            onUpdate={(viewUpdate) => {
-              handleRawUpdate(viewUpdate.state.doc.toString());
-            }}
-            // onBlur={handleRawBlur}
-            className="border rounded-md shadow-sm"
-          />
+          {/* <CodeMirrorEditor /> */}
+          {/* <CodeMirror
+          // value={userOptions.workbenchCode || ''}
+          // height='calc(100vh - 80px)'
+          // autoFocus={true}
+          // theme='dark'
+          // lang='python'
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          // theme={themes[codeMirrorOptions.theme as keyof typeof themes] || codeMirrorOptions?.theme}
+          // theme={dracula}
+          // extensions={[python()]}
+          // basicSetup={{
+          //   lineNumbers: true,
+          //   highlightActiveLineGutter: true,
+          //   highlightSpecialChars: true,
+          //   history: true,
+          //   foldGutter: true,
+          //   drawSelection: true,
+          //   dropCursor: true,
+          //   allowMultipleSelections: true,
+          //   indentOnInput: true,
+          //   syntaxHighlighting: true,
+          //   bracketMatching: true,
+          //   closeBrackets: true,
+          //   autocompletion: true,
+          //   rectangularSelection: true,
+          //   crosshairCursor: true,
+          //   highlightActiveLine: true,
+          //   highlightSelectionMatches: true,
+          //   closeBracketsKeymap: true,
+          //   defaultKeymap: true,
+          //   searchKeymap: true,
+          //   historyKeymap: true,
+          //   foldKeymap: true,
+          //   completionKeymap: true,
+          //   lintKeymap: true,
+          //   tabSize: 2,
+          // }}
+          // onUpdate={(viewUpdate) => {
+          //   handleRawUpdate(viewUpdate.state.doc.toString());
+          // }}
+          // // onBlur={handleRawBlur}
+          // className="border rounded-md shadow-sm"
+          /> */}
         </Grid>
         <Grid item id='custom-trace' sx={{ width: '50%', height: '100%' }}></Grid>
       </Grid>

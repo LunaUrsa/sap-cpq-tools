@@ -13,7 +13,7 @@ export default async function codeMirrorMods(codeMirrorOptions: CodeMirrorOption
    > Script workbench
    > Custom actions
    > Product Scripts
-   5.65.14, the second-to-last 5.X version available
+   5.65.14, the second-to-last 5.X version  available
    > Global scripts 
   */
   const codeMirrorVersion = "5.65.14";
@@ -317,39 +317,39 @@ export default async function codeMirrorMods(codeMirrorOptions: CodeMirrorOption
   // console.log('CodeMirror instance found:', editor)
 
   // Loads js and css addon files
-  // const loadAddon = async (addon: { scripts: string[]; css: string[] }) => {
-  //   const loadResource = (tag: 'script' | 'link', url: string): Promise<void> => {
-  //     return new Promise<void>((resolve, reject) => {
-  //       const element = document.createElement(tag);
+  const loadAddon = async (addon: { scripts: string[]; css: string[] }) => {
+    const loadResource = (tag: 'script' | 'link', url: string): Promise<void> => {
+      return new Promise<void>((resolve, reject) => {
+        const element = document.createElement(tag);
 
-  //       if (tag === 'script') {
-  //         Object.assign(element, {
-  //           type: 'text/javascript',
-  //           src: url,
-  //         });
-  //       } else {
-  //         Object.assign(element, {
-  //           rel: 'stylesheet',
-  //           type: 'text/css',
-  //           href: url,
-  //         });
-  //       }
+        if (tag === 'script') {
+          Object.assign(element, {
+            type: 'text/javascript',
+            src: url,
+          });
+        } else {
+          Object.assign(element, {
+            rel: 'stylesheet',
+            type: 'text/css',
+            href: url,
+          });
+        }
 
-  //       element.onload = () => resolve();
-  //       element.onerror = () => reject(new Error(`Failed to load ${url}`));
-  //       document.head.appendChild(element); // Use head instead of body for better practice
-  //     });
-  //   };
+        element.onload = () => resolve();
+        element.onerror = () => reject(new Error(`Failed to load ${url}`));
+        document.head.appendChild(element); // Use head instead of body for better practice
+      });
+    };
 
-  //   try {
-  //     const scriptPromises = addon.scripts.map(url => loadResource('script', url));
-  //     const cssPromises = addon.css.map(url => loadResource('link', url));
-  //     await Promise.all([...scriptPromises, ...cssPromises]);
-  //     console.log('All resources loaded successfully');
-  //   } catch (error) {
-  //     console.error('Error loading resources:', error);
-  //   }
-  // };
+    try {
+      const scriptPromises = addon.scripts.map(url => loadResource('script', url));
+      const cssPromises = addon.css.map(url => loadResource('link', url));
+      await Promise.all([...scriptPromises, ...cssPromises]);
+      console.log('All resources loaded successfully');
+    } catch (error) {
+      console.error('Error loading resources:', error);
+    }
+  };
 
   // Adds a hidden element to the page that allows the extension to read the code
   const addHiddenElement = (editor: CodeMirror.Editor) => {
@@ -386,18 +386,18 @@ export default async function codeMirrorMods(codeMirrorOptions: CodeMirrorOption
   };
   addHiddenElement(editor);
 
-  // // Applies the options on the user's options page
-  // const applyCodeMirrorOptions = async (editor: CodeMirror.Editor) => {
-  //   // console.log('applyCodeMirrorOptions')
-  //   for (const [key, value] of Object.entries(codeMirrorOptions)) {
-  //     try {
-  //       editor.setOption(key as keyof EditorConfiguration, value);
-  //     } catch (error) {
-  //       console.error('Failed to set option:', key, value, error);
-  //     }
-  //   }
-  //   // console.log('Options set:', codeMirrorOptions)
-  // };
+  // Applies the options on the user's options page
+  const applyCodeMirrorOptions = async (editor: CodeMirror.Editor) => {
+    // console.log('applyCodeMirrorOptions')
+    for (const [key, value] of Object.entries(codeMirrorOptions)) {
+      try {
+        editor.setOption(key as keyof EditorConfiguration, value);
+      } catch (error) {
+        console.error('Failed to set option:', key, value, error);
+      }
+    }
+    // console.log('Options set:', codeMirrorOptions)
+  };
 
   const addToolbar = async () => {
     // console.debug('addToolbar')
@@ -469,17 +469,17 @@ export default async function codeMirrorMods(codeMirrorOptions: CodeMirrorOption
   await addToolbar();
 
   // CodeMirror options
-  // const gutters = ["CodeMirror-linenumbers"];
+  const gutters = ["CodeMirror-linenumbers"];
 
   // console.log('codeMirrorOptions:', codeMirrorOptions)
-  // if (!basicThemes.includes(codeMirrorOptions.theme)) {
-  //   // console.log('Loading custom theme:', codeMirrorOptions.theme)
-  //   await loadAddon({
-  //     scripts: [],
-  //     css: [`${cdnBaseUrl}theme/${codeMirrorOptions.theme}.min.css`],
-  //   })
-  // };
-  // editor.setOption('theme' as keyof EditorConfiguration, codeMirrorOptions.theme);
+  if (!basicThemes.includes(codeMirrorOptions.theme)) {
+    // console.log('Loading custom theme:', codeMirrorOptions.theme)
+    await loadAddon({
+      scripts: [],
+      css: [`${cdnBaseUrl}theme/${codeMirrorOptions.theme}.min.css`],
+    })
+  };
+  editor.setOption('theme' as keyof EditorConfiguration, codeMirrorOptions.theme);
   // console.debug('Theme set:', codeMirrorOptions.theme)
 
   // await loadAddon(cmFiles.main)
