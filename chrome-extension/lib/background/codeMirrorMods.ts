@@ -365,24 +365,24 @@ export default async function codeMirrorMods(codeMirrorOptions: CodeMirrorOption
     hiddenElement.setAttribute('type', 'text/x-python');
     document.body.appendChild(hiddenElement);
 
-    // Function that updates the hidden element with the contents of CodeMirror
-    const updateHiddenContent = () => {
-      const hiddenContent = document.getElementById('hiddenContent');
-      if (hiddenContent) {
-        const editorElement = document.getElementsByClassName('CodeMirror')[0];
-        if (editorElement) {
-          // eslint-disable-next-line  @typescript-eslint/no-explicit-any
-          const editor: CodeMirror.Editor | undefined = (editorElement as any).CodeMirror;
-          if (editor) {
-            editor.setValue(hiddenContent.textContent ?? '')
-          }
-        }
-      }
-    };
-    // Listen for changes in the CodeMirror instance
-    hiddenElement.onchange = updateHiddenContent;
-    // Update the initial hidden content
-    updateHiddenContent();
+    // // Function that updates the hidden element with the contents of CodeMirror
+    // const updateHiddenContent = () => {
+    //   const hiddenContent = document.getElementById('hiddenContent');
+    //   if (hiddenContent) {
+    //     const editorElement = document.getElementsByClassName('CodeMirror')[0];
+    //     if (editorElement) {
+    //       // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+    //       const editor: CodeMirror.Editor | undefined = (editorElement as any).CodeMirror;
+    //       if (editor) {
+    //         editor.setValue(hiddenContent.textContent ?? '')
+    //       }
+    //     }
+    //   }
+    // };
+    // // Listen for changes in the CodeMirror instance
+    // editor.on('change', updateHiddenContent);
+    // // Update the initial hidden content
+    // updateHiddenContent();
   };
   addHiddenElement(editor);
 
@@ -484,204 +484,204 @@ export default async function codeMirrorMods(codeMirrorOptions: CodeMirrorOption
 
   // await loadAddon(cmFiles.main)
 
-  // // Search
-  // if (codeMirrorOptions.search) {
-  //   await loadAddon(cmFiles.search)
-  //   await loadAddon(cmFiles.dialog);
-  //   // console.log('Search loaded')
-  // }
-  // if (codeMirrorOptions.jumpToLine) {
-  //   await loadAddon(cmFiles.jumpToLine)
-  //   await loadAddon(cmFiles.dialog);
-  //   // console.log('jumpToLine loaded')
+  // Search
+  if (codeMirrorOptions.search) {
+    await loadAddon(cmFiles.search)
+    await loadAddon(cmFiles.dialog);
+    // console.log('Search loaded')
+  }
+  if (codeMirrorOptions.jumpToLine) {
+    await loadAddon(cmFiles.jumpToLine)
+    await loadAddon(cmFiles.dialog);
+    // console.log('jumpToLine loaded')
 
-  // }
-  // if (codeMirrorOptions.matchesOnScrollbar) {
-  //   await loadAddon(cmFiles.matchesOnScrollbar)
-  // }
+  }
+  if (codeMirrorOptions.matchesOnScrollbar) {
+    await loadAddon(cmFiles.matchesOnScrollbar)
+  }
 
-  // if (codeMirrorOptions.matchBrackets) {
-  //   await loadAddon(cmFiles.matchbrackets)
+  if (codeMirrorOptions.matchBrackets) {
+    await loadAddon(cmFiles.matchbrackets)
+  }
+  editor.setOption('matchBrackets' as keyof EditorConfiguration, codeMirrorOptions.matchBrackets);
+  // console.log('matchBrackets loaded')
+
+  if (codeMirrorOptions.autoCloseBrackets) {
+    await loadAddon(cmFiles.closebrackets)
+  }
+  editor.setOption('autoCloseBrackets' as keyof EditorConfiguration, codeMirrorOptions.autoCloseBrackets);
+  // console.log('autoCloseBrackets loaded')
+
+  if (codeMirrorOptions.matchTags) {
+    // console.log('matchTags loading', cmFiles.matchtags)
+    await loadAddon(cmFiles.matchtags)
+    // console.log('matchTags loaded')
+  }
+  editor.setOption('matchTags' as keyof EditorConfiguration, codeMirrorOptions.matchTags);
+
+  if (codeMirrorOptions.showTrailingSpace) {
+    await loadAddon(cmFiles.trailingspace)
+  }
+  editor.setOption('showTrailingSpace' as keyof EditorConfiguration, codeMirrorOptions.showTrailingSpace);
+  // console.log('showTrailingSpace loaded')
+  // if (codeMirrorOptions.autoCloseTags) {
+  //   await loadAddon(cmFiles.closetag)
   // }
-  // editor.setOption('matchBrackets' as keyof EditorConfiguration, codeMirrorOptions.matchBrackets);
-  // // console.log('matchBrackets loaded')
+  // editor.setOption('autoCloseTags' as keyof EditorConfiguration, codeMirrorOptions.autoCloseTags);
 
-  // if (codeMirrorOptions.autoCloseBrackets) {
-  //   await loadAddon(cmFiles.closebrackets)
-  // }
-  // editor.setOption('autoCloseBrackets' as keyof EditorConfiguration, codeMirrorOptions.autoCloseBrackets);
-  // // console.log('autoCloseBrackets loaded')
-
-  // if (codeMirrorOptions.matchTags) {
-  //   // console.log('matchTags loading', cmFiles.matchtags)
-  //   await loadAddon(cmFiles.matchtags)
-  //   // console.log('matchTags loaded')
-  // }
-  // editor.setOption('matchTags' as keyof EditorConfiguration, codeMirrorOptions.matchTags);
-
-  // if (codeMirrorOptions.showTrailingSpace) {
-  //   await loadAddon(cmFiles.trailingspace)
-  // }
-  // editor.setOption('showTrailingSpace' as keyof EditorConfiguration, codeMirrorOptions.showTrailingSpace);
-  // // console.log('showTrailingSpace loaded')
-  // // if (codeMirrorOptions.autoCloseTags) {
-  // //   await loadAddon(cmFiles.closetag)
-  // // }
-  // // editor.setOption('autoCloseTags' as keyof EditorConfiguration, codeMirrorOptions.autoCloseTags);
-
-  // // if (codeMirrorOptions.continueList) {
-  // //   await loadAddon(cmFiles.continuelist)
-  // // }
-
-  // if (codeMirrorOptions.comments) {
-  //   await loadAddon(cmFiles.comment)
+  // if (codeMirrorOptions.continueList) {
+  //   await loadAddon(cmFiles.continuelist)
   // }
 
-  // // Code folding
-  // if (codeMirrorOptions.foldCode) {
-  //   await loadAddon(cmFiles.fold);
-  //   gutters.push("CodeMirror-foldgutter");
-  // }
+  if (codeMirrorOptions.comments) {
+    await loadAddon(cmFiles.comment)
+  }
 
-  // editor.setOption('foldGutter' as keyof EditorConfiguration, codeMirrorOptions.foldCode);
-  // // console.log('foldcode loaded')
+  // Code folding
+  if (codeMirrorOptions.foldCode) {
+    await loadAddon(cmFiles.fold);
+    gutters.push("CodeMirror-foldgutter");
+  }
 
+  editor.setOption('foldGutter' as keyof EditorConfiguration, codeMirrorOptions.foldCode);
+  // console.log('foldcode loaded')
+
+  // Wait for the DOM to be fully loaded
+
+  // const textarea = document.getElementsByClassName('form-control')[1] as HTMLElement;
   // // Wait for the DOM to be fully loaded
+  // const codeMirrorInstance = $(textarea).data('CodeMirrorInstance');
 
-  // // const textarea = document.getElementsByClassName('form-control')[1] as HTMLElement;
-  // // // Wait for the DOM to be fully loaded
-  // // const codeMirrorInstance = $(textarea).data('CodeMirrorInstance');
+  // if (codeMirrorInstance) {
+  //   // Update the CodeMirror instance options to enable foldGutter
+  //   codeMirrorInstance.setOption('gutters', ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]);
+  //   codeMirrorInstance.setOption('foldGutter', true);
 
-  // // if (codeMirrorInstance) {
-  // //   // Update the CodeMirror instance options to enable foldGutter
-  // //   codeMirrorInstance.setOption('gutters', ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]);
-  // //   codeMirrorInstance.setOption('foldGutter', true);
+  //   // Optionally, you can also specify fold functions (e.g., brace-fold, comment-fold)
+  //   // codeMirrorInstance.setOption('foldOptions', {
+  //   //   rangeFinder: (CodeMirror as any).fold.combine((CodeMirror as any).fold.brace, CodeMirror.fold.comment)
+  //   // });
 
-  // //   // Optionally, you can also specify fold functions (e.g., brace-fold, comment-fold)
-  // //   // codeMirrorInstance.setOption('foldOptions', {
-  // //   //   rangeFinder: (CodeMirror as any).fold.combine((CodeMirror as any).fold.brace, CodeMirror.fold.comment)
-  // //   // });
-
-  // //   // Refresh the CodeMirror instance to apply the new options
-  // //   codeMirrorInstance.refresh();
-  // //   console.log('CodeMirror instance updated.')
-  // // } else {
-  // //   console.error('CodeMirror instance not found.');
-  // // }
-
-  // // Autocomplete
-  // if (codeMirrorOptions.autoComplete) {
-  //   await loadAddon(cmFiles.hint);
-  //   editor.setOption('hintOptions' as keyof EditorConfiguration, {
-  //     completeSingle: false,
-  //     closeOnUnfocus: false,
-  //     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  //     // hint: (CodeMirror as any).hint.anyword,
-  //   });
-  //   editor.setOption('extraKeys' as keyof EditorConfiguration, {
-  //     'Ctrl-Space': 'autocomplete',
-  //     'Cmd-Space': 'autocomplete',
-  //     'Ctrl-Enter': () => {
-  //       editor.execCommand('autocomplete');
-  //     },
-  //     'Cmd-Enter': () => {
-  //       editor.execCommand('autocomplete');
-  //     },
-  //   });
+  //   // Refresh the CodeMirror instance to apply the new options
+  //   codeMirrorInstance.refresh();
+  //   console.log('CodeMirror instance updated.')
+  // } else {
+  //   console.error('CodeMirror instance not found.');
   // }
 
-  // if (codeMirrorOptions.highlightSelectionMatches) {
-  //   await loadAddon(cmFiles.highlightSelectionMatches)
-  // }
-  // editor.setOption('highlightSelectionMatches' as keyof EditorConfiguration, codeMirrorOptions.highlightSelectionMatches);
+  // Autocomplete
+  if (codeMirrorOptions.autoComplete) {
+    await loadAddon(cmFiles.hint);
+    editor.setOption('hintOptions' as keyof EditorConfiguration, {
+      completeSingle: false,
+      closeOnUnfocus: false,
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // hint: (CodeMirror as any).hint.anyword,
+    });
+    editor.setOption('extraKeys' as keyof EditorConfiguration, {
+      'Ctrl-Space': 'autocomplete',
+      'Cmd-Space': 'autocomplete',
+      'Ctrl-Enter': () => {
+        editor.execCommand('autocomplete');
+      },
+      'Cmd-Enter': () => {
+        editor.execCommand('autocomplete');
+      },
+    });
+  }
 
-  // // Linting TODO
-  // if (codeMirrorOptions.linting) {
-  //   await loadAddon(cmFiles.lint)
-  // }
-  // // editor.setOption('lint' as keyof EditorConfiguration, codeMirrorOptions.highlightSelectionMatches);
+  if (codeMirrorOptions.highlightSelectionMatches) {
+    await loadAddon(cmFiles.highlightSelectionMatches)
+  }
+  editor.setOption('highlightSelectionMatches' as keyof EditorConfiguration, codeMirrorOptions.highlightSelectionMatches);
 
-  // if (codeMirrorOptions.markSelection) {
-  //   await loadAddon(cmFiles.markSelection)
-  // }
-  // editor.setOption('styleSelectedText' as keyof EditorConfiguration, codeMirrorOptions.markSelection);
+  // Linting TODO
+  if (codeMirrorOptions.linting) {
+    await loadAddon(cmFiles.lint)
+  }
+  // editor.setOption('lint' as keyof EditorConfiguration, codeMirrorOptions.highlightSelectionMatches);
+
+  if (codeMirrorOptions.markSelection) {
+    await loadAddon(cmFiles.markSelection)
+  }
+  editor.setOption('styleSelectedText' as keyof EditorConfiguration, codeMirrorOptions.markSelection);
 
 
-  // if (codeMirrorOptions.styleActiveLine) {
-  //   await loadAddon(cmFiles.activeLine)
-  //   gutters.push("CodeMirror-activeline");
-  // }
-  // editor.setOption('styleActiveLine' as keyof EditorConfiguration, codeMirrorOptions.styleActiveLine);
+  if (codeMirrorOptions.styleActiveLine) {
+    await loadAddon(cmFiles.activeLine)
+    gutters.push("CodeMirror-activeline");
+  }
+  editor.setOption('styleActiveLine' as keyof EditorConfiguration, codeMirrorOptions.styleActiveLine);
 
-  // if (codeMirrorOptions.selectionPointer) {
-  //   await loadAddon(cmFiles.selectionPointer)
-  // }
-  // editor.setOption('selectionPointer' as keyof EditorConfiguration, codeMirrorOptions.selectionPointer);
+  if (codeMirrorOptions.selectionPointer) {
+    await loadAddon(cmFiles.selectionPointer)
+  }
+  editor.setOption('selectionPointer' as keyof EditorConfiguration, codeMirrorOptions.selectionPointer);
 
-  // // Set the mode
-  // // await loadAddon(cmFiles.modes)
-  // // editor.modeOption = {
-  // //   name: "python",
-  // //   singleLineStringErrors: false,
-  // //   version: 2,
-  // // };
-  // // editor.setOption('mode' as keyof EditorConfiguration, editor.modeOption);
-  // // console.log(`CM Mode: `, editor.modeOption)
+  // Set the mode
+  // await loadAddon(cmFiles.modes)
+  // editor.modeOption = {
+  //   name: "python",
+  //   singleLineStringErrors: false,
+  //   version: 2,
+  // };
+  // editor.setOption('mode' as keyof EditorConfiguration, editor.modeOption);
+  // console.log(`CM Mode: `, editor.modeOption)
 
-  // if (codeMirrorOptions.continueComments) {
-  //   await loadAddon(cmFiles.continuecomment)
-  //   // console.log('continuecomment loaded')
-  // }
+  if (codeMirrorOptions.continueComments) {
+    await loadAddon(cmFiles.continuecomment)
+    // console.log('continuecomment loaded')
+  }
 
-  // // This is kind of gross, i can probably make a better one
-  // // Fullscreen
-  // // addonPromises.push(...loadAddon(cmFiles.fullscreen));
-  // // editor.setOption("extraKeys", {
-  // //   F11: function (cm) {
-  // //     if (cm.getOption('fullScreen' as keyof EditorConfiguration)) {
-  // //       cm.setOption('fullScreen' as keyof EditorConfiguration, false);
-  // //     } else {
-  // //       cm.setOption('fullScreen' as keyof EditorConfiguration, true);
-  // //     }
-  // //   }
-  // // });
+  // This is kind of gross, i can probably make a better one
+  // Fullscreen
+  // addonPromises.push(...loadAddon(cmFiles.fullscreen));
+  // editor.setOption("extraKeys", {
+  //   F11: function (cm) {
+  //     if (cm.getOption('fullScreen' as keyof EditorConfiguration)) {
+  //       cm.setOption('fullScreen' as keyof EditorConfiguration, false);
+  //     } else {
+  //       cm.setOption('fullScreen' as keyof EditorConfiguration, true);
+  //     }
+  //   }
+  // });
 
-  // if (['overlay', 'simple'].includes(codeMirrorOptions.scrollbarStyle)) {
-  //   await loadAddon(cmFiles.simpleScrollbars)
-  // }
-  // editor.setOption('scrollbarStyle' as keyof EditorConfiguration, codeMirrorOptions.scrollbarStyle);
+  if (['overlay', 'simple'].includes(codeMirrorOptions.scrollbarStyle)) {
+    await loadAddon(cmFiles.simpleScrollbars)
+  }
+  editor.setOption('scrollbarStyle' as keyof EditorConfiguration, codeMirrorOptions.scrollbarStyle);
 
-  // if (codeMirrorOptions.scrollPastEnd) {
-  //   await loadAddon(cmFiles.scrollpastend)
-  // }
-  // editor.setOption('scrollPastEnd' as keyof EditorConfiguration, codeMirrorOptions.scrollPastEnd);
+  if (codeMirrorOptions.scrollPastEnd) {
+    await loadAddon(cmFiles.scrollpastend)
+  }
+  editor.setOption('scrollPastEnd' as keyof EditorConfiguration, codeMirrorOptions.scrollPastEnd);
 
-  // // Keymaps
-  // switch (codeMirrorOptions.keyMap) {
-  //   case "sublime":
-  //     await loadAddon(cmFiles.sublime)
-  //     editor.addKeyMap("sublime")
-  //     break;
-  //   case "vim":
-  //     await loadAddon(cmFiles.vim)
-  //     editor.addKeyMap("vim")
-  //     break;
-  //   case "emacs":
-  //     await loadAddon(cmFiles.emacs)
-  //     editor.addKeyMap("emacs")
-  //     break;
-  //   default:
-  //     editor.addKeyMap("default")
-  // }
+  // Keymaps
+  switch (codeMirrorOptions.keyMap) {
+    case "sublime":
+      await loadAddon(cmFiles.sublime)
+      editor.addKeyMap("sublime")
+      break;
+    case "vim":
+      await loadAddon(cmFiles.vim)
+      editor.addKeyMap("vim")
+      break;
+    case "emacs":
+      await loadAddon(cmFiles.emacs)
+      editor.addKeyMap("emacs")
+      break;
+    default:
+      editor.addKeyMap("default")
+  }
 
-  // editor.setOption('gutters', gutters);
-  // console.log('Gutters set:', gutters)
+  editor.setOption('gutters', gutters);
+  console.log('Gutters set:', gutters)
 
-  // // Set the options defined in the codeMirrorOptions object
-  // // Needs to happen after the scripts are loaded
-  // await applyCodeMirrorOptions(editor);
+  // Set the options defined in the codeMirrorOptions object
+  // Needs to happen after the scripts are loaded
+  await applyCodeMirrorOptions(editor);
 
-  // // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  // console.log('codeMirrorMods ended with options:', (editor as any).options)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  console.log('codeMirrorMods ended with options:', (editor as any).options)
   return true;
 }
