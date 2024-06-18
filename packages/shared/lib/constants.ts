@@ -7,6 +7,11 @@ export const defaultUserPreferences: UserOptions = {
   workbenchView: 'Default' as WorkbenchViews,
   scriptingView: 'Default' as ScriptingViews,
   scriptingMode: 'Standard' as ScriptingModes,
+  workbenchCode: stripIndent`
+    if (true):
+        print('Hello World')
+    else:
+        print('Bye World')`
   // downloadLocations: {},
 };
 
@@ -417,476 +422,194 @@ export const defaultMods: Mod[] = [
     isEnabled: true,
     isValidCode: true,
   },
-  {
-    id: "2",
-    name: "Add New Document Pop-up",
-    content: stripIndent`
-      #popup1 {
-        position: fixed;
-        top: 350px;
-        left: 1100px;
-      }
-    `,
-    isEnabled: true,
-    isValidCode: true,
-  },
-  {
-    id: "3",
-    name: "Product Configuration Layout",
-    content: stripIndent`
-      #divConfiguratorLayout {
-        width: 1500px;
-      }
+  // {
+  //   id: "2",
+  //   name: "Add New Document Pop-up",
+  //   content: stripIndent`
+  //     #popup1 {
+  //       position: fixed;
+  //       top: 350px;
+  //       left: 1100px;
+  //     }
+  //   `,
+  //   isEnabled: true,
+  //   isValidCode: true,
+  // },
+  // {
+  //   id: "3",
+  //   name: "Product Configuration Layout",
+  //   content: stripIndent`
+  //     #divConfiguratorLayout {
+  //       width: 1500px;
+  //     }
 
-      #ctl00_cph1_tabsDiv {
-        width: 100%;
-      }
-    `,
-    isEnabled: true,
-    isValidCode: true,
-  },
-  {
-    id: "4",
-    name: "Document Preview Modal",
-    content: stripIndent`
-      #preview_popup {
-        position: fixed;
-        top: 20px;
-        height: 900px;
-        width: 1500px;
-      }
+  //     #ctl00_cph1_tabsDiv {
+  //       width: 100%;
+  //     }
+  //   `,
+  //   isEnabled: true,
+  //   isValidCode: true,
+  // },
+  // {
+  //   id: "4",
+  //   name: "Document Preview Modal",
+  //   content: stripIndent`
+  //     #preview_popup {
+  //       position: fixed;
+  //       top: 20px;
+  //       height: 900px;
+  //       width: 1500px;
+  //     }
 
-      #preview_container {
-        height: 100%;
-      }
+  //     #preview_container {
+  //       height: 100%;
+  //     }
 
-      iframe[src*="tempdoc/preview"] {
-        height: 800px;
-        width: 1400px;
-      }
-    `,
-    isEnabled: true,
-    isValidCode: true,
-  },
-  {
-    id: "5",
-    name: "Adding Attributes from Simple Products Modal",
-    content: stripIndent`
-      #ctl00_cph1_attributeControl_ps_pnlTable {
-        height: 850px;
-        position: fixed;
-        top: 25px;
-      }
-    `,
-    isEnabled: true,
-    isValidCode: true,
-  },
-  {
-    id: "6",
-    name: "Tag Builder",
-    content: stripIndent`
-      #tab-container-1 {
-        width: 800px;
-      }
+  //     iframe[src*="tempdoc/preview"] {
+  //       height: 800px;
+  //       width: 1400px;
+  //     }
+  //   `,
+  //   isEnabled: true,
+  //   isValidCode: true,
+  // },
+  // {
+  //   id: "5",
+  //   name: "Adding Attributes from Simple Products Modal",
+  //   content: stripIndent`
+  //     #ctl00_cph1_attributeControl_ps_pnlTable {
+  //       height: 850px;
+  //       position: fixed;
+  //       top: 25px;
+  //     }
+  //   `,
+  //   isEnabled: true,
+  //   isValidCode: true,
+  // },
+  // {
+  //   id: "6",
+  //   name: "Tag Builder",
+  //   content: stripIndent`
+  //     #tab-container-1 {
+  //       width: 800px;
+  //     }
 
-      #ddlTags {
-        height: 250px;
-        width: 750px;
-      }
+  //     #ddlTags {
+  //       height: 250px;
+  //       width: 750px;
+  //     }
 
-      #PA_ID {
-        width: 750px;
-      }
+  //     #PA_ID {
+  //       width: 750px;
+  //     }
 
-      #PAV_ID {
-        width: 750px;
-        height: 250px;
-      }
+  //     #PAV_ID {
+  //       width: 750px;
+  //       height: 250px;
+  //     }
 
-      textarea.consolelook.form-control {
-        height: 200px;
-        width: 750px;
-      }
+  //     textarea.consolelook.form-control {
+  //       height: 200px;
+  //       width: 750px;
+  //     }
 
-      #txtResult {
-        height: 300px;
-        width: 762px;
-      }
-    `,
-    isEnabled: true,
-    isValidCode: true,
-  },
-  {
-    id: "7",
-    name: "Product Configuration Fields",
-    content: stripIndent`
-      textarea.form-control[name*="DynPartNumber"] {
-        height: 150px;
-        width: 600px;
-      }
-    `,
-    isEnabled: true,
-    isValidCode: true,
-  },
-  {
-    id: "8",
-    name: "Rule Text Boxes",
-    content: stripIndent`
-      #ctl00_cph1_pnlRuleAdministration {
-        width: 1600px;
-      }
+  //     #txtResult {
+  //       height: 300px;
+  //       width: 762px;
+  //     }
+  //   `,
+  //   isEnabled: true,
+  //   isValidCode: true,
+  // },
+  // {
+  //   id: "7",
+  //   name: "Product Configuration Fields",
+  //   content: stripIndent`
+  //     textarea.form-control[name*="DynPartNumber"] {
+  //       height: 150px;
+  //       width: 600px;
+  //     }
+  //   `,
+  //   isEnabled: true,
+  //   isValidCode: true,
+  // },
+  // {
+  //   id: "8",
+  //   name: "Rule Text Boxes",
+  //   content: stripIndent`
+  //     #ctl00_cph1_pnlRuleAdministration {
+  //       width: 1600px;
+  //     }
 
-      #conditionDiv {
-        width: 550px;
-      }
+  //     #conditionDiv {
+  //       width: 550px;
+  //     }
 
-      textarea.form-control[name*="RuleCondition"] {
-        height: 250px;
-        width: 500px;
-      }
+  //     textarea.form-control[name*="RuleCondition"] {
+  //       height: 250px;
+  //       width: 500px;
+  //     }
 
-      #actionDiv {
-        width: 550px;
-      }
+  //     #actionDiv {
+  //       width: 550px;
+  //     }
 
-      #ctl00_cph1_txtRuleAction {
-        height: 250px;
-        width: 500px;
-      }
-    `,
-    isEnabled: true,
-    isValidCode: true,
-  },
-  {
-    id: "9",
-    name: "Script Events",
-    content: stripIndent`
-      #ctl00_cph1_lbAfterAdding1 {
-        height: 150px;
-        width: 400px;
-      }
-    `,
-    isEnabled: true,
-    isValidCode: true,
-  },
-  {
-    id: "10",
-    name: "Promo Banner on Quote Page",
-    content: stripIndent`
-      div.alert.alert-info {
-        z-index: 5;
-        opacity: 1;
-        position: fixed;
-        width: 95%;
-        height: 55px;
-        top: 135px;
-      }
+  //     #ctl00_cph1_txtRuleAction {
+  //       height: 250px;
+  //       width: 500px;
+  //     }
+  //   `,
+  //   isEnabled: true,
+  //   isValidCode: true,
+  // },
+  // {
+  //   id: "9",
+  //   name: "Script Events",
+  //   content: stripIndent`
+  //     #ctl00_cph1_lbAfterAdding1 {
+  //       height: 150px;
+  //       width: 400px;
+  //     }
+  //   `,
+  //   isEnabled: true,
+  //   isValidCode: true,
+  // },
+  // {
+  //   id: "10",
+  //   name: "Promo Banner on Quote Page",
+  //   content: stripIndent`
+  //     div.alert.alert-info {
+  //       z-index: 5;
+  //       opacity: 1;
+  //       position: fixed;
+  //       width: 95%;
+  //       height: 55px;
+  //       top: 135px;
+  //     }
 
-      div.quote-page-main-container {
-        margin-top: 55px;
-      }
-    `,
-    isEnabled: true,
-    isValidCode: true,
-  },
-  {
-    id: "11",
-    name: "Save Notifications",
-    content: stripIndent`
-      #ctl00_cph1_labError {
-        font-weight: bold;
-        font-size: 18pt;
-        position: fixed;
-        left: 1200px;
-        top: 50px;
-        border: solid 1px;
-      }
-    `,
-    isEnabled: true,
-    isValidCode: true,
-  },
-  {
-    id: "12",
-    name: "Window Relocation Formatting",
-    content: stripIndent`
-      .optsButton {
-        background-color: #f5f5f5;
-      }
-
-      .rowheight_win {
-        height: 675px;
-      }
-
-      .leftscript {
-        height: inherit !important;
-        max-height: 20000px !important;
-        width: 50% !important;
-      }
-
-      .righttrace {
-        display: block !important;
-        height: inherit !important;
-        max-height: 20000px !important;
-        float: right !important;
-      }
-
-      .largeleft {
-        height: inherit !important;
-        max-height: 20000px !important;
-        width: 65% !important;
-      }
-
-      .smallright {
-        height: inherit !important;
-        max-height: 20000px !important;
-        width: 35% !important;
-      }
-
-      .btn_cust1 {
-        margin: 0px 5px 8px 5px !important;
-      }
-
-      .toolbar_margin_match {
-        margin: 10px 0px 10px 0px;
-      }
-    `,
-    isEnabled: true,
-    isValidCode: true,
-  },
-  {
-    id: "13",
-    name: "Script Info",
-    content: stripIndent`
-      .script-info {
-        width: 50%;
-      }
-
-      .cm-tab {
-        background-color: red !important;
-      }
-
-      #wfOptsButton {
-        width: 10px;
-        width: 70px;
-        margin-left: 20px;
-        margin-right: 5px;
-      }
-    `,
-    isEnabled: true,
-    isValidCode: true,
-  },
-  {
-    id: "14",
-    name: "Prod Warning Popup Format",
-    content: stripIndent`
-      #toolButton img {
-        width: 100px;
-      }
-
-      #toolButton {
-        position: fixed;
-        width: 100%;
-        bottom: 0px;
-        z-index: 1048;
-      }
-
-      #toolButton .row {
-        float: right;
-        margin-right: 5%;
-        width: 15%;
-      }
-
-      .includeFrame {
-        width: 100%;
-      }
-
-      #devToolModal .modal-dialog {
-        width: 90vw;
-        height: 70vh;
-      }
-
-      #prodWarningModal {
-        background: red;
-      }
-    `,
-    isEnabled: true,
-    isValidCode: true,
-  },
-  {
-    id: "15",
-    name: "Script IDE",
-    content: stripIndent`
-      #script-ide>div.head.scriptsNavigationDiv>h2 {
-        cursor: pointer;
-      }
-
-      #script-ide-section-editor-output {
-        float: left;
-        width: 100%;
-      }
-
-      #script-ide-section {
-        float: left;
-        width: 100%;
-        margin-top: 5px;
-      }
-
-      #script-ide-tree {
-        width: 100%;
-      }
-
-      #script-ide-section-context>div,
-      .scriptResouceObjectContent,
-      .classInfoMethod {
-        font-size: 20px;
-      }
-
-      #script-ide-section-context {
-        float: left;
-        width: 97%;
-        position: absolute;
-        background-color: #ffff;
-        z-index: 100;
-      }
-
-      .mattblackmenu ul {
-        position: inherit;
-      }
-
-      #script-ide-section-empty {
-        width: 100%;
-      }
-
-      #script-ide {
-        width: 99%;
-        min-height: inherit;
-      }
-
-      #tree {
-        height: inherit;
-      }
-
-      #newActionButtonDiv {
-        position: inherit;
-      }
-
-      .floatLeft {}
-
-      #footer {
-        display: none;
-      }
-
-      .scriptsNavigationDiv h2 {
-        display: block;
-        float: left;
-      }
-
-      .scriptsNavigationDiv a {
-        display: block;
-        float: right;
-        color: #FFFFFF;
-      }
-
-      .scriptsNavigationDiv {
-        height: 20px;
-      }
-
-      #script-ide-section-context.invisible,
-      #script-ide-tree.invisible,
-      #header.invisible {
-        display: none;
-      }
-
-      #moreActionButtonDiv,
-      #script-ide-action-buttons,
-      #draftOpenedMessageDiv {
-        display: inline-block;
-      }
-
-      #script-ide-section-editor {
-        width: 50%;
-        max-width: 50%;
-        float: left;
-        overflow: hidden;
-      }
-
-      #script-ide-section-output {
-        width: 48%;
-        float: left;
-      }
-
-      .scriptsNavigationDiv a {
-        padding: 0 5px 0 5px;
-      }
-
-      .scriptOutputDiv .CodeMirror-wrap {
-        text-align: left;
-        float: left;
-        width: 100%;
-      }
-
-      .scriptOutputDiv {
-        text-align: right;
-        line-height: 32px;
-      }
-
-      #script-ide-section-editor .CodeMirror-wrap {}
-
-      #script-ide-section-history {
-        margin-top: 263px;
-      }
-
-      #script-ide-section-unit-tests {
-        height: 170px;
-      }
-
-      #script-ide-tabs {
-        text-align: right;
-      }
-    `,
-    isEnabled: true,
-    isValidCode: true,
-  },
-  {
-    id: "16",
-    name: "Domain Selector",
-    content: stripIndent`
-      .select-editable {
-        position:relative; 
-        background-color:white; 
-        border:solid grey 1px;  
-        width:120px; 
-        height:100%;
-      }
-
-      .select-editable select {
-        position:absolute; 
-        top:0px; 
-        left:0px; 
-        font-size:14px; 
-        border:none; 
-        width:120px;
-        margin:0;
-      }
-
-      .select-editable input {
-        position:absolute; 
-        top:0px; 
-        left:0px; 
-        width:90%; 
-        padding:1px; 
-        font-size:12px; 
-        border:none;
-        height: 100%;
-      }
-
-      .select-editable select:focus, .select-editable input:focus {
-        outline:none;
-      }
-    `,
-    isEnabled: true,
-    isValidCode: true,
-  },
+  //     div.quote-page-main-container {
+  //       margin-top: 55px;
+  //     }
+  //   `,
+  //   isEnabled: true,
+  //   isValidCode: true,
+  // },
+  // {
+  //   id: "11",
+  //   name: "Save Notifications",
+  //   content: stripIndent`
+  //     #ctl00_cph1_labError {
+  //       font-weight: bold;
+  //       font-size: 18pt;
+  //       position: fixed;
+  //       left: 1200px;
+  //       top: 50px;
+  //       border: solid 1px;
+  //     }
+  //   `,
+  //   isEnabled: true,
+  //   isValidCode: true,
+  // },
 ];
 
 export const defaultShortcuts: Shortcut[] = [
@@ -1010,3 +733,279 @@ export const userOptionsConfig = [
   { label: "Language", key: "language", type: "select", options: ["en", "es", "fr"] },
   { label: "Open app in side panel", key: "openInSidePanel", type: "switch" },
 ] as Option[];
+
+
+export const codeMirrorVersion = "5.65.14";
+export const cdnBaseUrl = `https://cdnjs.cloudflare.com/ajax/libs/codemirror/${codeMirrorVersion}/`;
+export const cmFiles = {
+  "main": {
+    'scripts': [
+      `${cdnBaseUrl}codemirror.min.js`,
+    ],
+    'css': [
+      `${cdnBaseUrl}codemirror.min.css`,
+    ]
+  },
+  "modes": {
+    'scripts': [
+      // `${cdnBaseUrl}mode/meta.min.js`,
+      // `${cdnBaseUrl}mode/apl/apl.min.js`,
+      `${cdnBaseUrl}mode/python/python.min.js`,
+    ],
+    'css': []
+  },
+  "activeLine": {
+    'scripts': [
+      `${cdnBaseUrl}addon/selection/active-line.min.js`,
+    ],
+    'css': []
+  },
+  // "autorefresh": {
+  //   'scripts': [
+  //     `${cdnBaseUrl}addon/display/autorefresh.min.js`,
+  //   ],
+  //   'css': []
+  // },
+  "comment": {
+    'scripts': [
+      `${cdnBaseUrl}addon/comment/comment.min.js`,
+    ],
+    'css': []
+  },
+  "continuecomment": {
+    'scripts': [
+      `${cdnBaseUrl}addon/comment/continuecomment.min.js`,
+    ],
+    'css': []
+  },
+  "closebrackets": {
+    'scripts': [
+      `${cdnBaseUrl}addon/edit/closebrackets.min.js`,
+    ],
+    'css': []
+  },
+  "closetag": {
+    'scripts': [
+      `${cdnBaseUrl}addon/edit/closetag.min.js`,
+    ],
+    'css': []
+  },
+  "continuelist": {
+    'scripts': [
+      `${cdnBaseUrl}addon/edit/continuelist.min.js`,
+    ],
+    'css': []
+  },
+  "dialog": {
+    'scripts': [
+      `${cdnBaseUrl}addon/dialog/dialog.min.js`,
+    ],
+    'css': [
+      `${cdnBaseUrl}addon/dialog/dialog.min.css`,
+    ]
+  },
+  "emacs": {
+    'scripts': [
+      `${cdnBaseUrl}keymap/emacs.min.js`,
+    ],
+    'css': []
+  },
+  "fold": {
+    'scripts': [
+      `${cdnBaseUrl}addon/fold/foldcode.min.js`,
+      `${cdnBaseUrl}addon/fold/foldgutter.min.js`,
+      `${cdnBaseUrl}addon/fold/brace-fold.min.js`,
+      `${cdnBaseUrl}addon/fold/comment-fold.min.js`,
+      `${cdnBaseUrl}addon/fold/indent-fold.min.js`,
+      `${cdnBaseUrl}addon/fold/markdown-fold.min.js`,
+      `${cdnBaseUrl}addon/fold/xml-fold.min.js`,
+    ],
+    'css': [
+      `${cdnBaseUrl}addon/fold/foldgutter.min.css`,
+    ]
+  },
+  "fullscreen": {
+    'scripts': [
+      `${cdnBaseUrl}addon/display/fullscreen.min.js`,
+    ],
+    'css': [
+      `${cdnBaseUrl}addon/display/fullscreen.min.css`,
+    ]
+  },
+  "hint": {
+    'scripts': [
+      `${cdnBaseUrl}addon/hint/show-hint.min.js`,
+      `${cdnBaseUrl}addon/hint/anyword-hint.min.js`,
+      // `${cdnBaseUrl}addon/hint/css-hint.min.js`,
+      // `${cdnBaseUrl}addon/hint/html-hint.min.js`,
+      // `${cdnBaseUrl}addon/hint/javascript-hint.min.js`,
+      // `${cdnBaseUrl}addon/hint/sql-hint.min.js`,
+      // `${cdnBaseUrl}addon/hint/xml-hint.min.js`,
+    ],
+    'css': [
+      `${cdnBaseUrl}addon/hint/show-hint.min.css`,
+    ]
+  },
+  "highlightSelectionMatches": {
+    'scripts': [
+      `${cdnBaseUrl}addon/search/match-highlighter.min.js`,
+    ],
+    'css': [
+      `${cdnBaseUrl}addon/search/matchesonscrollbar.min.css`,
+    ]
+  },
+  "jumpToLine": {
+    'scripts': [
+      `${cdnBaseUrl}addon/search/jump-to-line.min.js`,
+    ],
+    'css': []
+  },
+  "lint": {
+    'scripts': [
+      `${cdnBaseUrl}addon/lint/lint.min.js`,
+      // `${cdnBaseUrl}addon/lint/coffeescript-lint.min.js`,
+      // `${cdnBaseUrl}addon/lint/css-lint.min.js`,
+      // `${cdnBaseUrl}addon/lint/html-lint.min.js`,
+      // `${cdnBaseUrl}addon/lint/javascript-lint.min.js`,
+      // `${cdnBaseUrl}addon/lint/json-lint.min.js`,
+      // `${cdnBaseUrl}addon/lint/yaml-lint.min.js`,
+    ],
+    'css': [
+      `${cdnBaseUrl}addon/lint/lint.min.css`,
+    ]
+  },
+  "matchbrackets": {
+    'scripts': [
+      `${cdnBaseUrl}addon/edit/matchbrackets.min.js`,
+    ],
+    'css': []
+  },
+  // "merge": {
+  //   'scripts': [
+  //     `${cdnBaseUrl}addon/merge/merge.min.js`,
+  //   ],
+  //   'css': [
+  //     `${cdnBaseUrl}addon/merge/merge.min.css`,
+  //   ]
+  // },
+  // "mode": {
+  //   'scripts': [
+  //     `${cdnBaseUrl}addon/mode/loadmode.min.js`,
+  //     `${cdnBaseUrl}addon/mode/multiplex.min.js`,
+  //     `${cdnBaseUrl}addon/mode/multiplex_test.min.js`,
+  //     // `${cdnBaseUrl}addon/mode/overlay.min.js`,
+  //     `${cdnBaseUrl}addon/mode/simple.min.js`,
+  //   ],
+  //   'css': []
+  // },
+  "matchesOnScrollbar": {
+    'scripts': [
+      `${cdnBaseUrl}addon/scroll/annotatescrollbar.min.js`,
+      `${cdnBaseUrl}addon/search/matchesonscrollbar.min.js`,
+    ],
+    'css': [
+      `${cdnBaseUrl}addon/search/matchesonscrollbar.min.css`,
+    ]
+  },
+  "matchtags": {
+    'scripts': [
+      `${cdnBaseUrl}addon/edit/matchtags.min.js`,
+      `${cdnBaseUrl}addon/fold/xml-fold.min.js`,
+    ],
+    'css': []
+  },
+
+  "markSelection": {
+    'scripts': [
+      `${cdnBaseUrl}addon/selection/mark-selection.min.js`,
+    ],
+    'css': []
+  },
+  // "panel": {
+  //   'scripts': [
+  //     `${cdnBaseUrl}addon/panel/panel.min.js`,
+  //   ],
+  //   'css': []
+  // },
+  // "placeholder": {
+  //   'scripts': [
+  //     `${cdnBaseUrl}addon/display/placeholder.min.js`,
+  //   ],
+  //   'css': []
+  // },
+  // "runmode": {
+  //   'scripts': [
+  //     `${cdnBaseUrl}addon/runmode/colorize.min.js`,
+  //     `${cdnBaseUrl}addon/runmode/runmode-standalone.min.js`,
+  //     `${cdnBaseUrl}addon/runmode/runmode.min.js`,
+  //     `${cdnBaseUrl}addon/runmode/runmode.node.min.js`,
+  //   ],
+  //   'css': []
+  // },
+  // "rulers": {
+  //   'scripts': [
+  //     `${cdnBaseUrl}addon/rulers/rulers.min.js`,
+  //   ],
+  //   'css': []
+  // },
+  "selectionPointer": {
+    'scripts': [
+      `${cdnBaseUrl}addon/selection/selection-pointer.min.js`,
+    ],
+    'css': []
+  },
+  "search": {
+    'scripts': [
+      `${cdnBaseUrl}addon/search/search.min.js`,
+      `${cdnBaseUrl}addon/search/searchcursor.min.js`,
+    ],
+    'css': []
+  },
+  "scrollpastend": {
+    'scripts': [
+      `${cdnBaseUrl}addon/scroll/scrollpastend.min.js`,
+    ],
+    'css': []
+  },
+  "simpleScrollbars": {
+    'scripts': [
+      `${cdnBaseUrl}addon/scroll/simplescrollbars.min.js`,
+    ],
+    'css': [
+      `${cdnBaseUrl}addon/scroll/simplescrollbars.min.css`,
+    ]
+  },
+  "sublime": {
+    'scripts': [
+      `${cdnBaseUrl}keymap/sublime.min.js`,
+    ],
+    'css': []
+  },
+  "tern": {
+    'scripts': [
+      `${cdnBaseUrl}addon/tern/tern.min.js`,
+      `${cdnBaseUrl}addon/tern/worker.min.js`,
+    ],
+    'css': [
+      `${cdnBaseUrl}addon/tern/tern.min.css`,
+    ]
+  },
+  "trailingspace": {
+    'scripts': [
+      `${cdnBaseUrl}addon/edit/trailingspace.min.js`,
+    ],
+    'css': []
+  },
+  "vim": {
+    'scripts': [
+      `${cdnBaseUrl}keymap/vim.min.js`,
+    ],
+    'css': []
+  },
+  "wrap": {
+    'scripts': [
+      `${cdnBaseUrl}addon/wrap/hardwrap.min.js`,
+    ],
+    'css': []
+  },
+};

@@ -9,6 +9,8 @@ import {
   Box,
   Button, FormControl, Grid, InputLabel, MenuItem, Select, Typography,
 } from '@mui/material';
+import { stripIndent } from 'common-tags';
+import { python } from '@codemirror/lang-python';
 import type { SelectChangeEvent } from '@mui/material';
 import {
   // Fullscreen,
@@ -17,8 +19,11 @@ import {
   PlayArrow, Clear, Code, Functions, Api, Search
 } from '@mui/icons-material';
 import '@mui/material/styles';
+import CodeMirror from "@uiw/react-codemirror";
 import useAppContext from '@chrome-extension-boilerplate/shared/lib/hooks/useAppContext';
 import { saveToStorage } from '@chrome-extension-boilerplate/shared/lib/utils';
+import { cdnBaseUrl } from '@chrome-extension-boilerplate/shared/lib/constants';
+// import MonacoEditor from '@uiw/react-monacoeditor';
 // import FullScreenAlert from './FullScreenAlert';
 // import * as monaco from 'monaco-editor';
 // import Editor, { loader } from '@monaco-editor/react';
@@ -27,8 +32,43 @@ import { saveToStorage } from '@chrome-extension-boilerplate/shared/lib/utils';
 
 // loader.init();
 
+// Loads js and css addon files
+const loadAddon = async (addon: { scripts: string[]; css: string[] }) => {
+  const loadResource = (tag: 'script' | 'link', url: string): Promise<void> => {
+    return new Promise<void>((resolve, reject) => {
+      const element = document.createElement(tag);
+
+      if (tag === 'script') {
+        Object.assign(element, {
+          type: 'text/javascript',
+          src: url,
+        });
+      } else {
+        Object.assign(element, {
+          rel: 'stylesheet',
+          type: 'text/css',
+          href: url,
+        });
+      }
+
+      element.onload = () => resolve();
+      element.onerror = () => reject(new Error(`Failed to load ${url}`));
+      document.head.appendChild(element); // Use head instead of body for better practice
+    });
+  };
+
+  try {
+    const scriptPromises = addon.scripts.map(url => loadResource('script', url));
+    const cssPromises = addon.css.map(url => loadResource('link', url));
+    await Promise.all([...scriptPromises, ...cssPromises]);
+    // console.log('All resources loaded successfully');
+  } catch (error) {
+    console.error('Error loading resources:', error);
+  }
+};
+
 const App = () => {
-  const { userOptions, setUserOptions } = useAppContext();
+  const { userOptions, setUserOptions, codeMirrorOptions, setCodeMirrorOptions } = useAppContext();
   // console.log('init userOptions:', userOptions)
 
   const [isFolded, setIsFolded] = useState(false);
@@ -118,7 +158,7 @@ const App = () => {
     }
   }, []);
 
-  const handleSideBySideEditor = useCallback(() => {
+  const handleSideBySideEditor = useCallback(async () => {
     if (editorRef.current
       && traceRef.current
       && traceTitleRef.current
@@ -128,15 +168,26 @@ const App = () => {
       && scriptToolbarRef.current
       && toolbarRef.current) {
       // Move the editor into the box
-      const editorWrapper = document.getElementById('custom-editor') as HTMLElement;
-      editorWrapper.appendChild(editorRef.current);
-      editorRef.current.style.height = '100%'
-      editorRef.current.style.maxHeight = '100%';
+      // const editorWrapper = document.getElementById('custom-editor') as HTMLElement;
+      // editorWrapper.appendChild(editorRef.current);
+      // editorRef.current.style.height = '50%'
+      // editorRef.current.style.maxHeight = '50%';
+      editorRef.current.style.display = 'None'
       // Move the trace into the box
       const traceWrapper = document.getElementById('custom-trace') as HTMLElement;
       traceRef.current.style.height = '100%'
       traceRef.current.style.maxHeight = '100%';
       traceWrapper.appendChild(traceRef.current);
+
+      const basicThemes = ["default", "light", "dark"];
+      // console.log('codeMirrorOptions:', codeMirrorOptions)
+      if (!basicThemes.includes(codeMirrorOptions.theme)) {
+        // console.log('Loading custom theme:', codeMirrorOptions.theme)
+        await loadAddon({
+          scripts: [],
+          css: [`${cdnBaseUrl}theme/${codeMirrorOptions.theme}.min.css`],
+        })
+      };
 
       // const parentContainer = editorRef.current.parentElement;
 
@@ -374,10 +425,22 @@ const App = () => {
     handleSideBySideEditor();
   }
 
-  // const handleEditorChange = (value: string | undefined, event: monaco.editor.IModelContentChangedEvent) => {
-  //   console.log('here is the current model value:', value);
-  //   console.log('here is the event:', event);
-  // };
+  const handleRawUpdate = useCallback((text: string) => {
+    // console.log("Raw text updated:", text);
+    const hiddenContent = document.getElementById('hiddenContent');
+    if (hiddenContent && hiddenContent.textContent !== text) {
+      hiddenContent.textContent = text;
+      const changeEvent = new Event('change', { bubbles: true });
+      hiddenContent.dispatchEvent(changeEvent);
+      userOptions.workbenchCode = text;
+      setUserOptions((prevValues) => ({
+        ...prevValues,
+        ['workbenchCode']: text,
+      }));
+      saveToStorage('userOptions', userOptions)
+      // console.log('set userOptions:', userOptions)
+    }
+  }, []);
 
   return (
     <Box sx={{ border: '1px solid #ccc', padding: '5px', borderRadius: '8px', margin: '5px', backgroundColor: '#f9f9f9', height: 'calc(100vh - 15px)', boxSizing: 'border-box' }}>
@@ -584,18 +647,50 @@ const App = () => {
       {/* Editor */}
       <Grid container direction="row" sx={{ width: '100%', height: 'calc(100vh - 80px)', display: 'flex', flexDirection: 'row' }} alignItems="stretch">
         <Grid item id='custom-editor' sx={{ width: '50%', height: '100%' }}>
-          {/* <Editor
-            height="100%"
-            width="50%"
-            language="python"
-            theme={'vs-dark'}
-            defaultValue="if (true):\n  print('Hello World')\nelse:\n  print('Bye World')"
-            // onChange={handleEditorChange}
-            options={{
-              wordWrap: 'bounded',
-              rulers: [120],
+          <CodeMirror
+            value={userOptions.workbenchCode || ''}
+            height='calc(100vh - 80px)'
+            autoFocus={true}
+            theme='dark'
+            // lang='python'
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            // theme={themes[codeMirrorOptions.theme as keyof typeof themes] || codeMirrorOptions?.theme}
+            // theme={dracula}
+            extensions={[python()]}
+            basicSetup={{
+              lineNumbers: true,
+              highlightActiveLineGutter: true,
+              highlightSpecialChars: true,
+              history: true,
+              foldGutter: true,
+              drawSelection: true,
+              dropCursor: true,
+              allowMultipleSelections: true,
+              indentOnInput: true,
+              syntaxHighlighting: true,
+              bracketMatching: true,
+              closeBrackets: true,
+              autocompletion: true,
+              rectangularSelection: true,
+              crosshairCursor: true,
+              highlightActiveLine: true,
+              highlightSelectionMatches: true,
+              closeBracketsKeymap: true,
+              defaultKeymap: true,
+              searchKeymap: true,
+              historyKeymap: true,
+              foldKeymap: true,
+              completionKeymap: true,
+              lintKeymap: true,
+              tabSize: 2,
             }}
-          /> */}
+            onUpdate={(viewUpdate) => {
+              handleRawUpdate(viewUpdate.state.doc.toString());
+            }}
+            // onBlur={handleRawBlur}
+            className="border rounded-md shadow-sm"
+          />
         </Grid>
         <Grid item id='custom-trace' sx={{ width: '50%', height: '100%' }}></Grid>
       </Grid>

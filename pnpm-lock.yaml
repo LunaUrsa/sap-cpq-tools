@@ -221,6 +221,9 @@ importers:
       '@chrome-extension-boilerplate/shared':
         specifier: workspace:*
         version: link:../../packages/shared
+      '@codemirror/lang-python':
+        specifier: ^6.1.6
+        version: 6.1.6(@codemirror/view@6.26.3)
       '@emotion/react':
         specifier: ^11.11.4
         version: 11.11.4(@types/react@18.3.2)(react@18.2.0)
@@ -233,6 +236,12 @@ importers:
       '@mui/material':
         specifier: ^5.15.17
         version: 5.15.17(@emotion/react@11.11.4(@types/react@18.3.2)(react@18.2.0))(@emotion/styled@11.11.5(@emotion/react@11.11.4(@types/react@18.3.2)(react@18.2.0))(@types/react@18.3.2)(react@18.2.0))(@types/react@18.3.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      '@uiw/react-codemirror':
+        specifier: ^4.22.0
+        version: 4.22.0(@babel/runtime@7.24.5)(@codemirror/autocomplete@6.16.0(@codemirror/language@6.10.1)(@codemirror/state@6.4.1)(@codemirror/view@6.26.3)(@lezer/common@1.2.1))(@codemirror/language@6.10.1)(@codemirror/lint@6.7.0)(@codemirror/search@6.5.6)(@codemirror/state@6.4.1)(@codemirror/theme-one-dark@6.1.2)(@codemirror/view@6.26.3)(codemirror@6.0.1(@lezer/common@1.2.1))(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      common-tags:
+        specifier: ^1.8.2
+        version: 1.8.2
     devDependencies:
       '@chrome-extension-boilerplate/hmr':
         specifier: workspace:*
@@ -243,6 +252,9 @@ importers:
       '@chrome-extension-boilerplate/tsconfig':
         specifier: workspace:*
         version: link:../../packages/tsconfig
+      '@types/common-tags':
+        specifier: ^1.8.4
+        version: 1.8.4
 
   pages/devtools:
     dependencies:
@@ -450,6 +462,9 @@ packages:
 
   '@codemirror/lang-css@6.2.1':
     resolution: {integrity: sha512-/UNWDNV5Viwi/1lpr/dIXJNWiwDxpw13I4pTUAsNxZdg6E0mI2kTQb0P2iHczg1Tu+H4EBgJR+hYhKiHKko7qg==}
+
+  '@codemirror/lang-python@6.1.6':
+    resolution: {integrity: sha512-ai+01WfZhWqM92UqjnvorkxosZ2aq2u28kHvr+N3gu012XqY2CThD67JPMHnGceRfXPDBmn1HnyqowdpF57bNg==}
 
   '@codemirror/language@6.10.1':
     resolution: {integrity: sha512-5GrXzrhq6k+gL5fjkAwt90nYDmjlzTIJV8THnxNFtNKWotMIlzzN+CpqxqwXOECnUdOndmSeWntVrVcv5axWRQ==}
@@ -897,6 +912,9 @@ packages:
 
   '@lezer/lr@1.4.0':
     resolution: {integrity: sha512-Wst46p51km8gH0ZUmeNrtpRYmdlRHUpN1DQd3GFAyKANi8WVz8c2jHYTf1CVScFaCjQw1iO3ZZdqGDxQPRErTg==}
+
+  '@lezer/python@1.1.14':
+    resolution: {integrity: sha512-ykDOb2Ti24n76PJsSa4ZoDF0zH12BSw1LGfQXCYJhJyOGiFTfGaX0Du66Ze72R+u/P35U+O6I9m8TFXov1JzsA==}
 
   '@mui/base@5.0.0-beta.40':
     resolution: {integrity: sha512-I/lGHztkCzvwlXpjD2+SNmvNQvB4227xBXhISPjEaJUXGImOQ9f3D2Yj/T3KasSI/h0MLWy74X0J6clhPmsRbQ==}
@@ -4573,6 +4591,16 @@ snapshots:
     transitivePeerDependencies:
       - '@codemirror/view'
 
+  '@codemirror/lang-python@6.1.6(@codemirror/view@6.26.3)':
+    dependencies:
+      '@codemirror/autocomplete': 6.16.0(@codemirror/language@6.10.1)(@codemirror/state@6.4.1)(@codemirror/view@6.26.3)(@lezer/common@1.2.1)
+      '@codemirror/language': 6.10.1
+      '@codemirror/state': 6.4.1
+      '@lezer/common': 1.2.1
+      '@lezer/python': 1.1.14
+    transitivePeerDependencies:
+      - '@codemirror/view'
+
   '@codemirror/language@6.10.1':
     dependencies:
       '@codemirror/state': 6.4.1
@@ -4943,6 +4971,12 @@ snapshots:
   '@lezer/lr@1.4.0':
     dependencies:
       '@lezer/common': 1.2.1
+
+  '@lezer/python@1.1.14':
+    dependencies:
+      '@lezer/common': 1.2.1
+      '@lezer/highlight': 1.2.0
+      '@lezer/lr': 1.4.0
 
   '@mui/base@5.0.0-beta.40(@types/react@18.3.2)(react-dom@18.2.0(react@18.2.0))(react@18.2.0)':
     dependencies:

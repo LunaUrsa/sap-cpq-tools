@@ -101,24 +101,3 @@ This project uses Angular Commit Message Conventions for commit messages. This i
 
 **Footer** (optional): The footer is used to reference issue tracker IDs, link pull requests, or provide notes that do not fit in the body:
     BREAKING CHANGE: A footer that starts with BREAKING CHANGE: followed by a description indicates a breaking change that suggests a major version bump if this is part of an automated versioning scheme.
-
-# The issue with injecting scripts
-First of all, allowing the extension to inject scripts into a web page is a security risk. Imagine if someone malicious found a way to store a malicious script in the extension and then inject it into a web page. This could be used to steal sensitive information from the user, or to perform other malicious actions.
-
-If think you can address this and want to continue, see my notes below on why this is not even possible:
-
-To inject scripts into a web page, you should use the chrome.scripting.executeScript API. This API allows you to inject scripts into a page, and it is the recommended way to do so. The chrome.tabs.executeScript API is deprecated and should not be used.
-
-To use the executeScript API you must pass in a tab ID
-https://developer.chrome.com/docs/extensions/reference/api/scripting#injection_targets
-
-To get a tab ID you need to use the chrome.tabs.query API. This API allows you to query for tabs that match a given set of criteria. You can use this API to get the tab ID of the current tab, or you can use it to get the tab ID of a specific tab.
-
-To use the tabs.query API you need to be in a service worker (background.js) or an extension page (popup.js, options.js, etc.). You cannot use this API in a content script.
-https://developer.chrome.com/docs/extensions/reference/api/tabs
-
-So we need to run the chrome.tabs.query in the background.js and then pass the tab ID to the executeScript function. This is the only way to inject scripts into a web page, and this would be great, except we have user-defined scripts that are stored as strings. We can't pass a string to the executeScript function, we need to pass a file path.
-
-I've tried various ways to get around this, like "new function('code')" and "eval(code)" but it seems like chrome has locked this down pretty good
-
-I'm sure there's a way to do this, because Tapermonkey does this, but I'm not sure how, and at this point ive spent a few days on this so I'm going to move on to other things.  

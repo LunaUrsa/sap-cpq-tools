@@ -317,39 +317,39 @@ export default async function codeMirrorMods(codeMirrorOptions: CodeMirrorOption
   // console.log('CodeMirror instance found:', editor)
 
   // Loads js and css addon files
-  const loadAddon = async (addon: { scripts: string[]; css: string[] }) => {
-    const loadResource = (tag: 'script' | 'link', url: string): Promise<void> => {
-      return new Promise<void>((resolve, reject) => {
-        const element = document.createElement(tag);
+  // const loadAddon = async (addon: { scripts: string[]; css: string[] }) => {
+  //   const loadResource = (tag: 'script' | 'link', url: string): Promise<void> => {
+  //     return new Promise<void>((resolve, reject) => {
+  //       const element = document.createElement(tag);
 
-        if (tag === 'script') {
-          Object.assign(element, {
-            type: 'text/javascript',
-            src: url,
-          });
-        } else {
-          Object.assign(element, {
-            rel: 'stylesheet',
-            type: 'text/css',
-            href: url,
-          });
-        }
+  //       if (tag === 'script') {
+  //         Object.assign(element, {
+  //           type: 'text/javascript',
+  //           src: url,
+  //         });
+  //       } else {
+  //         Object.assign(element, {
+  //           rel: 'stylesheet',
+  //           type: 'text/css',
+  //           href: url,
+  //         });
+  //       }
 
-        element.onload = () => resolve();
-        element.onerror = () => reject(new Error(`Failed to load ${url}`));
-        document.head.appendChild(element); // Use head instead of body for better practice
-      });
-    };
+  //       element.onload = () => resolve();
+  //       element.onerror = () => reject(new Error(`Failed to load ${url}`));
+  //       document.head.appendChild(element); // Use head instead of body for better practice
+  //     });
+  //   };
 
-    try {
-      const scriptPromises = addon.scripts.map(url => loadResource('script', url));
-      const cssPromises = addon.css.map(url => loadResource('link', url));
-      await Promise.all([...scriptPromises, ...cssPromises]);
-      console.log('All resources loaded successfully');
-    } catch (error) {
-      console.error('Error loading resources:', error);
-    }
-  };
+  //   try {
+  //     const scriptPromises = addon.scripts.map(url => loadResource('script', url));
+  //     const cssPromises = addon.css.map(url => loadResource('link', url));
+  //     await Promise.all([...scriptPromises, ...cssPromises]);
+  //     console.log('All resources loaded successfully');
+  //   } catch (error) {
+  //     console.error('Error loading resources:', error);
+  //   }
+  // };
 
   // Adds a hidden element to the page that allows the extension to read the code
   const addHiddenElement = (editor: CodeMirror.Editor) => {
@@ -358,12 +358,12 @@ export default async function codeMirrorMods(codeMirrorOptions: CodeMirrorOption
     // we need to create a new element on the page that the content script can read. 
 
     // Create a new div element that's invisible and add it to the page
-    const newDiv = document.createElement('div');
-    newDiv.id = 'hiddenContent';
-    newDiv.style.display = 'none';
+    const hiddenElement = document.createElement('div');
+    hiddenElement.id = 'hiddenContent';
+    hiddenElement.style.display = 'none';
     // Set the type as 'text/x-python', this is read by the content script to determine how to save the file
-    newDiv.setAttribute('type', 'text/x-python');
-    document.body.appendChild(newDiv);
+    hiddenElement.setAttribute('type', 'text/x-python');
+    document.body.appendChild(hiddenElement);
 
     // Function that updates the hidden element with the contents of CodeMirror
     const updateHiddenContent = () => {
@@ -374,31 +374,30 @@ export default async function codeMirrorMods(codeMirrorOptions: CodeMirrorOption
           // eslint-disable-next-line  @typescript-eslint/no-explicit-any
           const editor: CodeMirror.Editor | undefined = (editorElement as any).CodeMirror;
           if (editor) {
-            const editorContent = editor.getValue();
-            hiddenContent.textContent = editorContent;
+            editor.setValue(hiddenContent.textContent ?? '')
           }
         }
       }
     };
     // Listen for changes in the CodeMirror instance
-    editor.on('change', updateHiddenContent);
+    hiddenElement.onchange = updateHiddenContent;
     // Update the initial hidden content
     updateHiddenContent();
   };
   addHiddenElement(editor);
 
-  // Applies the options on the user's options page
-  const applyCodeMirrorOptions = async (editor: CodeMirror.Editor) => {
-    // console.log('applyCodeMirrorOptions')
-    for (const [key, value] of Object.entries(codeMirrorOptions)) {
-      try {
-        editor.setOption(key as keyof EditorConfiguration, value);
-      } catch (error) {
-        console.error('Failed to set option:', key, value, error);
-      }
-    }
-    // console.log('Options set:', codeMirrorOptions)
-  };
+  // // Applies the options on the user's options page
+  // const applyCodeMirrorOptions = async (editor: CodeMirror.Editor) => {
+  //   // console.log('applyCodeMirrorOptions')
+  //   for (const [key, value] of Object.entries(codeMirrorOptions)) {
+  //     try {
+  //       editor.setOption(key as keyof EditorConfiguration, value);
+  //     } catch (error) {
+  //       console.error('Failed to set option:', key, value, error);
+  //     }
+  //   }
+  //   // console.log('Options set:', codeMirrorOptions)
+  // };
 
   const addToolbar = async () => {
     // console.debug('addToolbar')
@@ -470,219 +469,219 @@ export default async function codeMirrorMods(codeMirrorOptions: CodeMirrorOption
   await addToolbar();
 
   // CodeMirror options
-  const gutters = ["CodeMirror-linenumbers"];
+  // const gutters = ["CodeMirror-linenumbers"];
 
   // console.log('codeMirrorOptions:', codeMirrorOptions)
-  if (!basicThemes.includes(codeMirrorOptions.theme)) {
-    // console.log('Loading custom theme:', codeMirrorOptions.theme)
-    await loadAddon({
-      scripts: [],
-      css: [`${cdnBaseUrl}theme/${codeMirrorOptions.theme}.min.css`],
-    })
-  };
-  editor.setOption('theme' as keyof EditorConfiguration, codeMirrorOptions.theme);
+  // if (!basicThemes.includes(codeMirrorOptions.theme)) {
+  //   // console.log('Loading custom theme:', codeMirrorOptions.theme)
+  //   await loadAddon({
+  //     scripts: [],
+  //     css: [`${cdnBaseUrl}theme/${codeMirrorOptions.theme}.min.css`],
+  //   })
+  // };
+  // editor.setOption('theme' as keyof EditorConfiguration, codeMirrorOptions.theme);
   // console.debug('Theme set:', codeMirrorOptions.theme)
 
   // await loadAddon(cmFiles.main)
 
-  // Search
-  if (codeMirrorOptions.search) {
-    await loadAddon(cmFiles.search)
-    await loadAddon(cmFiles.dialog);
-    // console.log('Search loaded')
-  }
-  if (codeMirrorOptions.jumpToLine) {
-    await loadAddon(cmFiles.jumpToLine)
-    await loadAddon(cmFiles.dialog);
-    // console.log('jumpToLine loaded')
-
-  }
-  if (codeMirrorOptions.matchesOnScrollbar) {
-    await loadAddon(cmFiles.matchesOnScrollbar)
-  }
-
-  if (codeMirrorOptions.matchBrackets) {
-    await loadAddon(cmFiles.matchbrackets)
-  }
-  editor.setOption('matchBrackets' as keyof EditorConfiguration, codeMirrorOptions.matchBrackets);
-  // console.log('matchBrackets loaded')
-
-  if (codeMirrorOptions.autoCloseBrackets) {
-    await loadAddon(cmFiles.closebrackets)
-  }
-  editor.setOption('autoCloseBrackets' as keyof EditorConfiguration, codeMirrorOptions.autoCloseBrackets);
-  // console.log('autoCloseBrackets loaded')
-
-  if (codeMirrorOptions.matchTags) {
-    // console.log('matchTags loading', cmFiles.matchtags)
-    await loadAddon(cmFiles.matchtags)
-    // console.log('matchTags loaded')
-  }
-  editor.setOption('matchTags' as keyof EditorConfiguration, codeMirrorOptions.matchTags);
-
-  if (codeMirrorOptions.showTrailingSpace) {
-    await loadAddon(cmFiles.trailingspace)
-  }
-  editor.setOption('showTrailingSpace' as keyof EditorConfiguration, codeMirrorOptions.showTrailingSpace);
-  // console.log('showTrailingSpace loaded')
-  // if (codeMirrorOptions.autoCloseTags) {
-  //   await loadAddon(cmFiles.closetag)
+  // // Search
+  // if (codeMirrorOptions.search) {
+  //   await loadAddon(cmFiles.search)
+  //   await loadAddon(cmFiles.dialog);
+  //   // console.log('Search loaded')
   // }
-  // editor.setOption('autoCloseTags' as keyof EditorConfiguration, codeMirrorOptions.autoCloseTags);
+  // if (codeMirrorOptions.jumpToLine) {
+  //   await loadAddon(cmFiles.jumpToLine)
+  //   await loadAddon(cmFiles.dialog);
+  //   // console.log('jumpToLine loaded')
 
-  // if (codeMirrorOptions.continueList) {
-  //   await loadAddon(cmFiles.continuelist)
+  // }
+  // if (codeMirrorOptions.matchesOnScrollbar) {
+  //   await loadAddon(cmFiles.matchesOnScrollbar)
   // }
 
-  if (codeMirrorOptions.comments) {
-    await loadAddon(cmFiles.comment)
-  }
+  // if (codeMirrorOptions.matchBrackets) {
+  //   await loadAddon(cmFiles.matchbrackets)
+  // }
+  // editor.setOption('matchBrackets' as keyof EditorConfiguration, codeMirrorOptions.matchBrackets);
+  // // console.log('matchBrackets loaded')
 
-  // Code folding
-  if (codeMirrorOptions.foldCode) {
-    await loadAddon(cmFiles.fold);
-    gutters.push("CodeMirror-foldgutter");
-  }
+  // if (codeMirrorOptions.autoCloseBrackets) {
+  //   await loadAddon(cmFiles.closebrackets)
+  // }
+  // editor.setOption('autoCloseBrackets' as keyof EditorConfiguration, codeMirrorOptions.autoCloseBrackets);
+  // // console.log('autoCloseBrackets loaded')
 
-  editor.setOption('foldGutter' as keyof EditorConfiguration, codeMirrorOptions.foldCode);
-  // console.log('foldcode loaded')
+  // if (codeMirrorOptions.matchTags) {
+  //   // console.log('matchTags loading', cmFiles.matchtags)
+  //   await loadAddon(cmFiles.matchtags)
+  //   // console.log('matchTags loaded')
+  // }
+  // editor.setOption('matchTags' as keyof EditorConfiguration, codeMirrorOptions.matchTags);
 
-  // Wait for the DOM to be fully loaded
+  // if (codeMirrorOptions.showTrailingSpace) {
+  //   await loadAddon(cmFiles.trailingspace)
+  // }
+  // editor.setOption('showTrailingSpace' as keyof EditorConfiguration, codeMirrorOptions.showTrailingSpace);
+  // // console.log('showTrailingSpace loaded')
+  // // if (codeMirrorOptions.autoCloseTags) {
+  // //   await loadAddon(cmFiles.closetag)
+  // // }
+  // // editor.setOption('autoCloseTags' as keyof EditorConfiguration, codeMirrorOptions.autoCloseTags);
 
-  // const textarea = document.getElementsByClassName('form-control')[1] as HTMLElement;
+  // // if (codeMirrorOptions.continueList) {
+  // //   await loadAddon(cmFiles.continuelist)
+  // // }
+
+  // if (codeMirrorOptions.comments) {
+  //   await loadAddon(cmFiles.comment)
+  // }
+
+  // // Code folding
+  // if (codeMirrorOptions.foldCode) {
+  //   await loadAddon(cmFiles.fold);
+  //   gutters.push("CodeMirror-foldgutter");
+  // }
+
+  // editor.setOption('foldGutter' as keyof EditorConfiguration, codeMirrorOptions.foldCode);
+  // // console.log('foldcode loaded')
+
   // // Wait for the DOM to be fully loaded
-  // const codeMirrorInstance = $(textarea).data('CodeMirrorInstance');
 
-  // if (codeMirrorInstance) {
-  //   // Update the CodeMirror instance options to enable foldGutter
-  //   codeMirrorInstance.setOption('gutters', ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]);
-  //   codeMirrorInstance.setOption('foldGutter', true);
+  // // const textarea = document.getElementsByClassName('form-control')[1] as HTMLElement;
+  // // // Wait for the DOM to be fully loaded
+  // // const codeMirrorInstance = $(textarea).data('CodeMirrorInstance');
 
-  //   // Optionally, you can also specify fold functions (e.g., brace-fold, comment-fold)
-  //   // codeMirrorInstance.setOption('foldOptions', {
-  //   //   rangeFinder: (CodeMirror as any).fold.combine((CodeMirror as any).fold.brace, CodeMirror.fold.comment)
-  //   // });
+  // // if (codeMirrorInstance) {
+  // //   // Update the CodeMirror instance options to enable foldGutter
+  // //   codeMirrorInstance.setOption('gutters', ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]);
+  // //   codeMirrorInstance.setOption('foldGutter', true);
 
-  //   // Refresh the CodeMirror instance to apply the new options
-  //   codeMirrorInstance.refresh();
-  //   console.log('CodeMirror instance updated.')
-  // } else {
-  //   console.error('CodeMirror instance not found.');
+  // //   // Optionally, you can also specify fold functions (e.g., brace-fold, comment-fold)
+  // //   // codeMirrorInstance.setOption('foldOptions', {
+  // //   //   rangeFinder: (CodeMirror as any).fold.combine((CodeMirror as any).fold.brace, CodeMirror.fold.comment)
+  // //   // });
+
+  // //   // Refresh the CodeMirror instance to apply the new options
+  // //   codeMirrorInstance.refresh();
+  // //   console.log('CodeMirror instance updated.')
+  // // } else {
+  // //   console.error('CodeMirror instance not found.');
+  // // }
+
+  // // Autocomplete
+  // if (codeMirrorOptions.autoComplete) {
+  //   await loadAddon(cmFiles.hint);
+  //   editor.setOption('hintOptions' as keyof EditorConfiguration, {
+  //     completeSingle: false,
+  //     closeOnUnfocus: false,
+  //     // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  //     // hint: (CodeMirror as any).hint.anyword,
+  //   });
+  //   editor.setOption('extraKeys' as keyof EditorConfiguration, {
+  //     'Ctrl-Space': 'autocomplete',
+  //     'Cmd-Space': 'autocomplete',
+  //     'Ctrl-Enter': () => {
+  //       editor.execCommand('autocomplete');
+  //     },
+  //     'Cmd-Enter': () => {
+  //       editor.execCommand('autocomplete');
+  //     },
+  //   });
   // }
 
-  // Autocomplete
-  if (codeMirrorOptions.autoComplete) {
-    await loadAddon(cmFiles.hint);
-    editor.setOption('hintOptions' as keyof EditorConfiguration, {
-      completeSingle: false,
-      closeOnUnfocus: false,
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      // hint: (CodeMirror as any).hint.anyword,
-    });
-    editor.setOption('extraKeys' as keyof EditorConfiguration, {
-      'Ctrl-Space': 'autocomplete',
-      'Cmd-Space': 'autocomplete',
-      'Ctrl-Enter': () => {
-        editor.execCommand('autocomplete');
-      },
-      'Cmd-Enter': () => {
-        editor.execCommand('autocomplete');
-      },
-    });
-  }
+  // if (codeMirrorOptions.highlightSelectionMatches) {
+  //   await loadAddon(cmFiles.highlightSelectionMatches)
+  // }
+  // editor.setOption('highlightSelectionMatches' as keyof EditorConfiguration, codeMirrorOptions.highlightSelectionMatches);
 
-  if (codeMirrorOptions.highlightSelectionMatches) {
-    await loadAddon(cmFiles.highlightSelectionMatches)
-  }
-  editor.setOption('highlightSelectionMatches' as keyof EditorConfiguration, codeMirrorOptions.highlightSelectionMatches);
+  // // Linting TODO
+  // if (codeMirrorOptions.linting) {
+  //   await loadAddon(cmFiles.lint)
+  // }
+  // // editor.setOption('lint' as keyof EditorConfiguration, codeMirrorOptions.highlightSelectionMatches);
 
-  // Linting TODO
-  if (codeMirrorOptions.linting) {
-    await loadAddon(cmFiles.lint)
-  }
-  // editor.setOption('lint' as keyof EditorConfiguration, codeMirrorOptions.highlightSelectionMatches);
-
-  if (codeMirrorOptions.markSelection) {
-    await loadAddon(cmFiles.markSelection)
-  }
-  editor.setOption('styleSelectedText' as keyof EditorConfiguration, codeMirrorOptions.markSelection);
+  // if (codeMirrorOptions.markSelection) {
+  //   await loadAddon(cmFiles.markSelection)
+  // }
+  // editor.setOption('styleSelectedText' as keyof EditorConfiguration, codeMirrorOptions.markSelection);
 
 
-  if (codeMirrorOptions.styleActiveLine) {
-    await loadAddon(cmFiles.activeLine)
-    gutters.push("CodeMirror-activeline");
-  }
-  editor.setOption('styleActiveLine' as keyof EditorConfiguration, codeMirrorOptions.styleActiveLine);
+  // if (codeMirrorOptions.styleActiveLine) {
+  //   await loadAddon(cmFiles.activeLine)
+  //   gutters.push("CodeMirror-activeline");
+  // }
+  // editor.setOption('styleActiveLine' as keyof EditorConfiguration, codeMirrorOptions.styleActiveLine);
 
-  if (codeMirrorOptions.selectionPointer) {
-    await loadAddon(cmFiles.selectionPointer)
-  }
-  editor.setOption('selectionPointer' as keyof EditorConfiguration, codeMirrorOptions.selectionPointer);
+  // if (codeMirrorOptions.selectionPointer) {
+  //   await loadAddon(cmFiles.selectionPointer)
+  // }
+  // editor.setOption('selectionPointer' as keyof EditorConfiguration, codeMirrorOptions.selectionPointer);
 
-  // Set the mode
-  // await loadAddon(cmFiles.modes)
-  // editor.modeOption = {
-  //   name: "python",
-  //   singleLineStringErrors: false,
-  //   version: 2,
-  // };
-  // editor.setOption('mode' as keyof EditorConfiguration, editor.modeOption);
-  // console.log(`CM Mode: `, editor.modeOption)
+  // // Set the mode
+  // // await loadAddon(cmFiles.modes)
+  // // editor.modeOption = {
+  // //   name: "python",
+  // //   singleLineStringErrors: false,
+  // //   version: 2,
+  // // };
+  // // editor.setOption('mode' as keyof EditorConfiguration, editor.modeOption);
+  // // console.log(`CM Mode: `, editor.modeOption)
 
-  if (codeMirrorOptions.continueComments) {
-    await loadAddon(cmFiles.continuecomment)
-    // console.log('continuecomment loaded')
-  }
+  // if (codeMirrorOptions.continueComments) {
+  //   await loadAddon(cmFiles.continuecomment)
+  //   // console.log('continuecomment loaded')
+  // }
 
-  // This is kind of gross, i can probably make a better one
-  // Fullscreen
-  // addonPromises.push(...loadAddon(cmFiles.fullscreen));
-  // editor.setOption("extraKeys", {
-  //   F11: function (cm) {
-  //     if (cm.getOption('fullScreen' as keyof EditorConfiguration)) {
-  //       cm.setOption('fullScreen' as keyof EditorConfiguration, false);
-  //     } else {
-  //       cm.setOption('fullScreen' as keyof EditorConfiguration, true);
-  //     }
-  //   }
-  // });
+  // // This is kind of gross, i can probably make a better one
+  // // Fullscreen
+  // // addonPromises.push(...loadAddon(cmFiles.fullscreen));
+  // // editor.setOption("extraKeys", {
+  // //   F11: function (cm) {
+  // //     if (cm.getOption('fullScreen' as keyof EditorConfiguration)) {
+  // //       cm.setOption('fullScreen' as keyof EditorConfiguration, false);
+  // //     } else {
+  // //       cm.setOption('fullScreen' as keyof EditorConfiguration, true);
+  // //     }
+  // //   }
+  // // });
 
-  if (['overlay', 'simple'].includes(codeMirrorOptions.scrollbarStyle)) {
-    await loadAddon(cmFiles.simpleScrollbars)
-  }
-  editor.setOption('scrollbarStyle' as keyof EditorConfiguration, codeMirrorOptions.scrollbarStyle);
+  // if (['overlay', 'simple'].includes(codeMirrorOptions.scrollbarStyle)) {
+  //   await loadAddon(cmFiles.simpleScrollbars)
+  // }
+  // editor.setOption('scrollbarStyle' as keyof EditorConfiguration, codeMirrorOptions.scrollbarStyle);
 
-  if (codeMirrorOptions.scrollPastEnd) {
-    await loadAddon(cmFiles.scrollpastend)
-  }
-  editor.setOption('scrollPastEnd' as keyof EditorConfiguration, codeMirrorOptions.scrollPastEnd);
+  // if (codeMirrorOptions.scrollPastEnd) {
+  //   await loadAddon(cmFiles.scrollpastend)
+  // }
+  // editor.setOption('scrollPastEnd' as keyof EditorConfiguration, codeMirrorOptions.scrollPastEnd);
 
-  // Keymaps
-  switch (codeMirrorOptions.keyMap) {
-    case "sublime":
-      await loadAddon(cmFiles.sublime)
-      editor.addKeyMap("sublime")
-      break;
-    case "vim":
-      await loadAddon(cmFiles.vim)
-      editor.addKeyMap("vim")
-      break;
-    case "emacs":
-      await loadAddon(cmFiles.emacs)
-      editor.addKeyMap("emacs")
-      break;
-    default:
-      editor.addKeyMap("default")
-  }
+  // // Keymaps
+  // switch (codeMirrorOptions.keyMap) {
+  //   case "sublime":
+  //     await loadAddon(cmFiles.sublime)
+  //     editor.addKeyMap("sublime")
+  //     break;
+  //   case "vim":
+  //     await loadAddon(cmFiles.vim)
+  //     editor.addKeyMap("vim")
+  //     break;
+  //   case "emacs":
+  //     await loadAddon(cmFiles.emacs)
+  //     editor.addKeyMap("emacs")
+  //     break;
+  //   default:
+  //     editor.addKeyMap("default")
+  // }
 
-  editor.setOption('gutters', gutters);
-  console.log('Gutters set:', gutters)
+  // editor.setOption('gutters', gutters);
+  // console.log('Gutters set:', gutters)
 
-  // Set the options defined in the codeMirrorOptions object
-  // Needs to happen after the scripts are loaded
-  await applyCodeMirrorOptions(editor);
+  // // Set the options defined in the codeMirrorOptions object
+  // // Needs to happen after the scripts are loaded
+  // await applyCodeMirrorOptions(editor);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  console.log('codeMirrorMods ended with options:', (editor as any).options)
+  // // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // console.log('codeMirrorMods ended with options:', (editor as any).options)
   return true;
 }

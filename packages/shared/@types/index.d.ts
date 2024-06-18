@@ -110,6 +110,7 @@ interface UserOptions {
   workbenchView: WorkbenchViews;
   scriptingView: ScriptingViews;
   scriptingMode: ScriptingModes;
+  workbenchCode: string;
   // downloadLocations: { [key: string]: string };
 }
 

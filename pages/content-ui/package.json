@@ -21,14 +21,18 @@
   },
   "dependencies": {
     "@chrome-extension-boilerplate/shared": "workspace:*",
+    "@codemirror/lang-python": "^6.1.6",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.5",
     "@mui/icons-material": "^5.15.17",
-    "@mui/material": "^5.15.17"
+    "@mui/material": "^5.15.17",
+    "@uiw/react-codemirror": "^4.22.0",
+    "common-tags": "^1.8.2"
   },
   "devDependencies": {
     "@chrome-extension-boilerplate/hmr": "workspace:*",
     "@chrome-extension-boilerplate/tailwindcss-config": "workspace:*",
-    "@chrome-extension-boilerplate/tsconfig": "workspace:*"
+    "@chrome-extension-boilerplate/tsconfig": "workspace:*",
+    "@types/common-tags": "^1.8.4"
   }
 }
