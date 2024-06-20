@@ -36,7 +36,6 @@ export default defineConfig({
     },
     outDir: resolve(rootDir, '..', '..', 'dist', 'content-ui'),
     sourcemap: isDev,
-    minify: isProduction,
     reportCompressedSize: isProduction,
     rollupOptions: {
       external: ['chrome'],
@@ -48,6 +47,14 @@ export default defineConfig({
         }
 
         defaultHandler(warning)
+      },
+    },
+    // We need to do this otherwise we get a bad sourcemap
+    // minify: isProduction,
+    minify: 'terser', // Specify terser as the minifier
+    terserOptions: {
+      format: {
+        ascii_only: true, // Ensure the output is ASCII only
       },
     },
   },
