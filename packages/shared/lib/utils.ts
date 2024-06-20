@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export const saveToStorage = (key: string, value: any) => {
   const storedValue = typeof value === 'string' ? value : JSON.stringify(value);
-  console.log(`Saving ${key} to storage:`, storedValue)
+  // console.log(`Saving ${key} to storage:`, storedValue)
   chrome.storage.local.set({ [key]: storedValue });
 };
 

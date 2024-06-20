@@ -1,7 +1,7 @@
 import CodeMirror, { EditorConfiguration } from "codemirror";
 
 export default async function codeMirrorMods(codeMirrorOptions: CodeMirrorOptions) {
-  console.log('codeMirrorMods start')
+  // console.log('codeMirrorMods start')
   // Only run this on specific sites, we don't need to run this on every page
   const validHosts = ["cpq.cloud.sap", "codemirror.net"];
   if (!validHosts.some(h => new RegExp(h).test(window.location.host))) return
@@ -304,14 +304,14 @@ export default async function codeMirrorMods(codeMirrorOptions: CodeMirrorOption
       }
       await delay(500);
     }
-    console.error('CodeMirror instance not found after retries');
+    // console.error('CodeMirror instance not found after retries');
     return undefined;
   };
 
   const editor = await findCodemirror();
 
   if (!editor) {
-    console.error('CodeMirror instance not found after retries');
+    // console.error('CodeMirror instance not found after retries');
     return;
   }
   // console.log('CodeMirror instance found:', editor)
@@ -345,9 +345,9 @@ export default async function codeMirrorMods(codeMirrorOptions: CodeMirrorOption
       const scriptPromises = addon.scripts.map(url => loadResource('script', url));
       const cssPromises = addon.css.map(url => loadResource('link', url));
       await Promise.all([...scriptPromises, ...cssPromises]);
-      console.log('All resources loaded successfully');
+      // console.log('All resources loaded successfully');
     } catch (error) {
-      console.error('Error loading resources:', error);
+      // console.error('Error loading resources:', error);
     }
   };
 
@@ -365,24 +365,26 @@ export default async function codeMirrorMods(codeMirrorOptions: CodeMirrorOption
     hiddenElement.setAttribute('type', 'text/x-python');
     document.body.appendChild(hiddenElement);
 
-    // // Function that updates the hidden element with the contents of CodeMirror
-    // const updateHiddenContent = () => {
-    //   const hiddenContent = document.getElementById('hiddenContent');
-    //   if (hiddenContent) {
-    //     const editorElement = document.getElementsByClassName('CodeMirror')[0];
-    //     if (editorElement) {
-    //       // eslint-disable-next-line  @typescript-eslint/no-explicit-any
-    //       const editor: CodeMirror.Editor | undefined = (editorElement as any).CodeMirror;
-    //       if (editor) {
-    //         editor.setValue(hiddenContent.textContent ?? '')
-    //       }
-    //     }
-    //   }
-    // };
-    // // Listen for changes in the CodeMirror instance
-    // editor.on('change', updateHiddenContent);
-    // // Update the initial hidden content
-    // updateHiddenContent();
+    // Function that updates the hidden element with the contents of CodeMirror
+    const updateHiddenContent = () => {
+      const hiddenContent = document.getElementById('hiddenContent');
+      if (hiddenContent) {
+        const editorElement = document.getElementsByClassName('CodeMirror')[0];
+        if (editorElement) {
+          // eslint-disable-next-line  @typescript-eslint/no-explicit-any
+          const editor: CodeMirror.Editor | undefined = (editorElement as any).CodeMirror;
+          if (editor) {
+            editor.setValue(hiddenContent.textContent ?? '')
+          }
+        }
+      }
+    };
+    // Listen for changes in the CodeMirror instance
+    if (hiddenElement) {
+      hiddenElement.onchange = updateHiddenContent;
+    }
+    // Update the initial hidden content
+    updateHiddenContent();
   };
   addHiddenElement(editor);
 
@@ -393,7 +395,7 @@ export default async function codeMirrorMods(codeMirrorOptions: CodeMirrorOption
       try {
         editor.setOption(key as keyof EditorConfiguration, value);
       } catch (error) {
-        console.error('Failed to set option:', key, value, error);
+        // console.error('Failed to set option:', key, value, error);
       }
     }
     // console.log('Options set:', codeMirrorOptions)
@@ -429,10 +431,10 @@ export default async function codeMirrorMods(codeMirrorOptions: CodeMirrorOption
     async function handleFoldCode() {
       const editor = await findCodemirror();
       if (!editor) {
-        console.error('CodeMirror instance not found after retries');
+        // console.error('CodeMirror instance not found after retries');
         return;
       }
-      console.log('editor found:')
+      // console.log('editor found:')
       editor.operation(function () {
         for (let i = editor.firstLine(); i <= editor.lastLine(); ++i) {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -444,7 +446,7 @@ export default async function codeMirrorMods(codeMirrorOptions: CodeMirrorOption
     async function handleUnFoldCode() {
       const editor = await findCodemirror();
       if (!editor) {
-        console.error('CodeMirror instance not found after retries');
+        // console.error('CodeMirror instance not found after retries');
         return;
       }
       editor.operation(function () {
@@ -675,13 +677,13 @@ export default async function codeMirrorMods(codeMirrorOptions: CodeMirrorOption
   }
 
   editor.setOption('gutters', gutters);
-  console.log('Gutters set:', gutters)
+  // console.log('Gutters set:', gutters)
 
   // Set the options defined in the codeMirrorOptions object
   // Needs to happen after the scripts are loaded
   await applyCodeMirrorOptions(editor);
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  console.log('codeMirrorMods ended with options:', (editor as any).options)
+  // console.log('codeMirrorMods ended with options:', (editor as any).options)
   return true;
 }

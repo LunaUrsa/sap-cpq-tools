@@ -8,10 +8,10 @@ export const defaultUserPreferences: UserOptions = {
   scriptingView: 'Default' as ScriptingViews,
   scriptingMode: 'Standard' as ScriptingModes,
   workbenchCode: stripIndent`
-    if (true):
-        print('Hello World')
+    if (True):
+        Trace.Write('Hello World')
     else:
-        print('Bye World')`
+        Trace.Write('Bye World')`
   // downloadLocations: {},
 };
 
