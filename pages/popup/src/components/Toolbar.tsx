@@ -59,7 +59,7 @@ const EnhancedToolbar: React.FC = () => {
   };
 
   // Default title
-  const title = titles[location.hash] || "SAP CPQ Tools";
+  const title = titles[location.hash] || "Daedalus";
 
   const addShortcut = () => {
     const newShortcut = {

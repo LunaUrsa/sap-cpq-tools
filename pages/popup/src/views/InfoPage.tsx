@@ -6,7 +6,7 @@ const InfoPage = () => {
     <Box sx={{ maxWidth: 600, mx: "auto", p: 3 }}>
       <Paper elevation={2} sx={{ p: 2 }}>
         <Typography variant="h5" component="h1" gutterBottom>
-          About SAP CPQ Tools
+          About Daedalus
         </Typography>
         <Typography variant="body1" paragraph>
           This extension was created by{" "}

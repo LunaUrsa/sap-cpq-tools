@@ -1,6 +1,6 @@
 {
-  "name": "sap_cpq_tools",
-  "version": "0.0.1",
+  "name": "daedalus",
+  "version": "1.0.0",
   "description": "Tools for SAP CPQ",
   "license": "MIT",
   "repository": {
