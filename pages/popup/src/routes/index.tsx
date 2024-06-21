@@ -1,15 +1,12 @@
-import { Route, Routes } from "react-router-dom"
+import { Route, Routes } from 'react-router-dom';
 
-import FormulaPage from "../views/FormulaPage"
-import InfoPage from "../views/InfoPage"
-import ModsPage from "../views/ModPage"
-import ShortcutsPage from "../views/ShortcutsPage"
-import OptionsPage from "../views/OptionsPage"
-
+import FormulaPage from '../views/FormulaPage';
+import InfoPage from '../views/InfoPage';
+import ModsPage from '../views/ModPage';
+import ShortcutsPage from '../views/ShortcutsPage';
+import OptionsPage from '../views/OptionsPage';
 
 export const Routing: React.FC = () => {
-
-
   return (
     <Routes>
       <Route path="/" element={<ShortcutsPage />} />
@@ -21,5 +18,5 @@ export const Routing: React.FC = () => {
       <Route path="/options" element={<OptionsPage />} />
       <Route path="/info" element={<InfoPage />} />
     </Routes>
-  )
-}
+  );
+};

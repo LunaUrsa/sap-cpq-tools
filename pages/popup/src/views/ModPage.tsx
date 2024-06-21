@@ -1,36 +1,20 @@
-import React, { useState } from "react";
-import {
-  List,
-  ListItem,
-  TextField,
-  IconButton,
-  Grid,
-  Switch,
-  ListItemText,
-} from "@mui/material";
-import DragIndicatorIcon from "@mui/icons-material/DragIndicator";
-import {
-  DragDropContext,
-  Droppable,
-  Draggable,
-} from "react-beautiful-dnd";
-import type {
-  DropResult,
-  DraggableProvided,
-  DroppableProvided,
-} from "react-beautiful-dnd";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
-import ModEditor from "../components/ModEditor";
+import React, { useState } from 'react';
+import { List, ListItem, TextField, IconButton, Grid, Switch, ListItemText } from '@mui/material';
+import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import type { DropResult, DraggableProvided, DroppableProvided } from 'react-beautiful-dnd';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
+import ModEditor from '../components/ModEditor';
 import useAppContext from '@chrome-extension-boilerplate/shared/lib/hooks/useAppContext';
-import { saveToStorage } from "@chrome-extension-boilerplate/shared/lib/utils";
+import { saveToStorage } from '@chrome-extension-boilerplate/shared/lib/utils';
 
 const ModsPage: React.FC = () => {
   const [activeEditId, setActiveEditId] = useState<string | null>(null);
   const { mods, setMods } = useAppContext();
 
   const refreshMods = (oldMods: Mod[], newMods: Mod[]) => {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+    chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
       const activeTab = tabs[0];
       if (!activeTab.url || activeTab.url.startsWith('chrome://')) {
         return;
@@ -54,15 +38,11 @@ const ModsPage: React.FC = () => {
       });
     });
     setMods(newMods);
-    saveToStorage('mods', newMods)
-  }
+    saveToStorage('mods', newMods);
+  };
 
-  const handleChange = (
-    id: string,
-    field: keyof Mod,
-    value: string | boolean,
-  ) => {
-    const updatedMods = mods.map((mod) => {
+  const handleChange = (id: string, field: keyof Mod, value: string | boolean) => {
+    const updatedMods = mods.map(mod => {
       if (mod.id === id) {
         return { ...mod, [field]: value };
       }
@@ -72,12 +52,8 @@ const ModsPage: React.FC = () => {
   };
 
   // When the user leaves the input field, save the mods to the local storage
-  const handleBlur = (
-    id: string,
-    field: keyof Mod,
-    value: string | boolean,
-  ) => {
-    const updatedMods = mods.map((mod) => {
+  const handleBlur = (id: string, field: keyof Mod, value: string | boolean) => {
+    const updatedMods = mods.map(mod => {
       if (mod.id === id) {
         return { ...mod, [field]: value };
       }
@@ -88,7 +64,7 @@ const ModsPage: React.FC = () => {
 
   // Delete the mod with the given id
   const handleDelete = (id: string) => {
-    const updatedMods = mods.filter((mod) => mod.id !== id);
+    const updatedMods = mods.filter(mod => mod.id !== id);
     refreshMods(mods, updatedMods);
   };
 
@@ -102,7 +78,7 @@ const ModsPage: React.FC = () => {
 
   // Toggle edit mode
   const handleEditToggle = (modId: string) => {
-    console.log("Edit toggle:", modId);
+    console.log('Edit toggle:', modId);
     if (activeEditId === modId) {
       setActiveEditId(null); // Close editor if it's already open
     } else {
@@ -126,8 +102,7 @@ const ModsPage: React.FC = () => {
                           dense={true}
                           ref={provided.innerRef}
                           {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                        >
+                          {...provided.dragHandleProps}>
                           <Grid container spacing={1} alignItems="center">
                             <Grid item xs="auto" style={{ paddingRight: 4, paddingLeft: 4 }}>
                               <DragIndicatorIcon style={{ cursor: 'grab' }} />
@@ -138,25 +113,23 @@ const ModsPage: React.FC = () => {
                                 size="small"
                                 label="Name"
                                 value={mod.name}
-                                onChange={(e) => handleChange(mod.id, "name", e.target.value)}
-                                onBlur={(e) => handleBlur(mod.id, "name", e.target.value)}
+                                onChange={e => handleChange(mod.id, 'name', e.target.value)}
+                                onBlur={e => handleBlur(mod.id, 'name', e.target.value)}
                                 placeholder="Name"
                                 error={!mod.isValidCode}
-                                helperText={!mod.isValidCode ? "This code is not valid!" : ""}
+                                helperText={!mod.isValidCode ? 'This code is not valid!' : ''}
                                 InputProps={{
                                   style: {
-                                    borderColor: !mod.isValidCode ? "#ff1744" : "default",
+                                    borderColor: !mod.isValidCode ? '#ff1744' : 'default',
                                   },
                                 }}
-                                style={!mod.isValidCode ? { color: "red" } : {}}
+                                style={!mod.isValidCode ? { color: 'red' } : {}}
                               />
                             </Grid>
                             <Grid item xs={2}>
                               <Switch
                                 checked={mod.isEnabled}
-                                onChange={(e) =>
-                                  handleChange(mod.id, "isEnabled", e.target.checked)
-                                }
+                                onChange={e => handleChange(mod.id, 'isEnabled', e.target.checked)}
                                 color="primary"
                                 size="medium"
                               />
@@ -166,8 +139,7 @@ const ModsPage: React.FC = () => {
                                 size="small"
                                 edge="end"
                                 aria-label="edit"
-                                onClick={() => handleEditToggle(mod.id)}
-                              >
+                                onClick={() => handleEditToggle(mod.id)}>
                                 <EditIcon />
                               </IconButton>
                             </Grid>
@@ -176,19 +148,16 @@ const ModsPage: React.FC = () => {
                                 size="small"
                                 edge="end"
                                 aria-label="delete"
-                                onClick={() => handleDelete(mod.id)}
-                              >
+                                onClick={() => handleDelete(mod.id)}>
                                 <DeleteIcon />
                               </IconButton>
                             </Grid>
                             {activeEditId === mod.id ? (
                               <Grid item xs={12}>
                                 <ListItemText
-                                  secondary={
-                                    <ModEditor mod={mod} handleChange={handleChange} />
-                                  }
-                                  primaryTypographyProps={{ component: "div" }}
-                                  secondaryTypographyProps={{ component: "div" }}
+                                  secondary={<ModEditor mod={mod} handleChange={handleChange} />}
+                                  primaryTypographyProps={{ component: 'div' }}
+                                  secondaryTypographyProps={{ component: 'div' }}
                                 />
                               </Grid>
                             ) : (

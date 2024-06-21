@@ -1,6 +1,6 @@
 /* Edit icon */
 
-img[title="Edit"] {
+img[title='Edit'] {
   width: 28px;
 }
 
@@ -35,7 +35,7 @@ img[title="Edit"] {
   height: 100%;
 }
 
-iframe[src*="tempdoc/preview"] {
+iframe[src*='tempdoc/preview'] {
   height: 800px;
   width: 1400px;
 }
@@ -80,7 +80,7 @@ textarea.consolelook.form-control {
 
 /* Product configuration fields */
 
-textarea.form-control[name*="DynPartNumber"] {
+textarea.form-control[name*='DynPartNumber'] {
   height: 150px;
   width: 600px;
 }
@@ -95,7 +95,7 @@ textarea.form-control[name*="DynPartNumber"] {
   width: 550px;
 }
 
-textarea.form-control[name*="RuleCondition"] {
+textarea.form-control[name*='RuleCondition'] {
   height: 250px;
   width: 500px;
 }
@@ -159,7 +159,6 @@ div[class="CodeMirror cm-s-default CodeMirror-wrap CodeMirror-focused"] {
   width: 45%
 } */
 
-
 /*
 ** START LAWRENCES CSS
 */
@@ -186,7 +185,7 @@ div[class="CodeMirror cm-s-default CodeMirror-wrap CodeMirror-focused"] {
   color: #ea80ea;
 } */
 
-#script-ide>div.head.scriptsNavigationDiv>h2 {
+#script-ide > div.head.scriptsNavigationDiv > h2 {
   cursor: pointer;
 }
 
@@ -205,7 +204,9 @@ div[class="CodeMirror cm-s-default CodeMirror-wrap CodeMirror-focused"] {
   width: 100%;
 }
 
-#script-ide-section-context>div, .scriptResouceObjectContent, .classInfoMethod {
+#script-ide-section-context > div,
+.scriptResouceObjectContent,
+.classInfoMethod {
   font-size: 20px;
 }
 
@@ -238,7 +239,8 @@ div[class="CodeMirror cm-s-default CodeMirror-wrap CodeMirror-focused"] {
   position: inherit;
 }
 
-.floatLeft {}
+.floatLeft {
+}
 
 #footer {
   display: none;
@@ -252,18 +254,22 @@ div[class="CodeMirror cm-s-default CodeMirror-wrap CodeMirror-focused"] {
 .scriptsNavigationDiv a {
   display: block;
   float: right;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .scriptsNavigationDiv {
   height: 20px;
 }
 
-#script-ide-section-context.invisible, #script-ide-tree.invisible, #header.invisible {
+#script-ide-section-context.invisible,
+#script-ide-tree.invisible,
+#header.invisible {
   display: none;
 }
 
-#moreActionButtonDiv, #script-ide-action-buttons, #draftOpenedMessageDiv {
+#moreActionButtonDiv,
+#script-ide-action-buttons,
+#draftOpenedMessageDiv {
   display: inline-block;
 }
 
@@ -294,7 +300,8 @@ div[class="CodeMirror cm-s-default CodeMirror-wrap CodeMirror-focused"] {
   line-height: 32px;
 }
 
-#script-ide-section-editor .CodeMirror-wrap {}
+#script-ide-section-editor .CodeMirror-wrap {
+}
 
 #script-ide-section-history {
   margin-top: 263px;
@@ -315,4 +322,3 @@ div[class="CodeMirror cm-s-default CodeMirror-wrap CodeMirror-focused"] {
 /*
 ** END LAWRENCES CSS
 */
-

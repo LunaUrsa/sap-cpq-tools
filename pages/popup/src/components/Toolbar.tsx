@@ -1,22 +1,14 @@
-import React, { useState } from "react";
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  IconButton,
-  Menu,
-  MenuItem,
-  Grid,
-} from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
+import React, { useState } from 'react';
+import { AppBar, Toolbar, Typography, IconButton, Menu, MenuItem, Grid } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
 import KeyboardIcon from '@mui/icons-material/Keyboard';
-import SettingsIcon from "@mui/icons-material/Settings";
-import CustomizeIcon from "@mui/icons-material/Tune";
-import HelpIcon from "@mui/icons-material/Help";
-import { Link as RouterLink } from "react-router-dom";
-import { Functions, AddCircle } from "@mui/icons-material";
-import { v4 as uuidv4 } from "uuid";
-import { saveToStorage } from "@chrome-extension-boilerplate/shared/lib/utils";
+import SettingsIcon from '@mui/icons-material/Settings';
+import CustomizeIcon from '@mui/icons-material/Tune';
+import HelpIcon from '@mui/icons-material/Help';
+import { Link as RouterLink } from 'react-router-dom';
+import { Functions, AddCircle } from '@mui/icons-material';
+import { v4 as uuidv4 } from 'uuid';
+import { saveToStorage } from '@chrome-extension-boilerplate/shared/lib/utils';
 import useAppContext from '@chrome-extension-boilerplate/shared/lib/hooks/useAppContext';
 
 const EnhancedToolbar: React.FC = () => {
@@ -29,7 +21,7 @@ const EnhancedToolbar: React.FC = () => {
 
   const handleMenuClick = (page: Page) => {
     console.log('setting page to', page);
-    saveToStorage("currentPage", page);
+    saveToStorage('currentPage', page);
     setCurrentPage(page);
     setAnchorEl(null);
   };
@@ -37,51 +29,51 @@ const EnhancedToolbar: React.FC = () => {
   const addStyle = () => {
     const newStyle = {
       id: uuidv4(),
-      name: "",
-      content: "",
+      name: '',
+      content: '',
       isEnabled: true,
       isValidLanguage: true,
       isValidCode: true,
-      language: "css",
+      language: 'css',
     };
     setMods([...mods, newStyle]);
-    saveToStorage("mods", [...mods, newStyle]);
+    saveToStorage('mods', [...mods, newStyle]);
   };
 
   const titles: Record<string, string> = {
-    "": "Shortcuts",
-    "#/": "Shortcuts",
-    "#/shortcuts": "Shortcuts",
-    "#/mods": "Mods",
-    "#/options": "Options",
-    "#/formula": "Formula Format",
-    "#/info": "Information",
+    '': 'Shortcuts',
+    '#/': 'Shortcuts',
+    '#/shortcuts': 'Shortcuts',
+    '#/mods': 'Mods',
+    '#/options': 'Options',
+    '#/formula': 'Formula Format',
+    '#/info': 'Information',
   };
 
   // Default title
-  const title = titles[location.hash] || "Daedalus";
+  const title = titles[location.hash] || 'Daedalus';
 
   const addShortcut = () => {
     const newShortcut = {
       id: uuidv4(),
-      key: "",
-      destination: "",
+      key: '',
+      destination: '',
       isUnique: true,
       isValidDestination: true,
     };
     setShortcuts([...shortcuts, newShortcut]);
-    saveToStorage("shortcuts", [...shortcuts, newShortcut]);
+    saveToStorage('shortcuts', [...shortcuts, newShortcut]);
   };
 
   let toolbarIcons;
   let usedSpace = 5; // 4 for the title and 1 for the menu icon
   switch (currentPage) {
-    case "options":
-    case "info":
-    case "formula":
+    case 'options':
+    case 'info':
+    case 'formula':
       toolbarIcons = <Grid item xs={12 - usedSpace}></Grid>;
       break;
-    case "mods":
+    case 'mods':
       usedSpace += 1; // 1 for the add new icon
       toolbarIcons = (
         <>
@@ -89,20 +81,14 @@ const EnhancedToolbar: React.FC = () => {
           <Grid item xs={12 - usedSpace}></Grid>
           {/* Add new */}
           <Grid item xs={1}>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              edge="end"
-              onClick={addStyle}
-              sx={{ mr: 2 }}
-            >
+            <IconButton color="inherit" aria-label="open drawer" edge="end" onClick={addStyle} sx={{ mr: 2 }}>
               <AddCircle />
             </IconButton>
           </Grid>
         </>
       );
       break;
-    case "shortcuts":
+    case 'shortcuts':
       usedSpace += 1; // 1 for the add new icon
       toolbarIcons = (
         <>
@@ -110,13 +96,7 @@ const EnhancedToolbar: React.FC = () => {
           <Grid item xs={12 - usedSpace}></Grid>
           {/* Add New */}
           <Grid item xs={1}>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              edge="end"
-              onClick={addShortcut}
-              sx={{ mr: 2 }}
-            >
+            <IconButton color="inherit" aria-label="open drawer" edge="end" onClick={addShortcut} sx={{ mr: 2 }}>
               <AddCircle />
             </IconButton>
           </Grid>
@@ -132,11 +112,7 @@ const EnhancedToolbar: React.FC = () => {
       <Toolbar>
         <Grid container>
           <Grid item xs={4}>
-            <Typography
-              variant="h6"
-              component="div"
-              sx={{ flexGrow: 1, mt: 0.5 }}
-            >
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1, mt: 0.5 }}>
               {title}
             </Typography>
           </Grid>
@@ -146,20 +122,11 @@ const EnhancedToolbar: React.FC = () => {
               color="inherit"
               aria-label="open drawer"
               // edge="end"
-              onClick={openMenu}
-            >
+              onClick={openMenu}>
               <MenuIcon />
             </IconButton>
-            <Menu
-              anchorEl={anchorEl}
-              open={Boolean(anchorEl)}
-              onClose={() => setAnchorEl(null)}
-            >
-              <MenuItem
-                onClick={() => handleMenuClick('shortcuts' as Page)}
-                component={RouterLink}
-                to="/shortcuts"
-              >
+            <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={() => setAnchorEl(null)}>
+              <MenuItem onClick={() => handleMenuClick('shortcuts' as Page)} component={RouterLink} to="/shortcuts">
                 <KeyboardIcon />
                 Shortcuts
               </MenuItem>
@@ -167,19 +134,11 @@ const EnhancedToolbar: React.FC = () => {
                 <CustomizeIcon />
                 Mods
               </MenuItem>
-              <MenuItem
-                onClick={() => handleMenuClick('formula' as Page)}
-                component={RouterLink}
-                to="/formula"
-              >
+              <MenuItem onClick={() => handleMenuClick('formula' as Page)} component={RouterLink} to="/formula">
                 <Functions />
                 Formula Format
               </MenuItem>
-              <MenuItem
-                onClick={() => handleMenuClick('options' as Page)}
-                component={RouterLink}
-                to="/options"
-              >
+              <MenuItem onClick={() => handleMenuClick('options' as Page)} component={RouterLink} to="/options">
                 <SettingsIcon />
                 Options
               </MenuItem>

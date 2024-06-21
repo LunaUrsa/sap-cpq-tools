@@ -1,10 +1,9 @@
 name: Release
 
 on:
-  push:
+  pull_request:
     branches:
       - main
-
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -44,8 +43,3 @@ jobs:
 
       - name: Zip Build Folder
         run: zip -r build.zip ./dist/
-
-      - name: Run semantic-release
-        run: npx semantic-release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Ensure this token has the appropriate permissions

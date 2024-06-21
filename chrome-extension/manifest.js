@@ -30,7 +30,7 @@ const manifest = {
     service_worker: 'background.iife.js',
     type: 'module',
   },
-  host_permissions: ["*://*.cpq.cloud.sap/*", "*://*.workflow.cloud.sap/*", "*://*.codemirror.net/*"],
+  host_permissions: ['*://*.cpq.cloud.sap/*', '*://*.workflow.cloud.sap/*', '*://*.codemirror.net/*'],
   action: {
     default_popup: 'popup/index.html',
     default_icon: 'icon-34.png',
@@ -43,16 +43,16 @@ const manifest = {
   },
   content_scripts: [
     {
-      "matches": ["*://*.cpq.cloud.sap/*", "*://*.workflow.cloud.sap/*", "*://*.codemirror.net/*"],
+      matches: ['*://*.cpq.cloud.sap/*', '*://*.workflow.cloud.sap/*', '*://*.codemirror.net/*'],
       js: ['content/index.iife.js'],
     },
     {
-      "matches": ["*://*.cpq.cloud.sap/*", "*://*.workflow.cloud.sap/*", "*://*.codemirror.net/*"],
+      matches: ['*://*.cpq.cloud.sap/*', '*://*.workflow.cloud.sap/*', '*://*.codemirror.net/*'],
       js: ['content-ui/index.iife.js'],
     },
     {
-      "matches": ["*://*.cpq.cloud.sap/*", "*://*.workflow.cloud.sap/*", "*://*.codemirror.net/*"],
-      css: ['content.css'], 
+      matches: ['*://*.cpq.cloud.sap/*', '*://*.workflow.cloud.sap/*', '*://*.codemirror.net/*'],
+      css: ['content.css'],
     },
   ],
   devtools_page: 'devtools/index.html',
@@ -62,18 +62,18 @@ const manifest = {
       matches: ['*://*/*'],
     },
   ],
-  // "content_security_policy": { 
+  // "content_security_policy": {
   //   // content_scripts: "script-src 'self' 'unsafe-inl ine' 'unsafe-eval' 'wasm-unsafe-eval' 'inline-speculation-rules' http://localhost:* http://127.0.0.1:*; object-src 'self'",
   //   // extension_pages: "script-src 'self' 'unsafe-eval'; ob ject-src 'self' ;",
   //   // sandbox: "sandbox allow-scripts allow-forms allow-popups allow-m odals; script-src 'self' 'unsafe-inline' 'unsafe-eval'; child-src 'self';"
   // },
   commands: {
-    "Open Shortcuts": {
+    'Open Shortcuts': {
       suggested_key: {
         default: 'Ctrl+Space',
         mac: 'Command+Space',
       },
-      "description": "Opens the shortcut page."
+      description: 'Opens the shortcut page.',
     },
     // "Open Mods": {
     //   // suggested_key: {

@@ -1,13 +1,13 @@
-import CodeMirror, { EditorConfiguration } from "codemirror";
+import CodeMirror, { EditorConfiguration } from 'codemirror';
 
 export default async function codeMirrorMods(codeMirrorOptions: CodeMirrorOptions) {
   // console.log('codeMirrorMods start')
   // Only run this on specific sites, we don't need to run this on every page
-  const validHosts = ["cpq.cloud.sap", "codemirror.net"];
-  if (!validHosts.some(h => new RegExp(h).test(window.location.host))) return
+  const validHosts = ['cpq.cloud.sap', 'codemirror.net'];
+  if (!validHosts.some(h => new RegExp(h).test(window.location.host))) return;
 
   // Declare constants
-  const basicThemes = ["default", "light", "dark"];
+  const basicThemes = ['default', 'light', 'dark'];
   /* Okay so for some reason SAP uses multiple versions of codemirror. The most recent is version 6.
    4.0.3, the first 4.X version available
    > Script workbench
@@ -16,30 +16,24 @@ export default async function codeMirrorMods(codeMirrorOptions: CodeMirrorOption
    5.65.14, the second-to-last 5.X version  available
    > Global scripts 
   */
-  const codeMirrorVersion = "5.65.14";
+  const codeMirrorVersion = '5.65.14';
   const cdnBaseUrl = `https://cdnjs.cloudflare.com/ajax/libs/codemirror/${codeMirrorVersion}/`;
   const cmFiles = {
-    "main": {
-      'scripts': [
-        `${cdnBaseUrl}codemirror.min.js`,
-      ],
-      'css': [
-        `${cdnBaseUrl}codemirror.min.css`,
-      ]
+    main: {
+      scripts: [`${cdnBaseUrl}codemirror.min.js`],
+      css: [`${cdnBaseUrl}codemirror.min.css`],
     },
-    "modes": {
-      'scripts': [
+    modes: {
+      scripts: [
         // `${cdnBaseUrl}mode/meta.min.js`,
         // `${cdnBaseUrl}mode/apl/apl.min.js`,
         `${cdnBaseUrl}mode/python/python.min.js`,
       ],
-      'css': []
+      css: [],
     },
-    "activeLine": {
-      'scripts': [
-        `${cdnBaseUrl}addon/selection/active-line.min.js`,
-      ],
-      'css': []
+    activeLine: {
+      scripts: [`${cdnBaseUrl}addon/selection/active-line.min.js`],
+      css: [],
     },
     // "autorefresh": {
     //   'scripts': [
@@ -47,52 +41,36 @@ export default async function codeMirrorMods(codeMirrorOptions: CodeMirrorOption
     //   ],
     //   'css': []
     // },
-    "comment": {
-      'scripts': [
-        `${cdnBaseUrl}addon/comment/comment.min.js`,
-      ],
-      'css': []
+    comment: {
+      scripts: [`${cdnBaseUrl}addon/comment/comment.min.js`],
+      css: [],
     },
-    "continuecomment": {
-      'scripts': [
-        `${cdnBaseUrl}addon/comment/continuecomment.min.js`,
-      ],
-      'css': []
+    continuecomment: {
+      scripts: [`${cdnBaseUrl}addon/comment/continuecomment.min.js`],
+      css: [],
     },
-    "closebrackets": {
-      'scripts': [
-        `${cdnBaseUrl}addon/edit/closebrackets.min.js`,
-      ],
-      'css': []
+    closebrackets: {
+      scripts: [`${cdnBaseUrl}addon/edit/closebrackets.min.js`],
+      css: [],
     },
-    "closetag": {
-      'scripts': [
-        `${cdnBaseUrl}addon/edit/closetag.min.js`,
-      ],
-      'css': []
+    closetag: {
+      scripts: [`${cdnBaseUrl}addon/edit/closetag.min.js`],
+      css: [],
     },
-    "continuelist": {
-      'scripts': [
-        `${cdnBaseUrl}addon/edit/continuelist.min.js`,
-      ],
-      'css': []
+    continuelist: {
+      scripts: [`${cdnBaseUrl}addon/edit/continuelist.min.js`],
+      css: [],
     },
-    "dialog": {
-      'scripts': [
-        `${cdnBaseUrl}addon/dialog/dialog.min.js`,
-      ],
-      'css': [
-        `${cdnBaseUrl}addon/dialog/dialog.min.css`,
-      ]
+    dialog: {
+      scripts: [`${cdnBaseUrl}addon/dialog/dialog.min.js`],
+      css: [`${cdnBaseUrl}addon/dialog/dialog.min.css`],
     },
-    "emacs": {
-      'scripts': [
-        `${cdnBaseUrl}keymap/emacs.min.js`,
-      ],
-      'css': []
+    emacs: {
+      scripts: [`${cdnBaseUrl}keymap/emacs.min.js`],
+      css: [],
     },
-    "fold": {
-      'scripts': [
+    fold: {
+      scripts: [
         `${cdnBaseUrl}addon/fold/foldcode.min.js`,
         `${cdnBaseUrl}addon/fold/foldgutter.min.js`,
         `${cdnBaseUrl}addon/fold/brace-fold.min.js`,
@@ -101,20 +79,14 @@ export default async function codeMirrorMods(codeMirrorOptions: CodeMirrorOption
         `${cdnBaseUrl}addon/fold/markdown-fold.min.js`,
         `${cdnBaseUrl}addon/fold/xml-fold.min.js`,
       ],
-      'css': [
-        `${cdnBaseUrl}addon/fold/foldgutter.min.css`,
-      ]
+      css: [`${cdnBaseUrl}addon/fold/foldgutter.min.css`],
     },
-    "fullscreen": {
-      'scripts': [
-        `${cdnBaseUrl}addon/display/fullscreen.min.js`,
-      ],
-      'css': [
-        `${cdnBaseUrl}addon/display/fullscreen.min.css`,
-      ]
+    fullscreen: {
+      scripts: [`${cdnBaseUrl}addon/display/fullscreen.min.js`],
+      css: [`${cdnBaseUrl}addon/display/fullscreen.min.css`],
     },
-    "hint": {
-      'scripts': [
+    hint: {
+      scripts: [
         `${cdnBaseUrl}addon/hint/show-hint.min.js`,
         `${cdnBaseUrl}addon/hint/anyword-hint.min.js`,
         // `${cdnBaseUrl}addon/hint/css-hint.min.js`,
@@ -123,26 +95,18 @@ export default async function codeMirrorMods(codeMirrorOptions: CodeMirrorOption
         // `${cdnBaseUrl}addon/hint/sql-hint.min.js`,
         // `${cdnBaseUrl}addon/hint/xml-hint.min.js`,
       ],
-      'css': [
-        `${cdnBaseUrl}addon/hint/show-hint.min.css`,
-      ]
+      css: [`${cdnBaseUrl}addon/hint/show-hint.min.css`],
     },
-    "highlightSelectionMatches": {
-      'scripts': [
-        `${cdnBaseUrl}addon/search/match-highlighter.min.js`,
-      ],
-      'css': [
-        `${cdnBaseUrl}addon/search/matchesonscrollbar.min.css`,
-      ]
+    highlightSelectionMatches: {
+      scripts: [`${cdnBaseUrl}addon/search/match-highlighter.min.js`],
+      css: [`${cdnBaseUrl}addon/search/matchesonscrollbar.min.css`],
     },
-    "jumpToLine": {
-      'scripts': [
-        `${cdnBaseUrl}addon/search/jump-to-line.min.js`,
-      ],
-      'css': []
+    jumpToLine: {
+      scripts: [`${cdnBaseUrl}addon/search/jump-to-line.min.js`],
+      css: [],
     },
-    "lint": {
-      'scripts': [
+    lint: {
+      scripts: [
         `${cdnBaseUrl}addon/lint/lint.min.js`,
         // `${cdnBaseUrl}addon/lint/coffeescript-lint.min.js`,
         // `${cdnBaseUrl}addon/lint/css-lint.min.js`,
@@ -151,15 +115,11 @@ export default async function codeMirrorMods(codeMirrorOptions: CodeMirrorOption
         // `${cdnBaseUrl}addon/lint/json-lint.min.js`,
         // `${cdnBaseUrl}addon/lint/yaml-lint.min.js`,
       ],
-      'css': [
-        `${cdnBaseUrl}addon/lint/lint.min.css`,
-      ]
+      css: [`${cdnBaseUrl}addon/lint/lint.min.css`],
     },
-    "matchbrackets": {
-      'scripts': [
-        `${cdnBaseUrl}addon/edit/matchbrackets.min.js`,
-      ],
-      'css': []
+    matchbrackets: {
+      scripts: [`${cdnBaseUrl}addon/edit/matchbrackets.min.js`],
+      css: [],
     },
     // "merge": {
     //   'scripts': [
@@ -179,28 +139,21 @@ export default async function codeMirrorMods(codeMirrorOptions: CodeMirrorOption
     //   ],
     //   'css': []
     // },
-    "matchesOnScrollbar": {
-      'scripts': [
+    matchesOnScrollbar: {
+      scripts: [
         `${cdnBaseUrl}addon/scroll/annotatescrollbar.min.js`,
         `${cdnBaseUrl}addon/search/matchesonscrollbar.min.js`,
       ],
-      'css': [
-        `${cdnBaseUrl}addon/search/matchesonscrollbar.min.css`,
-      ]
+      css: [`${cdnBaseUrl}addon/search/matchesonscrollbar.min.css`],
     },
-    "matchtags": {
-      'scripts': [
-        `${cdnBaseUrl}addon/edit/matchtags.min.js`,
-        `${cdnBaseUrl}addon/fold/xml-fold.min.js`,
-      ],
-      'css': []
+    matchtags: {
+      scripts: [`${cdnBaseUrl}addon/edit/matchtags.min.js`, `${cdnBaseUrl}addon/fold/xml-fold.min.js`],
+      css: [],
     },
 
-    "markSelection": {
-      'scripts': [
-        `${cdnBaseUrl}addon/selection/mark-selection.min.js`,
-      ],
-      'css': []
+    markSelection: {
+      scripts: [`${cdnBaseUrl}addon/selection/mark-selection.min.js`],
+      css: [],
     },
     // "panel": {
     //   'scripts': [
@@ -229,65 +182,41 @@ export default async function codeMirrorMods(codeMirrorOptions: CodeMirrorOption
     //   ],
     //   'css': []
     // },
-    "selectionPointer": {
-      'scripts': [
-        `${cdnBaseUrl}addon/selection/selection-pointer.min.js`,
-      ],
-      'css': []
+    selectionPointer: {
+      scripts: [`${cdnBaseUrl}addon/selection/selection-pointer.min.js`],
+      css: [],
     },
-    "search": {
-      'scripts': [
-        `${cdnBaseUrl}addon/search/search.min.js`,
-        `${cdnBaseUrl}addon/search/searchcursor.min.js`,
-      ],
-      'css': []
+    search: {
+      scripts: [`${cdnBaseUrl}addon/search/search.min.js`, `${cdnBaseUrl}addon/search/searchcursor.min.js`],
+      css: [],
     },
-    "scrollpastend": {
-      'scripts': [
-        `${cdnBaseUrl}addon/scroll/scrollpastend.min.js`,
-      ],
-      'css': []
+    scrollpastend: {
+      scripts: [`${cdnBaseUrl}addon/scroll/scrollpastend.min.js`],
+      css: [],
     },
-    "simpleScrollbars": {
-      'scripts': [
-        `${cdnBaseUrl}addon/scroll/simplescrollbars.min.js`,
-      ],
-      'css': [
-        `${cdnBaseUrl}addon/scroll/simplescrollbars.min.css`,
-      ]
+    simpleScrollbars: {
+      scripts: [`${cdnBaseUrl}addon/scroll/simplescrollbars.min.js`],
+      css: [`${cdnBaseUrl}addon/scroll/simplescrollbars.min.css`],
     },
-    "sublime": {
-      'scripts': [
-        `${cdnBaseUrl}keymap/sublime.min.js`,
-      ],
-      'css': []
+    sublime: {
+      scripts: [`${cdnBaseUrl}keymap/sublime.min.js`],
+      css: [],
     },
-    "tern": {
-      'scripts': [
-        `${cdnBaseUrl}addon/tern/tern.min.js`,
-        `${cdnBaseUrl}addon/tern/worker.min.js`,
-      ],
-      'css': [
-        `${cdnBaseUrl}addon/tern/tern.min.css`,
-      ]
+    tern: {
+      scripts: [`${cdnBaseUrl}addon/tern/tern.min.js`, `${cdnBaseUrl}addon/tern/worker.min.js`],
+      css: [`${cdnBaseUrl}addon/tern/tern.min.css`],
     },
-    "trailingspace": {
-      'scripts': [
-        `${cdnBaseUrl}addon/edit/trailingspace.min.js`,
-      ],
-      'css': []
+    trailingspace: {
+      scripts: [`${cdnBaseUrl}addon/edit/trailingspace.min.js`],
+      css: [],
     },
-    "vim": {
-      'scripts': [
-        `${cdnBaseUrl}keymap/vim.min.js`,
-      ],
-      'css': []
+    vim: {
+      scripts: [`${cdnBaseUrl}keymap/vim.min.js`],
+      css: [],
     },
-    "wrap": {
-      'scripts': [
-        `${cdnBaseUrl}addon/wrap/hardwrap.min.js`,
-      ],
-      'css': []
+    wrap: {
+      scripts: [`${cdnBaseUrl}addon/wrap/hardwrap.min.js`],
+      css: [],
     },
   };
   // Finds the codemirror instance on the page
@@ -352,10 +281,10 @@ export default async function codeMirrorMods(codeMirrorOptions: CodeMirrorOption
   };
 
   // Adds a hidden element to the page that allows the extension to read the code
-  const addHiddenElement = (editor: CodeMirror.Editor) => {
+  const addHiddenElement = () => {
     // console.log('addHiddenElement')
     // The editor instance is not available outside this script, so if we want the content of the editor
-    // we need to create a new element on the page that the content script can read. 
+    // we need to create a new element on the page that the content script can read.
 
     // Create a new div element that's invisible and add it to the page
     const hiddenElement = document.createElement('div');
@@ -374,7 +303,7 @@ export default async function codeMirrorMods(codeMirrorOptions: CodeMirrorOption
           // eslint-disable-next-line  @typescript-eslint/no-explicit-any
           const editor: CodeMirror.Editor | undefined = (editorElement as any).CodeMirror;
           if (editor) {
-            editor.setValue(hiddenContent.textContent ?? '')
+            editor.setValue(hiddenContent.textContent ?? '');
           }
         }
       }
@@ -386,7 +315,7 @@ export default async function codeMirrorMods(codeMirrorOptions: CodeMirrorOption
     // Update the initial hidden content
     updateHiddenContent();
   };
-  addHiddenElement(editor);
+  addHiddenElement();
 
   // Applies the options on the user's options page
   const applyCodeMirrorOptions = async (editor: CodeMirror.Editor) => {
@@ -438,7 +367,7 @@ export default async function codeMirrorMods(codeMirrorOptions: CodeMirrorOption
       editor.operation(function () {
         for (let i = editor.firstLine(); i <= editor.lastLine(); ++i) {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          (editor as any).foldCode({ line: i, ch: 0 }, null, "fold");
+          (editor as any).foldCode({ line: i, ch: 0 }, null, 'fold');
         }
       });
     }
@@ -452,7 +381,7 @@ export default async function codeMirrorMods(codeMirrorOptions: CodeMirrorOption
       editor.operation(function () {
         for (let i = editor.firstLine(); i <= editor.lastLine(); ++i) {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          (editor as any).foldCode({ line: i, ch: 0 }, null, "unfold");
+          (editor as any).foldCode({ line: i, ch: 0 }, null, 'unfold');
         }
       });
     }
@@ -471,7 +400,7 @@ export default async function codeMirrorMods(codeMirrorOptions: CodeMirrorOption
   await addToolbar();
 
   // CodeMirror options
-  const gutters = ["CodeMirror-linenumbers"];
+  const gutters = ['CodeMirror-linenumbers'];
 
   // console.log('codeMirrorOptions:', codeMirrorOptions)
   if (!basicThemes.includes(codeMirrorOptions.theme)) {
@@ -479,8 +408,8 @@ export default async function codeMirrorMods(codeMirrorOptions: CodeMirrorOption
     await loadAddon({
       scripts: [],
       css: [`${cdnBaseUrl}theme/${codeMirrorOptions.theme}.min.css`],
-    })
-  };
+    });
+  }
   editor.setOption('theme' as keyof EditorConfiguration, codeMirrorOptions.theme);
   // console.debug('Theme set:', codeMirrorOptions.theme)
 
@@ -488,41 +417,40 @@ export default async function codeMirrorMods(codeMirrorOptions: CodeMirrorOption
 
   // Search
   if (codeMirrorOptions.search) {
-    await loadAddon(cmFiles.search)
+    await loadAddon(cmFiles.search);
     await loadAddon(cmFiles.dialog);
     // console.log('Search loaded')
   }
   if (codeMirrorOptions.jumpToLine) {
-    await loadAddon(cmFiles.jumpToLine)
+    await loadAddon(cmFiles.jumpToLine);
     await loadAddon(cmFiles.dialog);
     // console.log('jumpToLine loaded')
-
   }
   if (codeMirrorOptions.matchesOnScrollbar) {
-    await loadAddon(cmFiles.matchesOnScrollbar)
+    await loadAddon(cmFiles.matchesOnScrollbar);
   }
 
   if (codeMirrorOptions.matchBrackets) {
-    await loadAddon(cmFiles.matchbrackets)
+    await loadAddon(cmFiles.matchbrackets);
   }
   editor.setOption('matchBrackets' as keyof EditorConfiguration, codeMirrorOptions.matchBrackets);
   // console.log('matchBrackets loaded')
 
   if (codeMirrorOptions.autoCloseBrackets) {
-    await loadAddon(cmFiles.closebrackets)
+    await loadAddon(cmFiles.closebrackets);
   }
   editor.setOption('autoCloseBrackets' as keyof EditorConfiguration, codeMirrorOptions.autoCloseBrackets);
   // console.log('autoCloseBrackets loaded')
 
   if (codeMirrorOptions.matchTags) {
     // console.log('matchTags loading', cmFiles.matchtags)
-    await loadAddon(cmFiles.matchtags)
+    await loadAddon(cmFiles.matchtags);
     // console.log('matchTags loaded')
   }
   editor.setOption('matchTags' as keyof EditorConfiguration, codeMirrorOptions.matchTags);
 
   if (codeMirrorOptions.showTrailingSpace) {
-    await loadAddon(cmFiles.trailingspace)
+    await loadAddon(cmFiles.trailingspace);
   }
   editor.setOption('showTrailingSpace' as keyof EditorConfiguration, codeMirrorOptions.showTrailingSpace);
   // console.log('showTrailingSpace loaded')
@@ -536,13 +464,13 @@ export default async function codeMirrorMods(codeMirrorOptions: CodeMirrorOption
   // }
 
   if (codeMirrorOptions.comments) {
-    await loadAddon(cmFiles.comment)
+    await loadAddon(cmFiles.comment);
   }
 
   // Code folding
   if (codeMirrorOptions.foldCode) {
     await loadAddon(cmFiles.fold);
-    gutters.push("CodeMirror-foldgutter");
+    gutters.push('CodeMirror-foldgutter');
   }
 
   editor.setOption('foldGutter' as keyof EditorConfiguration, codeMirrorOptions.foldCode);
@@ -593,30 +521,32 @@ export default async function codeMirrorMods(codeMirrorOptions: CodeMirrorOption
   }
 
   if (codeMirrorOptions.highlightSelectionMatches) {
-    await loadAddon(cmFiles.highlightSelectionMatches)
+    await loadAddon(cmFiles.highlightSelectionMatches);
   }
-  editor.setOption('highlightSelectionMatches' as keyof EditorConfiguration, codeMirrorOptions.highlightSelectionMatches);
+  editor.setOption(
+    'highlightSelectionMatches' as keyof EditorConfiguration,
+    codeMirrorOptions.highlightSelectionMatches,
+  );
 
   // Linting TODO
   if (codeMirrorOptions.linting) {
-    await loadAddon(cmFiles.lint)
+    await loadAddon(cmFiles.lint);
   }
   // editor.setOption('lint' as keyof EditorConfiguration, codeMirrorOptions.highlightSelectionMatches);
 
   if (codeMirrorOptions.markSelection) {
-    await loadAddon(cmFiles.markSelection)
+    await loadAddon(cmFiles.markSelection);
   }
   editor.setOption('styleSelectedText' as keyof EditorConfiguration, codeMirrorOptions.markSelection);
 
-
   if (codeMirrorOptions.styleActiveLine) {
-    await loadAddon(cmFiles.activeLine)
-    gutters.push("CodeMirror-activeline");
+    await loadAddon(cmFiles.activeLine);
+    gutters.push('CodeMirror-activeline');
   }
   editor.setOption('styleActiveLine' as keyof EditorConfiguration, codeMirrorOptions.styleActiveLine);
 
   if (codeMirrorOptions.selectionPointer) {
-    await loadAddon(cmFiles.selectionPointer)
+    await loadAddon(cmFiles.selectionPointer);
   }
   editor.setOption('selectionPointer' as keyof EditorConfiguration, codeMirrorOptions.selectionPointer);
 
@@ -631,7 +561,7 @@ export default async function codeMirrorMods(codeMirrorOptions: CodeMirrorOption
   // console.log(`CM Mode: `, editor.modeOption)
 
   if (codeMirrorOptions.continueComments) {
-    await loadAddon(cmFiles.continuecomment)
+    await loadAddon(cmFiles.continuecomment);
     // console.log('continuecomment loaded')
   }
 
@@ -649,31 +579,31 @@ export default async function codeMirrorMods(codeMirrorOptions: CodeMirrorOption
   // });
 
   if (['overlay', 'simple'].includes(codeMirrorOptions.scrollbarStyle)) {
-    await loadAddon(cmFiles.simpleScrollbars)
+    await loadAddon(cmFiles.simpleScrollbars);
   }
   editor.setOption('scrollbarStyle' as keyof EditorConfiguration, codeMirrorOptions.scrollbarStyle);
 
   if (codeMirrorOptions.scrollPastEnd) {
-    await loadAddon(cmFiles.scrollpastend)
+    await loadAddon(cmFiles.scrollpastend);
   }
   editor.setOption('scrollPastEnd' as keyof EditorConfiguration, codeMirrorOptions.scrollPastEnd);
 
   // Keymaps
   switch (codeMirrorOptions.keyMap) {
-    case "sublime":
-      await loadAddon(cmFiles.sublime)
-      editor.addKeyMap("sublime")
+    case 'sublime':
+      await loadAddon(cmFiles.sublime);
+      editor.addKeyMap('sublime');
       break;
-    case "vim":
-      await loadAddon(cmFiles.vim)
-      editor.addKeyMap("vim")
+    case 'vim':
+      await loadAddon(cmFiles.vim);
+      editor.addKeyMap('vim');
       break;
-    case "emacs":
-      await loadAddon(cmFiles.emacs)
-      editor.addKeyMap("emacs")
+    case 'emacs':
+      await loadAddon(cmFiles.emacs);
+      editor.addKeyMap('emacs');
       break;
     default:
-      editor.addKeyMap("default")
+      editor.addKeyMap('default');
   }
 
   editor.setOption('gutters', gutters);

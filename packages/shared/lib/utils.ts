@@ -8,7 +8,11 @@ export const saveToStorage = (key: string, value: any) => {
 export function isValidUserOptions(obj: any): obj is UserOptions {
   try {
     const parsedObj = JSON.parse(obj);
-    return typeof parsedObj === "object" && typeof parsedObj.isDarkMode === "boolean" && typeof parsedObj.language === "string";
+    return (
+      typeof parsedObj === 'object' &&
+      typeof parsedObj.isDarkMode === 'boolean' &&
+      typeof parsedObj.language === 'string'
+    );
   } catch {
     return false;
   }
@@ -17,7 +21,7 @@ export function isValidUserOptions(obj: any): obj is UserOptions {
 export function isValidCodeOptions(obj: any): obj is CodeMirrorOptions {
   try {
     const parsedObj = JSON.parse(obj);
-    return typeof parsedObj === "object" && typeof parsedObj.autocapitalize === "boolean";
+    return typeof parsedObj === 'object' && typeof parsedObj.autocapitalize === 'boolean';
   } catch {
     return false;
   }
@@ -26,7 +30,7 @@ export function isValidCodeOptions(obj: any): obj is CodeMirrorOptions {
 export function isValidModList(obj: any): obj is Mod[] {
   try {
     const parsedObj = JSON.parse(obj);
-    return Array.isArray(parsedObj) && parsedObj.every(mod => typeof mod === "object" && typeof mod.id === "string");
+    return Array.isArray(parsedObj) && parsedObj.every(mod => typeof mod === 'object' && typeof mod.id === 'string');
   } catch {
     return false;
   }
@@ -35,15 +39,22 @@ export function isValidModList(obj: any): obj is Mod[] {
 export function isValidShortcutList(obj: any): obj is Shortcut[] {
   try {
     const parsedObj = JSON.parse(obj);
-    return Array.isArray(parsedObj) && parsedObj.every(shortcut => typeof shortcut === "object" && typeof shortcut.id === "string");
+    return (
+      Array.isArray(parsedObj) &&
+      parsedObj.every(shortcut => typeof shortcut === 'object' && typeof shortcut.id === 'string')
+    );
   } catch {
     return false;
   }
 }
 
-export async function loadAndValidateStorageItem<T>(key: string, isValidFunction: (obj: any) => obj is T, defaultData: T): Promise<void> {
-  return new Promise<void>((resolve) => {
-    chrome.storage.local.get(key, (result) => {
+export async function loadAndValidateStorageItem<T>(
+  key: string,
+  isValidFunction: (obj: any) => obj is T,
+  defaultData: T,
+): Promise<void> {
+  return new Promise<void>(resolve => {
+    chrome.storage.local.get(key, result => {
       const storedData = result[key];
       if (storedData && isValidFunction(storedData)) {
         // console.log(`${key} is valid.`);

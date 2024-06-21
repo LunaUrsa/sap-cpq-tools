@@ -5,17 +5,9 @@
     "jsx": "react-jsx",
     "baseUrl": ".",
     "paths": {
-      "@lib/*": [
-        "lib/*"
-      ]
+      "@lib/*": ["lib/*"]
     },
-    "types": [
-      "chrome"
-    ]
+    "types": ["chrome"]
   },
-  "include": [
-    "index.ts",
-    "lib",
-    "@types"
-  ]
+  "include": ["index.ts", "lib", "@types"]
 }

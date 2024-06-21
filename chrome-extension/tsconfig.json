@@ -2,18 +2,10 @@
   "extends": "@chrome-extension-boilerplate/tsconfig/app.json",
   "compilerOptions": {
     "baseUrl": "./",
-    "types": [
-      "vite/client",
-      "node",
-      "chrome"
-    ],
+    "types": ["vite/client", "node", "chrome"],
     "paths": {
-      "@root/*": [
-        "./*"
-      ],
-      "@lib/*": [
-        "lib/*"
-      ],
+      "@root/*": ["./*"],
+      "@lib/*": ["lib/*"]
     }
   },
   "include": [
@@ -24,5 +16,5 @@
     "node_modules/@types",
     "../packages/shared/@types",
     "../packages/shared/lib/constants.ts"
-  ],
+  ]
 }

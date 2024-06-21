@@ -1,8 +1,16 @@
 import { useEffect, useRef } from 'react';
-import { hideToastContainer, autoScrollTrace, repositionTraceWindow, updateHiddenElement } from '../util/scriptWorkbench';
+import {
+  hideToastContainer,
+  autoScrollTrace,
+  repositionTraceWindow,
+  updateHiddenElement,
+} from '../util/scriptWorkbench';
 import { EditorView } from 'codemirror';
 
-export const useTraceManagement = (editorViewRef: React.MutableRefObject<EditorView | null>, userOptions: any) => {
+export const useTraceManagement = (
+  editorViewRef: React.MutableRefObject<EditorView | null>,
+  userOptions: UserOptions,
+) => {
   const traceRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {

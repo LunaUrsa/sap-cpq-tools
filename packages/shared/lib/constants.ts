@@ -11,80 +11,80 @@ export const defaultUserPreferences: UserOptions = {
     if (True):
         Trace.Write('Hello World')
     else:
-        Trace.Write('Bye World')`
+        Trace.Write('Bye World')`,
   // downloadLocations: {},
 };
 
 export const codeMirrorThemes = {
-  Default: "default",
-  Light: "light",
-  Dark: "dark",
-  Day3024: "3024-day",
-  Night3024: "3024-night",
-  Abbott: "abbott",
-  Abcdef: "abcdef",
-  AmbianceMobile: "ambiance-mobile",
-  Ambiance: "ambiance",
-  AyuDark: "ayu-dark",
-  AyuMirage: "ayu-mirage",
-  Base16Dark: "base16-dark",
-  Base16Light: "base16-light",
-  Bespin: "bespin",
-  Blackboard: "blackboard",
-  Cobalt: "cobalt",
-  Colorforth: "colorforth",
-  Darcula: "darcula",
-  Dracula: "dracula",
-  DuotoneDark: "duotone-dark",
-  DuotoneLight: "duotone-light",
-  Eclipse: "eclipse",
-  Elegant: "elegant",
-  ErlangDark: "erlang-dark",
-  GruvboxDark: "gruvbox-dark",
-  Hopscotch: "hopscotch",
-  Icecoder: "icecoder",
-  Idea: "idea",
-  Isotope: "isotope",
-  Juejin: "juejin",
-  LesserDark: "lesser-dark",
-  Liquibyte: "liquibyte",
-  Lucario: "lucario",
-  MaterialDarker: "material-darker",
-  MaterialOcean: "material-ocean",
-  MaterialPalenight: "material-palenight",
-  Material: "material",
-  Mbo: "mbo",
-  MdnLike: "mdn-like",
-  Midnight: "midnight",
-  Monokai: "monokai",
-  Moxer: "moxer",
-  Neat: "neat",
-  Neo: "neo",
-  Night: "night",
-  Nord: "nord",
-  OceanicNext: "oceanic-next",
-  PandaSyntax: "panda-syntax",
-  ParaisoDark: "paraiso-dark",
-  ParaisoLight: "paraiso-light",
-  PastelOnDark: "pastel-on-dark",
-  Railscasts: "railscasts",
-  Rubyblue: "rubyblue",
-  Seti: "seti",
-  Shadowfox: "shadowfox",
-  Solarized: "solarized",
-  Ssms: "ssms",
-  TheMatrix: "the-matrix",
-  TomorrowNightBright: "tomorrow-night-bright",
-  TomorrowNightEighties: "tomorrow-night-eighties",
-  Ttcn: "ttcn",
-  Twilight: "twilight",
-  VibrantInk: "vibrant-ink",
-  XqDark: "xq-dark",
-  XqLight: "xq-light",
-  Yeti: "yeti",
-  Yonce: "yonce",
-  Zenburn: "zenburn"
-}
+  Default: 'default',
+  Light: 'light',
+  Dark: 'dark',
+  Day3024: '3024-day',
+  Night3024: '3024-night',
+  Abbott: 'abbott',
+  Abcdef: 'abcdef',
+  AmbianceMobile: 'ambiance-mobile',
+  Ambiance: 'ambiance',
+  AyuDark: 'ayu-dark',
+  AyuMirage: 'ayu-mirage',
+  Base16Dark: 'base16-dark',
+  Base16Light: 'base16-light',
+  Bespin: 'bespin',
+  Blackboard: 'blackboard',
+  Cobalt: 'cobalt',
+  Colorforth: 'colorforth',
+  Darcula: 'darcula',
+  Dracula: 'dracula',
+  DuotoneDark: 'duotone-dark',
+  DuotoneLight: 'duotone-light',
+  Eclipse: 'eclipse',
+  Elegant: 'elegant',
+  ErlangDark: 'erlang-dark',
+  GruvboxDark: 'gruvbox-dark',
+  Hopscotch: 'hopscotch',
+  Icecoder: 'icecoder',
+  Idea: 'idea',
+  Isotope: 'isotope',
+  Juejin: 'juejin',
+  LesserDark: 'lesser-dark',
+  Liquibyte: 'liquibyte',
+  Lucario: 'lucario',
+  MaterialDarker: 'material-darker',
+  MaterialOcean: 'material-ocean',
+  MaterialPalenight: 'material-palenight',
+  Material: 'material',
+  Mbo: 'mbo',
+  MdnLike: 'mdn-like',
+  Midnight: 'midnight',
+  Monokai: 'monokai',
+  Moxer: 'moxer',
+  Neat: 'neat',
+  Neo: 'neo',
+  Night: 'night',
+  Nord: 'nord',
+  OceanicNext: 'oceanic-next',
+  PandaSyntax: 'panda-syntax',
+  ParaisoDark: 'paraiso-dark',
+  ParaisoLight: 'paraiso-light',
+  PastelOnDark: 'pastel-on-dark',
+  Railscasts: 'railscasts',
+  Rubyblue: 'rubyblue',
+  Seti: 'seti',
+  Shadowfox: 'shadowfox',
+  Solarized: 'solarized',
+  Ssms: 'ssms',
+  TheMatrix: 'the-matrix',
+  TomorrowNightBright: 'tomorrow-night-bright',
+  TomorrowNightEighties: 'tomorrow-night-eighties',
+  Ttcn: 'ttcn',
+  Twilight: 'twilight',
+  VibrantInk: 'vibrant-ink',
+  XqDark: 'xq-dark',
+  XqLight: 'xq-light',
+  Yeti: 'yeti',
+  Yonce: 'yonce',
+  Zenburn: 'zenburn',
+};
 
 export const defaultCodePreferences: CodeMirrorOptions = {
   // The starting value of the editor. Can be a string, or a document object.
@@ -95,15 +95,15 @@ export const defaultCodePreferences: CodeMirrorOptions = {
   // Alternatively, it may be an object containing configuration options for the mode.
   // mode: {
   //   name: "python",
-  //   singleLineStringErrors: false, 
+  //   singleLineStringErrors: false,
   //   version: 3
   // },
   // pythonVersion: 2,
-  // Explicitly set the line separator for the editor. 
+  // Explicitly set the line separator for the editor.
   // By default (value null), the document will be split on CRLFs as well as lone CRs and LFs,
-  // and a single LF will be used as line separator in all output (such as getValue). 
+  // and a single LF will be used as line separator in all output (such as getValue).
   lineSeparator: null,
-  // The theme to style the editor with. 
+  // The theme to style the editor with.
   // You must make sure the CSS file defining the corresponding .cm-s-[name] styles is loaded.
   theme: 'darcula' as CodeMirrorTheme, // SAP default = "default"
   // How many spaces a block (whatever that means in the edited language) should be indented.
@@ -114,20 +114,20 @@ export const defaultCodePreferences: CodeMirrorOptions = {
   tabSize: 4,
   // Whether, when indenting, the first N*tabSize spaces should be replaced by N tabs.
   indentWithTabs: false,
-  // Configures whether the editor should re-indent the current line when a character is typed that might 
+  // Configures whether the editor should re-indent the current line when a character is typed that might
   // change its proper indentation (only works if the mode supports indentation).
   electricChars: true,
-  scrollbarStyle: "overlay",
-  // Flips overall layout and selects base paragraph direction to be left-to-right or right-to-left. 
+  scrollbarStyle: 'overlay',
+  // Flips overall layout and selects base paragraph direction to be left-to-right or right-to-left.
   // direction: "ltr",
-  // Determines whether horizontal cursor movement through right-to-left (Arabic, Hebrew) text is 
+  // Determines whether horizontal cursor movement through right-to-left (Arabic, Hebrew) text is
   // visual (pressing the left arrow moves the cursor left) or
-  // logical (pressing the left arrow moves to the next lower index in the string, which is visually right in right-to-left text). 
+  // logical (pressing the left arrow moves to the next lower index in the string, which is visually right in right-to-left text).
   // rtlMoveVisually: false,
   // Configures the key map to use. The default is "default", which is the only key map defined in codemirror.js itself.
   // You can also use 'emacs', 'sublime', 'vim' or a custom key map that you define.
   // https://codemirror.net/5/doc/manual.html#keymaps
-  keyMap: "default",
+  keyMap: 'default',
   // Can be used to specify extra key bindings for the editor, alongside the ones defined by keyMap.
   // extraKeys: {
   //   "Ctrl-Space": "autocomplete"
@@ -138,11 +138,11 @@ export const defaultCodePreferences: CodeMirrorOptions = {
   lineWrapping: true,
   // Whether to show line numbers to the left of the editor.
   lineNumbers: true,
-  // At which number to start counting lines. 
+  // At which number to start counting lines.
   firstLineNumber: 1,
   // Can be used to add extra gutters (beyond or instead of the line number gutter).
   // gutters: [],
-  // Determines whether the gutter scrolls along with the content horizontally (false) 
+  // Determines whether the gutter scrolls along with the content horizontally (false)
   // or whether it stays fixed during horizontal scrolling (true, the default).
   fixedGutter: true,
   // Chooses a scrollbar implementation. The default is "native", showing native scrollbars.
@@ -152,33 +152,33 @@ export const defaultCodePreferences: CodeMirrorOptions = {
   // inputStyle: "textarea",
   // This label is read by the screen readers when CodeMirror text area is focused.
   // screenReaderLabel: null,
-  // Whether the cursor should be drawn when a selection is active. 
+  // Whether the cursor should be drawn when a selection is active.
   showCursorWhenSelecting: false,
   // When enabled, which is the default, doing copy or cut when there is no selection will copy or cut the whole lines that have cursors on them.
   lineWiseCopyCut: true,
-  // When pasting something from an external source (not from the editor itself), 
+  // When pasting something from an external source (not from the editor itself),
   // if the number of lines matches the number of selection, CodeMirror will by default insert one line per selection.
   pasteLinesPerSelection: true,
   // Determines whether multiple selections are joined as soon as they touch (the default) or only when they overlap (true).
   selectionsMayTouch: false,
   // The maximum number of undo levels that the editor stores. Note that this includes selection change events. Defaults to 200.
   undoDepth: 200,
-  // The period of inactivity (in milliseconds) that will cause a new history event to be started when typing or deleting. 
+  // The period of inactivity (in milliseconds) that will cause a new history event to be started when typing or deleting.
   historyEventDelay: 1250,
   // The tab index to assign to the editor. If not given, no tab index will be assigned.
   // tabindex: null,
   // Can be used to make CodeMirror focus itself on initialization.
   autofocus: true, // SAP default = false
-  // Some addons run user-visible strings (such as labels in the interface) through the phrase method to allow for translation. 
+  // Some addons run user-visible strings (such as labels in the interface) through the phrase method to allow for translation.
   // phrases: null,
 
-  // Below this a few more specialized, low-level options are listed. 
+  // Below this a few more specialized, low-level options are listed.
   //These are only useful in very specific situations.
   // You might want to skip them the first time you read this manual.
 
   // Controls whether drag-and-drop is enabled.
   // dragDrop: true,
-  // When set (default is null) only files whose type is in the array can be dropped into the editor. 
+  // When set (default is null) only files whose type is in the array can be dropped into the editor.
   // allowDropFileTypes: null,
   // Half-period in milliseconds used for cursor blinking.
   // cursorBlinkRate: 530,
@@ -186,12 +186,12 @@ export const defaultCodePreferences: CodeMirrorOptions = {
   cursorScrollMargin: 0,
   // Determines the height of the cursor. Default is 1, meaning it spans the whole height of the line.
   // cursorHeight: 1,
-  // If set to true (the default), will keep the cursor height constant for an entire line (or wrapped part of a line). 
+  // If set to true (the default), will keep the cursor height constant for an entire line (or wrapped part of a line).
   // When false, the cursor's height is based on the height of the adjacent reference character.
   // singleCursorHeightPerLine: true,
-  // Controls whether, when the context menu is opened with a click outside of the current selection, the cursor is moved to the point of the click. 
+  // Controls whether, when the context menu is opened with a click outside of the current selection, the cursor is moved to the point of the click.
   resetSelectionOnContextMenu: true,
-  // Highlighting is done by a pseudo background-thread that will work for workTime milliseconds, and then use timeout to sleep for workDelay milliseconds. 
+  // Highlighting is done by a pseudo background-thread that will work for workTime milliseconds, and then use timeout to sleep for workDelay milliseconds.
   // workTime: 100,
   // workDelay: 100,
   // Indicates how quickly CodeMirror should poll its input textarea for changes (when focused).
@@ -212,7 +212,7 @@ export const defaultCodePreferences: CodeMirrorOptions = {
   autoCapitalize: true,
   // Specifies whether or not autocorrect will be enabled on the input.
   autoCorrect: true,
-  // when set to true, will make the editor full-screen (as in, taking up the whole browser window). 
+  // when set to true, will make the editor full-screen (as in, taking up the whole browser window).
   // fullScreen: false,
 
   // SAP addons
@@ -266,12 +266,12 @@ export const sapDefaultPreferences: CodeMirrorOptions = {
   // },
   // direction: "ltr",
   // rtlMoveVisually: false,
-  keyMap: "default",
+  keyMap: 'default',
   lineWrapping: true,
   lineNumbers: true,
   firstLineNumber: 1,
   fixedGutter: true,
-  scrollbarStyle: "native",
+  scrollbarStyle: 'native',
   coverGutterNextToScrollbar: false,
   showCursorWhenSelecting: false,
   lineWiseCopyCut: true,
@@ -337,83 +337,264 @@ export const themeOptions = Object.values(codeMirrorThemes);
 export const codeMirrorOptionsConfig: Option[] = [
   // { label: "Mode", key: "mode", type: "select", tooltip: "The mode to use. It may be a string or an object containing configuration options for the mode.", options: ["python", "javascript", "html", "css", "xml", "markdown"] },
   // { label: "Python Version", key: "pythonVersion", type: "select", tooltip: "Which version of python are you aiming for?", options: ['2', '3'] },
-  { label: "Line Separator", key: "lineSeparator", type: "string", tooltip: "Explicitly set the line separator for the editor." },
-  { label: "Theme", key: "theme", type: "select", tooltip: "The theme to style the editor with.", options: themeOptions },
-  { label: "Indent Unit", key: "indentUnit", type: "number", tooltip: "How many spaces a block should be indented." },
-  { label: "Smart Indent", key: "smartIndent", type: "switch", tooltip: "Whether to use the context-sensitive indentation that the mode provides." },
-  { label: "Tab Size", key: "tabSize", type: "number", tooltip: "The width of a tab character." },
-  { label: "Indent with Tabs", key: "indentWithTabs", type: "switch", tooltip: "Whether to replace spaces with tabs when indenting." },
-  { label: "Electric Characters", key: "electricChars", type: "switch", tooltip: "Configures whether the editor should re-indent the current line when a character is typed that might change its proper indentation." },
+  {
+    label: 'Line Separator',
+    key: 'lineSeparator',
+    type: 'string',
+    tooltip: 'Explicitly set the line separator for the editor.',
+  },
+  {
+    label: 'Theme',
+    key: 'theme',
+    type: 'select',
+    tooltip: 'The theme to style the editor with.',
+    options: themeOptions,
+  },
+  { label: 'Indent Unit', key: 'indentUnit', type: 'number', tooltip: 'How many spaces a block should be indented.' },
+  {
+    label: 'Smart Indent',
+    key: 'smartIndent',
+    type: 'switch',
+    tooltip: 'Whether to use the context-sensitive indentation that the mode provides.',
+  },
+  { label: 'Tab Size', key: 'tabSize', type: 'number', tooltip: 'The width of a tab character.' },
+  {
+    label: 'Indent with Tabs',
+    key: 'indentWithTabs',
+    type: 'switch',
+    tooltip: 'Whether to replace spaces with tabs when indenting.',
+  },
+  {
+    label: 'Electric Characters',
+    key: 'electricChars',
+    type: 'switch',
+    tooltip:
+      'Configures whether the editor should re-indent the current line when a character is typed that might change its proper indentation.',
+  },
   // { label: "Direction", key: "direction", type: "select", tooltip: "Flips overall layout and selects base paragraph direction to be left-to-right or right-to-left.", options: ["ltr", "rtl"] },
   // { label: "RTL Move Visually", key: "rtlMoveVisually", type: "switch", tooltip: "Determines whether horizontal cursor movement through right-to-left text is visual or logical." },
-  { label: "Key Map", key: "keyMap", type: "select", tooltip: "Configures the key map to use.", options: ["default", "emacs", "sublime", "vim"] },
+  {
+    label: 'Key Map',
+    key: 'keyMap',
+    type: 'select',
+    tooltip: 'Configures the key map to use.',
+    options: ['default', 'emacs', 'sublime', 'vim'],
+  },
   // { label: "Extra Keys", key: "extraKeys", type: "select", tooltip: "Specifies extra key bindings for the editor." },
   // { label: "Configure Mouse", key: "configureMouse", type: "select", tooltip: "Allows you to configure the behavior of mouse selection and dragging." },
-  { label: "Line Wrapping", key: "lineWrapping", type: "switch", tooltip: "Whether CodeMirror should scroll or wrap for long lines." },
-  { label: "Line Numbers", key: "lineNumbers", type: "switch", tooltip: "Whether to show line numbers to the left of the editor." },
-  { label: "First Line Number", key: "firstLineNumber", type: "number", tooltip: "At which number to start counting lines." },
+  {
+    label: 'Line Wrapping',
+    key: 'lineWrapping',
+    type: 'switch',
+    tooltip: 'Whether CodeMirror should scroll or wrap for long lines.',
+  },
+  {
+    label: 'Line Numbers',
+    key: 'lineNumbers',
+    type: 'switch',
+    tooltip: 'Whether to show line numbers to the left of the editor.',
+  },
+  {
+    label: 'First Line Number',
+    key: 'firstLineNumber',
+    type: 'number',
+    tooltip: 'At which number to start counting lines.',
+  },
   // { label: "Gutters", key: "gutters", type: "select", tooltip: "Can be used to add extra gutters (beyond or instead of the line number gutter)." },
-  { label: "Fixed Gutter", key: "fixedGutter", type: "switch", tooltip: "Determines whether the gutter scrolls along with the content horizontally or stays fixed." },
-  { label: "Cover Gutter Next to Scrollbar", key: "coverGutterNextToScrollbar", type: "switch", tooltip: "When fixedGutter is on, determines whether the gutter will be visible to the left of the scrollbar." },
-  { label: "Scrollbar Style", key: "scrollbarStyle", type: "select", tooltip: "Chooses a scrollbar implementation.", options: ["native", "overlay"] },
+  {
+    label: 'Fixed Gutter',
+    key: 'fixedGutter',
+    type: 'switch',
+    tooltip: 'Determines whether the gutter scrolls along with the content horizontally or stays fixed.',
+  },
+  {
+    label: 'Cover Gutter Next to Scrollbar',
+    key: 'coverGutterNextToScrollbar',
+    type: 'switch',
+    tooltip: 'When fixedGutter is on, determines whether the gutter will be visible to the left of the scrollbar.',
+  },
+  {
+    label: 'Scrollbar Style',
+    key: 'scrollbarStyle',
+    type: 'select',
+    tooltip: 'Chooses a scrollbar implementation.',
+    options: ['native', 'overlay'],
+  },
   // { label: "Input Style", key: "inputStyle", type: "select", tooltip: "Selects the way CodeMirror handles input and focus.", options: ["textarea", "contenteditable"] },
   // { label: "Screen Reader Label", key: "screenReaderLabel", type: "select", tooltip: "This label is read by the screen readers when CodeMirror text area is focused." },
-  { label: "Show Cursor When Selecting", key: "showCursorWhenSelecting", type: "switch", tooltip: "Whether the cursor should be drawn when a selection is active." },
-  { label: "Line Wise Copy Cut", key: "lineWiseCopyCut", type: "switch", tooltip: "Whether doing copy or cut when there is no selection will copy or cut the whole lines that have cursors on them." },
-  { label: "Paste Lines Per Selection", key: "pasteLinesPerSelection", type: "switch", tooltip: "When pasting from an external source, determines whether to insert one line per selection." },
-  { label: "Selections May Touch", key: "selectionsMayTouch", type: "switch", tooltip: "Determines whether multiple selections are joined as soon as they touch or only when they overlap." },
-  { label: "Undo Depth", key: "undoDepth", type: "number", tooltip: "The maximum number of undo levels that the editor stores." },
-  { label: "History Event Delay", key: "historyEventDelay", type: "number", tooltip: "The period of inactivity that will cause a new history event to be started when typing or deleting." },
+  {
+    label: 'Show Cursor When Selecting',
+    key: 'showCursorWhenSelecting',
+    type: 'switch',
+    tooltip: 'Whether the cursor should be drawn when a selection is active.',
+  },
+  {
+    label: 'Line Wise Copy Cut',
+    key: 'lineWiseCopyCut',
+    type: 'switch',
+    tooltip:
+      'Whether doing copy or cut when there is no selection will copy or cut the whole lines that have cursors on them.',
+  },
+  {
+    label: 'Paste Lines Per Selection',
+    key: 'pasteLinesPerSelection',
+    type: 'switch',
+    tooltip: 'When pasting from an external source, determines whether to insert one line per selection.',
+  },
+  {
+    label: 'Selections May Touch',
+    key: 'selectionsMayTouch',
+    type: 'switch',
+    tooltip: 'Determines whether multiple selections are joined as soon as they touch or only when they overlap.',
+  },
+  {
+    label: 'Undo Depth',
+    key: 'undoDepth',
+    type: 'number',
+    tooltip: 'The maximum number of undo levels that the editor stores.',
+  },
+  {
+    label: 'History Event Delay',
+    key: 'historyEventDelay',
+    type: 'number',
+    tooltip: 'The period of inactivity that will cause a new history event to be started when typing or deleting.',
+  },
   // { label: "Tab Index", key: "tabindex", type: "select", tooltip: "The tab index to assign to the editor." },
-  { label: "Autofocus", key: "autofocus", type: "switch", tooltip: "Can be used to make CodeMirror focus itself on initialization." },
+  {
+    label: 'Autofocus',
+    key: 'autofocus',
+    type: 'switch',
+    tooltip: 'Can be used to make CodeMirror focus itself on initialization.',
+  },
   // { label: "Phrases", key: "phrases", type: "select", tooltip: "Some addons run user-visible strings through the phrase method to allow for translation." },
 
   // Specialized options
   // { label: "Drag Drop", key: "dragDrop", type: "switch", tooltip: "Controls whether drag-and-drop is enabled." },
   // { label: "Allow Drop File Types", key: "allowDropFileTypes", type: "select", tooltip: "Only files whose type is in the array can be dropped into the editor." },
   // { label: "Cursor Blink Rate", key: "cursorBlinkRate", type: "number", tooltip: "Half-period in milliseconds used for cursor blinking." },
-  { label: "Cursor Scroll Margin", key: "cursorScrollMargin", type: "number", tooltip: "How much extra space to always keep above and below the cursor." },
+  {
+    label: 'Cursor Scroll Margin',
+    key: 'cursorScrollMargin',
+    type: 'number',
+    tooltip: 'How much extra space to always keep above and below the cursor.',
+  },
   // { label: "Cursor Height", key: "cursorHeight", type: "select", tooltip: "Determines the height of the cursor." },
   // { label: "Single Cursor Height Per Line", key: "singleCursorHeightPerLine", type: "switch", tooltip: "When true, will keep the cursor height constant for an entire line." },
-  { label: "Reset Selection on Context Menu", key: "resetSelectionOnContextMenu", type: "switch", tooltip: "Controls whether the cursor is moved to the point of the click when the context menu is opened." },
+  {
+    label: 'Reset Selection on Context Menu',
+    key: 'resetSelectionOnContextMenu',
+    type: 'switch',
+    tooltip: 'Controls whether the cursor is moved to the point of the click when the context menu is opened.',
+  },
   // { label: "Work Time", key: "workTime", type: "select", tooltip: "Highlighting is done by a pseudo background-thread that will work for workTime milliseconds." },
   // { label: "Work Delay", key: "workDelay", type: "select", tooltip: "The delay in milliseconds for the background-thread used for highlighting." },
   // { label: "Poll Interval", key: "pollInterval", type: "select", tooltip: "Indicates how quickly CodeMirror should poll its input textarea for changes." },
   // { label: "Flatten Spans", key: "flattenSpans", type: "switch", tooltip: "Whether to combine adjacent tokens into a single span if they have the same class." },
   // { label: "Add Mode Class", key: "addModeClass", type: "switch", tooltip: "When enabled, an extra CSS class will be added to each token indicating the mode that produced it." },
-  { label: "Max Highlight Length", key: "maxHighlightLength", type: "number", tooltip: "The maximum length of lines to highlight before styling the rest as plain text." },
-  { label: "Viewport Margin", key: "viewportMargin", type: "number", tooltip: "Specifies the amount of lines rendered above and below the part of the document currently scrolled into view." },
-  { label: "Spellcheck", key: "spellCheck", type: "switch", tooltip: "Specifies whether spellcheck will be enabled on the input." },
-  { label: "Autocapitalize", key: "autoCapitalize", type: "switch", tooltip: "Specifies whether autocapitalization will be enabled on the input." },
-  { label: "Autocorrect", key: "autoCorrect", type: "switch", tooltip: "Specifies whether autocorrect will be enabled on the input." },
+  {
+    label: 'Max Highlight Length',
+    key: 'maxHighlightLength',
+    type: 'number',
+    tooltip: 'The maximum length of lines to highlight before styling the rest as plain text.',
+  },
+  {
+    label: 'Viewport Margin',
+    key: 'viewportMargin',
+    type: 'number',
+    tooltip:
+      'Specifies the amount of lines rendered above and below the part of the document currently scrolled into view.',
+  },
+  {
+    label: 'Spellcheck',
+    key: 'spellCheck',
+    type: 'switch',
+    tooltip: 'Specifies whether spellcheck will be enabled on the input.',
+  },
+  {
+    label: 'Autocapitalize',
+    key: 'autoCapitalize',
+    type: 'switch',
+    tooltip: 'Specifies whether autocapitalization will be enabled on the input.',
+  },
+  {
+    label: 'Autocorrect',
+    key: 'autoCorrect',
+    type: 'switch',
+    tooltip: 'Specifies whether autocorrect will be enabled on the input.',
+  },
 
   // Addon Options
-  { label: "Search", key: "search", type: "switch", tooltip: "Enables searching the code" },
-  { label: "Jump to line", key: "jumpToLine", type: "switch", tooltip: "Adds jumping to line number with Alt-G" },
-  { label: "Matches on scrollbar", key: "matchesOnScrollbar", type: "switch", tooltip: "Search matches of the given query will be displayed on the editor's vertical scrollbar." },
-  { label: "Match Brackets", key: "matchBrackets", type: "switch", tooltip: "Causes matching brackets to be highlighted whenever the cursor is next to them." },
-  { label: "Close Brackets", key: "autoCloseBrackets", type: "switch", tooltip: "Automatically closes brackets when typed" },
-  { label: "Match Tags", key: "matchTags", type: "switch", tooltip: "Whether to highlight the matching tag." },
-  { label: "Show Trailing Space", key: "showTrailingSpace", type: "switch", tooltip: "Adds a CSS class to stretches of whitespace at the end of lines." },
+  { label: 'Search', key: 'search', type: 'switch', tooltip: 'Enables searching the code' },
+  { label: 'Jump to line', key: 'jumpToLine', type: 'switch', tooltip: 'Adds jumping to line number with Alt-G' },
+  {
+    label: 'Matches on scrollbar',
+    key: 'matchesOnScrollbar',
+    type: 'switch',
+    tooltip: "Search matches of the given query will be displayed on the editor's vertical scrollbar.",
+  },
+  {
+    label: 'Match Brackets',
+    key: 'matchBrackets',
+    type: 'switch',
+    tooltip: 'Causes matching brackets to be highlighted whenever the cursor is next to them.',
+  },
+  {
+    label: 'Close Brackets',
+    key: 'autoCloseBrackets',
+    type: 'switch',
+    tooltip: 'Automatically closes brackets when typed',
+  },
+  { label: 'Match Tags', key: 'matchTags', type: 'switch', tooltip: 'Whether to highlight the matching tag.' },
+  {
+    label: 'Show Trailing Space',
+    key: 'showTrailingSpace',
+    type: 'switch',
+    tooltip: 'Adds a CSS class to stretches of whitespace at the end of lines.',
+  },
   // { label: "", key: "autoCloseTags", type: "", tooltip: "" },
   // { label: "", key: "continueList", type: "switch", tooltip: "" },
-  { label: "Comments", key: "comments", type: "switch", tooltip: "Addon for commenting and uncommenting code." },
-  { label: "Fold Code", key: "foldCode", type: "switch", tooltip: "Whether the gutter with line-folding controls should be shown." },
-  { label: "Autocomplete", key: "autoComplete", type: "switch", tooltip: "Adds auto completion with ctrl+space" },
-  { label: "Highlight Selection Matches", key: "highlightSelectionMatches", type: "switch", tooltip: "Whether to highlight other occurrences of the currently selected text." },
-  { label: "Lint", key: "linting", type: "switch", tooltip: "Whether to use linting." },
-  { label: "Mark Selection", key: "markSelection", type: "switch", tooltip: "Causes the selected text to be marked." },
-  { label: "Style Active Line", key: "styleActiveLine", type: "switch", tooltip: "Whether to highlight the currently active line." },
+  { label: 'Comments', key: 'comments', type: 'switch', tooltip: 'Addon for commenting and uncommenting code.' },
+  {
+    label: 'Fold Code',
+    key: 'foldCode',
+    type: 'switch',
+    tooltip: 'Whether the gutter with line-folding controls should be shown.',
+  },
+  { label: 'Autocomplete', key: 'autoComplete', type: 'switch', tooltip: 'Adds auto completion with ctrl+space' },
+  {
+    label: 'Highlight Selection Matches',
+    key: 'highlightSelectionMatches',
+    type: 'switch',
+    tooltip: 'Whether to highlight other occurrences of the currently selected text.',
+  },
+  { label: 'Lint', key: 'linting', type: 'switch', tooltip: 'Whether to use linting.' },
+  { label: 'Mark Selection', key: 'markSelection', type: 'switch', tooltip: 'Causes the selected text to be marked.' },
+  {
+    label: 'Style Active Line',
+    key: 'styleActiveLine',
+    type: 'switch',
+    tooltip: 'Whether to highlight the currently active line.',
+  },
   // { label: "Custom Selection Pointer", key: "selectionPointer", type: "switch", tooltip: "Activates a custom cursor" },
-  { label: "Continue Comments", key: "continueComment", type: "switch", tooltip: "The editor will make the next line continue a comment when you press Enter inside a comment block" },
+  {
+    label: 'Continue Comments',
+    key: 'continueComment',
+    type: 'switch',
+    tooltip: 'The editor will make the next line continue a comment when you press Enter inside a comment block',
+  },
   // { label: "Full Screen", key: "fullScreen", type: "switch", tooltip: "When set to true, will make the editor full-screen." },
-  { label: "Scroll Past End", key: "scrollPastEnd", type: "switch", tooltip: "Allows the user to scroll one editor height of empty space into view at the bottom of the editor." },
+  {
+    label: 'Scroll Past End',
+    key: 'scrollPastEnd',
+    type: 'switch',
+    tooltip: 'Allows the user to scroll one editor height of empty space into view at the bottom of the editor.',
+  },
 ];
 
 export const defaultMods: Mod[] = [
   {
-    id: "1",
-    name: "Edit Icon",
+    id: '1',
+    name: 'Edit Icon',
     content: stripIndent`
       img[title="Edit"] {
         width: 28px;
@@ -614,24 +795,24 @@ export const defaultMods: Mod[] = [
 
 export const defaultShortcuts: Shortcut[] = [
   {
-    id: "0",
-    key: "1",
+    id: '0',
+    key: '1',
     destination:
-      "https://help.sap.com/docs/SAP_CPQ/884885f05e6b4c8082254d4d9d63f19b/e5f2e0b33a9e4e7ea2a22e27dba2e76f.html",
+      'https://help.sap.com/docs/SAP_CPQ/884885f05e6b4c8082254d4d9d63f19b/e5f2e0b33a9e4e7ea2a22e27dba2e76f.html',
     isUnique: true,
     isValidDestination: true,
   },
   {
-    id: "1",
-    key: "Q",
-    destination: "Home > Quote List",
+    id: '1',
+    key: 'Q',
+    destination: 'Home > Quote List',
     isUnique: true,
     isValidDestination: true,
   },
   {
-    id: "2",
-    key: "W",
-    destination: "Home > Script Workbench",
+    id: '2',
+    key: 'W',
+    destination: 'Home > Script Workbench',
     isUnique: true,
     isValidDestination: true,
   },
@@ -643,16 +824,16 @@ export const defaultShortcuts: Shortcut[] = [
   //   isValidDestination: true,
   // },
   {
-    id: "4",
-    key: "R",
-    destination: "UI Design > Responsive Templates",
+    id: '4',
+    key: 'R',
+    destination: 'UI Design > Responsive Templates',
     isUnique: true,
     isValidDestination: true,
   },
   {
-    id: "5",
-    key: "T",
-    destination: "Quotes > Quote Tables",
+    id: '5',
+    key: 'T',
+    destination: 'Quotes > Quote Tables',
     isUnique: true,
     isValidDestination: true,
   },
@@ -671,23 +852,23 @@ export const defaultShortcuts: Shortcut[] = [
   //   isValidDestination: true,
   // },
   {
-    id: "8",
-    key: "D",
-    destination: "Home > Developer Console",
+    id: '8',
+    key: 'D',
+    destination: 'Home > Developer Console',
     isUnique: true,
     isValidDestination: true,
   },
   {
-    id: "9",
-    key: "F",
-    destination: "Quotes > Custom Fields",
+    id: '9',
+    key: 'F',
+    destination: 'Quotes > Custom Fields',
     isUnique: true,
     isValidDestination: true,
   },
   {
-    id: "10",
-    key: "G",
-    destination: "Develop > Global Scripts",
+    id: '10',
+    key: 'G',
+    destination: 'Develop > Global Scripts',
     isUnique: true,
     isValidDestination: true,
   },
@@ -706,9 +887,9 @@ export const defaultShortcuts: Shortcut[] = [
   //   isValidDestination: true,
   // },
   {
-    id: "13",
-    key: "C",
-    destination: "Develop > Custom Actions",
+    id: '13',
+    key: 'C',
+    destination: 'Develop > Custom Actions',
     isUnique: true,
     isValidDestination: true,
   },
@@ -729,36 +910,29 @@ export const defaultShortcuts: Shortcut[] = [
 ];
 
 export const userOptionsConfig = [
-  { label: "Dark Mode", key: "isDarkMode", type: "switch" },
-  { label: "Language", key: "language", type: "select", options: ["en", "es", "fr"] },
-  { label: "Open app in side panel", key: "openInSidePanel", type: "switch" },
+  { label: 'Dark Mode', key: 'isDarkMode', type: 'switch' },
+  { label: 'Language', key: 'language', type: 'select', options: ['en', 'es', 'fr'] },
+  { label: 'Open app in side panel', key: 'openInSidePanel', type: 'switch' },
 ] as Option[];
 
-
-export const codeMirrorVersion = "5.65.14";
+export const codeMirrorVersion = '5.65.14';
 export const cdnBaseUrl = `https://cdnjs.cloudflare.com/ajax/libs/codemirror/${codeMirrorVersion}/`;
 export const cmFiles = {
-  "main": {
-    'scripts': [
-      `${cdnBaseUrl}codemirror.min.js`,
-    ],
-    'css': [
-      `${cdnBaseUrl}codemirror.min.css`,
-    ]
+  main: {
+    scripts: [`${cdnBaseUrl}codemirror.min.js`],
+    css: [`${cdnBaseUrl}codemirror.min.css`],
   },
-  "modes": {
-    'scripts': [
+  modes: {
+    scripts: [
       // `${cdnBaseUrl}mode/meta.min.js`,
       // `${cdnBaseUrl}mode/apl/apl.min.js`,
       `${cdnBaseUrl}mode/python/python.min.js`,
     ],
-    'css': []
+    css: [],
   },
-  "activeLine": {
-    'scripts': [
-      `${cdnBaseUrl}addon/selection/active-line.min.js`,
-    ],
-    'css': []
+  activeLine: {
+    scripts: [`${cdnBaseUrl}addon/selection/active-line.min.js`],
+    css: [],
   },
   // "autorefresh": {
   //   'scripts': [
@@ -766,52 +940,36 @@ export const cmFiles = {
   //   ],
   //   'css': []
   // },
-  "comment": {
-    'scripts': [
-      `${cdnBaseUrl}addon/comment/comment.min.js`,
-    ],
-    'css': []
+  comment: {
+    scripts: [`${cdnBaseUrl}addon/comment/comment.min.js`],
+    css: [],
   },
-  "continuecomment": {
-    'scripts': [
-      `${cdnBaseUrl}addon/comment/continuecomment.min.js`,
-    ],
-    'css': []
+  continuecomment: {
+    scripts: [`${cdnBaseUrl}addon/comment/continuecomment.min.js`],
+    css: [],
   },
-  "closebrackets": {
-    'scripts': [
-      `${cdnBaseUrl}addon/edit/closebrackets.min.js`,
-    ],
-    'css': []
+  closebrackets: {
+    scripts: [`${cdnBaseUrl}addon/edit/closebrackets.min.js`],
+    css: [],
   },
-  "closetag": {
-    'scripts': [
-      `${cdnBaseUrl}addon/edit/closetag.min.js`,
-    ],
-    'css': []
+  closetag: {
+    scripts: [`${cdnBaseUrl}addon/edit/closetag.min.js`],
+    css: [],
   },
-  "continuelist": {
-    'scripts': [
-      `${cdnBaseUrl}addon/edit/continuelist.min.js`,
-    ],
-    'css': []
+  continuelist: {
+    scripts: [`${cdnBaseUrl}addon/edit/continuelist.min.js`],
+    css: [],
   },
-  "dialog": {
-    'scripts': [
-      `${cdnBaseUrl}addon/dialog/dialog.min.js`,
-    ],
-    'css': [
-      `${cdnBaseUrl}addon/dialog/dialog.min.css`,
-    ]
+  dialog: {
+    scripts: [`${cdnBaseUrl}addon/dialog/dialog.min.js`],
+    css: [`${cdnBaseUrl}addon/dialog/dialog.min.css`],
   },
-  "emacs": {
-    'scripts': [
-      `${cdnBaseUrl}keymap/emacs.min.js`,
-    ],
-    'css': []
+  emacs: {
+    scripts: [`${cdnBaseUrl}keymap/emacs.min.js`],
+    css: [],
   },
-  "fold": {
-    'scripts': [
+  fold: {
+    scripts: [
       `${cdnBaseUrl}addon/fold/foldcode.min.js`,
       `${cdnBaseUrl}addon/fold/foldgutter.min.js`,
       `${cdnBaseUrl}addon/fold/brace-fold.min.js`,
@@ -820,20 +978,14 @@ export const cmFiles = {
       `${cdnBaseUrl}addon/fold/markdown-fold.min.js`,
       `${cdnBaseUrl}addon/fold/xml-fold.min.js`,
     ],
-    'css': [
-      `${cdnBaseUrl}addon/fold/foldgutter.min.css`,
-    ]
+    css: [`${cdnBaseUrl}addon/fold/foldgutter.min.css`],
   },
-  "fullscreen": {
-    'scripts': [
-      `${cdnBaseUrl}addon/display/fullscreen.min.js`,
-    ],
-    'css': [
-      `${cdnBaseUrl}addon/display/fullscreen.min.css`,
-    ]
+  fullscreen: {
+    scripts: [`${cdnBaseUrl}addon/display/fullscreen.min.js`],
+    css: [`${cdnBaseUrl}addon/display/fullscreen.min.css`],
   },
-  "hint": {
-    'scripts': [
+  hint: {
+    scripts: [
       `${cdnBaseUrl}addon/hint/show-hint.min.js`,
       `${cdnBaseUrl}addon/hint/anyword-hint.min.js`,
       // `${cdnBaseUrl}addon/hint/css-hint.min.js`,
@@ -842,26 +994,18 @@ export const cmFiles = {
       // `${cdnBaseUrl}addon/hint/sql-hint.min.js`,
       // `${cdnBaseUrl}addon/hint/xml-hint.min.js`,
     ],
-    'css': [
-      `${cdnBaseUrl}addon/hint/show-hint.min.css`,
-    ]
+    css: [`${cdnBaseUrl}addon/hint/show-hint.min.css`],
   },
-  "highlightSelectionMatches": {
-    'scripts': [
-      `${cdnBaseUrl}addon/search/match-highlighter.min.js`,
-    ],
-    'css': [
-      `${cdnBaseUrl}addon/search/matchesonscrollbar.min.css`,
-    ]
+  highlightSelectionMatches: {
+    scripts: [`${cdnBaseUrl}addon/search/match-highlighter.min.js`],
+    css: [`${cdnBaseUrl}addon/search/matchesonscrollbar.min.css`],
   },
-  "jumpToLine": {
-    'scripts': [
-      `${cdnBaseUrl}addon/search/jump-to-line.min.js`,
-    ],
-    'css': []
+  jumpToLine: {
+    scripts: [`${cdnBaseUrl}addon/search/jump-to-line.min.js`],
+    css: [],
   },
-  "lint": {
-    'scripts': [
+  lint: {
+    scripts: [
       `${cdnBaseUrl}addon/lint/lint.min.js`,
       // `${cdnBaseUrl}addon/lint/coffeescript-lint.min.js`,
       // `${cdnBaseUrl}addon/lint/css-lint.min.js`,
@@ -870,15 +1014,11 @@ export const cmFiles = {
       // `${cdnBaseUrl}addon/lint/json-lint.min.js`,
       // `${cdnBaseUrl}addon/lint/yaml-lint.min.js`,
     ],
-    'css': [
-      `${cdnBaseUrl}addon/lint/lint.min.css`,
-    ]
+    css: [`${cdnBaseUrl}addon/lint/lint.min.css`],
   },
-  "matchbrackets": {
-    'scripts': [
-      `${cdnBaseUrl}addon/edit/matchbrackets.min.js`,
-    ],
-    'css': []
+  matchbrackets: {
+    scripts: [`${cdnBaseUrl}addon/edit/matchbrackets.min.js`],
+    css: [],
   },
   // "merge": {
   //   'scripts': [
@@ -898,28 +1038,21 @@ export const cmFiles = {
   //   ],
   //   'css': []
   // },
-  "matchesOnScrollbar": {
-    'scripts': [
+  matchesOnScrollbar: {
+    scripts: [
       `${cdnBaseUrl}addon/scroll/annotatescrollbar.min.js`,
       `${cdnBaseUrl}addon/search/matchesonscrollbar.min.js`,
     ],
-    'css': [
-      `${cdnBaseUrl}addon/search/matchesonscrollbar.min.css`,
-    ]
+    css: [`${cdnBaseUrl}addon/search/matchesonscrollbar.min.css`],
   },
-  "matchtags": {
-    'scripts': [
-      `${cdnBaseUrl}addon/edit/matchtags.min.js`,
-      `${cdnBaseUrl}addon/fold/xml-fold.min.js`,
-    ],
-    'css': []
+  matchtags: {
+    scripts: [`${cdnBaseUrl}addon/edit/matchtags.min.js`, `${cdnBaseUrl}addon/fold/xml-fold.min.js`],
+    css: [],
   },
 
-  "markSelection": {
-    'scripts': [
-      `${cdnBaseUrl}addon/selection/mark-selection.min.js`,
-    ],
-    'css': []
+  markSelection: {
+    scripts: [`${cdnBaseUrl}addon/selection/mark-selection.min.js`],
+    css: [],
   },
   // "panel": {
   //   'scripts': [
@@ -948,64 +1081,40 @@ export const cmFiles = {
   //   ],
   //   'css': []
   // },
-  "selectionPointer": {
-    'scripts': [
-      `${cdnBaseUrl}addon/selection/selection-pointer.min.js`,
-    ],
-    'css': []
+  selectionPointer: {
+    scripts: [`${cdnBaseUrl}addon/selection/selection-pointer.min.js`],
+    css: [],
   },
-  "search": {
-    'scripts': [
-      `${cdnBaseUrl}addon/search/search.min.js`,
-      `${cdnBaseUrl}addon/search/searchcursor.min.js`,
-    ],
-    'css': []
+  search: {
+    scripts: [`${cdnBaseUrl}addon/search/search.min.js`, `${cdnBaseUrl}addon/search/searchcursor.min.js`],
+    css: [],
   },
-  "scrollpastend": {
-    'scripts': [
-      `${cdnBaseUrl}addon/scroll/scrollpastend.min.js`,
-    ],
-    'css': []
+  scrollpastend: {
+    scripts: [`${cdnBaseUrl}addon/scroll/scrollpastend.min.js`],
+    css: [],
   },
-  "simpleScrollbars": {
-    'scripts': [
-      `${cdnBaseUrl}addon/scroll/simplescrollbars.min.js`,
-    ],
-    'css': [
-      `${cdnBaseUrl}addon/scroll/simplescrollbars.min.css`,
-    ]
+  simpleScrollbars: {
+    scripts: [`${cdnBaseUrl}addon/scroll/simplescrollbars.min.js`],
+    css: [`${cdnBaseUrl}addon/scroll/simplescrollbars.min.css`],
   },
-  "sublime": {
-    'scripts': [
-      `${cdnBaseUrl}keymap/sublime.min.js`,
-    ],
-    'css': []
+  sublime: {
+    scripts: [`${cdnBaseUrl}keymap/sublime.min.js`],
+    css: [],
   },
-  "tern": {
-    'scripts': [
-      `${cdnBaseUrl}addon/tern/tern.min.js`,
-      `${cdnBaseUrl}addon/tern/worker.min.js`,
-    ],
-    'css': [
-      `${cdnBaseUrl}addon/tern/tern.min.css`,
-    ]
+  tern: {
+    scripts: [`${cdnBaseUrl}addon/tern/tern.min.js`, `${cdnBaseUrl}addon/tern/worker.min.js`],
+    css: [`${cdnBaseUrl}addon/tern/tern.min.css`],
   },
-  "trailingspace": {
-    'scripts': [
-      `${cdnBaseUrl}addon/edit/trailingspace.min.js`,
-    ],
-    'css': []
+  trailingspace: {
+    scripts: [`${cdnBaseUrl}addon/edit/trailingspace.min.js`],
+    css: [],
   },
-  "vim": {
-    'scripts': [
-      `${cdnBaseUrl}keymap/vim.min.js`,
-    ],
-    'css': []
+  vim: {
+    scripts: [`${cdnBaseUrl}keymap/vim.min.js`],
+    css: [],
   },
-  "wrap": {
-    'scripts': [
-      `${cdnBaseUrl}addon/wrap/hardwrap.min.js`,
-    ],
-    'css': []
+  wrap: {
+    scripts: [`${cdnBaseUrl}addon/wrap/hardwrap.min.js`],
+    css: [],
   },
 };

@@ -3,7 +3,7 @@
 type Option = {
   label: string;
   key: keyof CodeMirrorOptions | keyof UserOptions;
-  type: "switch" | "select" | "number" | "string";
+  type: 'switch' | 'select' | 'number' | 'string';
   tooltip: string;
   options?: string[];
 };
@@ -33,7 +33,7 @@ interface ModListProps {
   mods: Mod[];
   setMods: React.Dispatch<React.SetStateAction<Mod[]>>;
   preferences: UserOptions;
-  codeMirrorOptions: CodeMirrorOptions
+  codeMirrorOptions: CodeMirrorOptions;
 }
 
 interface ModEditProps {
@@ -52,8 +52,8 @@ interface ToolbarProps {
   setMods: React.Dispatch<React.SetStateAction<Mod[]>>;
   shortcuts: Shortcut[];
   setShortcuts: React.Dispatch<React.SetStateAction<Shortcut[]>>;
-  currentPage: Page
-  setCurrentPage: React.Dispatch<React.SetStateAction<Page>>
+  currentPage: Page;
+  setCurrentPage: React.Dispatch<React.SetStateAction<Page>>;
 }
 
 enum Page {
@@ -61,20 +61,20 @@ enum Page {
   SHORTCUTS = 'shortcuts',
   INFO = 'info',
   FORMULA = 'formula',
-  OPTIONS = 'options'
+  OPTIONS = 'options',
 }
 
 interface RoutingProps {
-  mods: Mod[]
-  setMods: React.Dispatch<React.SetStateAction<Mod[]>>
-  shortcuts: Shortcut[]
-  setShortcuts: React.Dispatch<React.SetStateAction<Shortcut[]>>
-  preferences: UserOptions
-  setPreferences: React.Dispatch<React.SetStateAction<UserOptions>>
-  codeMirrorOptions: CodeMirrorOptions
-  setCodeMirrorOptions: React.Dispatch<React.SetStateAction<CodeMirrorOptions>>
-  currentPage: Page
-  setCurrentPage: React.Dispatch<React.SetStateAction<Page>>
+  mods: Mod[];
+  setMods: React.Dispatch<React.SetStateAction<Mod[]>>;
+  shortcuts: Shortcut[];
+  setShortcuts: React.Dispatch<React.SetStateAction<Shortcut[]>>;
+  preferences: UserOptions;
+  setPreferences: React.Dispatch<React.SetStateAction<UserOptions>>;
+  codeMirrorOptions: CodeMirrorOptions;
+  setCodeMirrorOptions: React.Dispatch<React.SetStateAction<CodeMirrorOptions>>;
+  currentPage: Page;
+  setCurrentPage: React.Dispatch<React.SetStateAction<Page>>;
 }
 
 interface FormulaProps {
@@ -89,18 +89,18 @@ interface FormulaProps {
 enum WorkbenchViews {
   Default = 'Default',
   SideBySide = 'Side By Side',
-  NarrowTrace = 'Narrow Trace'
+  NarrowTrace = 'Narrow Trace',
 }
 
 enum ScriptingViews {
   Default = 'Default',
   Fullscreen = 'Fullscreen',
-  Expanded = 'Expanded'
+  Expanded = 'Expanded',
 }
 
 enum ScriptingModes {
   Standard = 'Standard',
-  Test = 'Test'
+  Test = 'Test',
 }
 
 interface UserOptions {
@@ -125,72 +125,72 @@ type ExtraKeys = {
 };
 
 enum CodeMirrorTheme {
-  Day3024 = "3024-day",
-  Night3024 = "3024-night",
-  Abbott = "abbott",
-  Abcdef = "abcdef",
-  AmbianceMobile = "ambiance-mobile",
-  Ambiance = "ambiance",
-  AyuDark = "ayu-dark",
-  AyuMirage = "ayu-mirage",
-  Base16Dark = "base16-dark",
-  Base16Light = "base16-light",
-  Bespin = "bespin",
-  Blackboard = "blackboard",
-  Cobalt = "cobalt",
-  Colorforth = "colorforth",
-  Default = "default",
-  Darcula = "darcula",
-  Dracula = "dracula",
-  DuotoneDark = "duotone-dark",
-  DuotoneLight = "duotone-light",
-  Eclipse = "eclipse",
-  Elegant = "elegant",
-  ErlangDark = "erlang-dark",
-  GruvboxDark = "gruvbox-dark",
-  Hopscotch = "hopscotch",
-  Icecoder = "icecoder",
-  Idea = "idea",
-  Isotope = "isotope",
-  Juejin = "juejin",
-  LesserDark = "lesser-dark",
-  Liquibyte = "liquibyte",
-  Lucario = "lucario",
-  MaterialDarker = "material-darker",
-  MaterialOcean = "material-ocean",
-  MaterialPalenight = "material-palenight",
-  Material = "material",
-  Mbo = "mbo",
-  MdnLike = "mdn-like",
-  Midnight = "midnight",
-  Monokai = "monokai",
-  Moxer = "moxer",
-  Neat = "neat",
-  Neo = "neo",
-  Night = "night",
-  Nord = "nord",
-  OceanicNext = "oceanic-next",
-  PandaSyntax = "panda-syntax",
-  ParaisoDark = "paraiso-dark",
-  ParaisoLight = "paraiso-light",
-  PastelOnDark = "pastel-on-dark",
-  Railscasts = "railscasts",
-  Rubyblue = "rubyblue",
-  Seti = "seti",
-  Shadowfox = "shadowfox",
-  Solarized = "solarized",
-  Ssms = "ssms",
-  TheMatrix = "the-matrix",
-  TomorrowNightBright = "tomorrow-night-bright",
-  TomorrowNightEighties = "tomorrow-night-eighties",
-  Ttcn = "ttcn",
-  Twilight = "twilight",
-  VibrantInk = "vibrant-ink",
-  XqDark = "xq-dark",
-  XqLight = "xq-light",
-  Yeti = "yeti",
-  Yonce = "yonce",
-  Zenburn = "zenburn",
+  Day3024 = '3024-day',
+  Night3024 = '3024-night',
+  Abbott = 'abbott',
+  Abcdef = 'abcdef',
+  AmbianceMobile = 'ambiance-mobile',
+  Ambiance = 'ambiance',
+  AyuDark = 'ayu-dark',
+  AyuMirage = 'ayu-mirage',
+  Base16Dark = 'base16-dark',
+  Base16Light = 'base16-light',
+  Bespin = 'bespin',
+  Blackboard = 'blackboard',
+  Cobalt = 'cobalt',
+  Colorforth = 'colorforth',
+  Default = 'default',
+  Darcula = 'darcula',
+  Dracula = 'dracula',
+  DuotoneDark = 'duotone-dark',
+  DuotoneLight = 'duotone-light',
+  Eclipse = 'eclipse',
+  Elegant = 'elegant',
+  ErlangDark = 'erlang-dark',
+  GruvboxDark = 'gruvbox-dark',
+  Hopscotch = 'hopscotch',
+  Icecoder = 'icecoder',
+  Idea = 'idea',
+  Isotope = 'isotope',
+  Juejin = 'juejin',
+  LesserDark = 'lesser-dark',
+  Liquibyte = 'liquibyte',
+  Lucario = 'lucario',
+  MaterialDarker = 'material-darker',
+  MaterialOcean = 'material-ocean',
+  MaterialPalenight = 'material-palenight',
+  Material = 'material',
+  Mbo = 'mbo',
+  MdnLike = 'mdn-like',
+  Midnight = 'midnight',
+  Monokai = 'monokai',
+  Moxer = 'moxer',
+  Neat = 'neat',
+  Neo = 'neo',
+  Night = 'night',
+  Nord = 'nord',
+  OceanicNext = 'oceanic-next',
+  PandaSyntax = 'panda-syntax',
+  ParaisoDark = 'paraiso-dark',
+  ParaisoLight = 'paraiso-light',
+  PastelOnDark = 'pastel-on-dark',
+  Railscasts = 'railscasts',
+  Rubyblue = 'rubyblue',
+  Seti = 'seti',
+  Shadowfox = 'shadowfox',
+  Solarized = 'solarized',
+  Ssms = 'ssms',
+  TheMatrix = 'the-matrix',
+  TomorrowNightBright = 'tomorrow-night-bright',
+  TomorrowNightEighties = 'tomorrow-night-eighties',
+  Ttcn = 'ttcn',
+  Twilight = 'twilight',
+  VibrantInk = 'vibrant-ink',
+  XqDark = 'xq-dark',
+  XqLight = 'xq-light',
+  Yeti = 'yeti',
+  Yonce = 'yonce',
+  Zenburn = 'zenburn',
 }
 
 type CodeMirrorOptions = {
@@ -216,7 +216,7 @@ type CodeMirrorOptions = {
   firstLineNumber: number;
   // gutters: string[];
   fixedGutter: boolean;
-  scrollbarStyle: "native" | "null" | "overlay" | "simple";
+  scrollbarStyle: 'native' | 'null' | 'overlay' | 'simple';
   coverGutterNextToScrollbar: boolean;
   // inputStyle: string;
   // screenReaderLabel: string | null;

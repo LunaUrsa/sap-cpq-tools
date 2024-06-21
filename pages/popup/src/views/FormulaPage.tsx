@@ -1,7 +1,7 @@
 /* eslint-disable import/namespace */
-import React, { useState } from "react";
-import CodeMirror from "@uiw/react-codemirror";
-import { Grid } from "@mui/material";
+import React, { useState } from 'react';
+import CodeMirror from '@uiw/react-codemirror';
+import { Grid } from '@mui/material';
 
 // import * as themes from "@uiw/codemirror-themes-all";
 
@@ -78,10 +78,20 @@ const parseRawCode = (rawText: string): string => {
         }
         break;
       case '[':
-        if (rawList.slice(index + 1, index + 3).join('').toLowerCase() === 'if') {
+        if (
+          rawList
+            .slice(index + 1, index + 3)
+            .join('')
+            .toLowerCase() === 'if'
+        ) {
           trackingDict.if++;
           outputList.push(character);
-        } else if (rawList.slice(index + 1, index + 5).join('').toLowerCase() === 'endif') {
+        } else if (
+          rawList
+            .slice(index + 1, index + 5)
+            .join('')
+            .toLowerCase() === 'endif'
+        ) {
           trackingDict.if--;
           outputList.push('\n');
           addIndents(outputList, trackingDict.Operators + trackingDict.colons + trackingDict.if);
@@ -155,10 +165,11 @@ function revertToRaw(parsedText: string): string {
 }
 
 const FormulaPage: React.FC = () => {
-
   // const { codeMirrorOptions } = useAppContext();
 
-  const [rawText, setRawText] = useState<string>(`[IF](<*CTX( Quote.CustomField(Customer's Language).AddDays().InUSDateFormat )*>){"True"}{"False"}[ENDIF]`);
+  const [rawText, setRawText] = useState<string>(
+    `[IF](<*CTX( Quote.CustomField(Customer's Language).AddDays().InUSDateFormat )*>){"True"}{"False"}[ENDIF]`,
+  );
   const [formattedText, setFormattedText] = useState(`[IF](
   <*CTX( Quote.CustomField(Customer's Language).AddDays().InUSDateFormat )*>
   ){
@@ -169,7 +180,7 @@ const FormulaPage: React.FC = () => {
   `);
 
   const handleRawUpdate = (text: string) => {
-    console.log("Raw text updated:", text);
+    console.log('Raw text updated:', text);
     setRawText(text);
   };
 
@@ -180,7 +191,7 @@ const FormulaPage: React.FC = () => {
   const handleRawBlur = () => {
     // This should take the formattedText, convert it to lowercase, and set it as the rawText
     const formatted = parseRawCode(rawText);
-    console.log("Raw text blurred:", formatted);
+    console.log('Raw text blurred:', formatted);
     setFormattedText(formatted);
   };
 
@@ -193,7 +204,7 @@ const FormulaPage: React.FC = () => {
   return (
     <main className="container mx-auto p-0 m-0">
       <Grid container spacing={2} sx={{ padding: 0, margin: 0 }}>
-        <Grid item xs={12} sx={{ fontSize: "16px", padding: 0, margin: 0 }}>
+        <Grid item xs={12} sx={{ fontSize: '16px', padding: 0, margin: 0 }}>
           <CodeMirror
             value={rawText}
             height="12vh"
@@ -221,14 +232,14 @@ const FormulaPage: React.FC = () => {
               lintKeymap: true,
               tabSize: 2,
             }}
-            onUpdate={(viewUpdate) => {
+            onUpdate={viewUpdate => {
               handleRawUpdate(viewUpdate.state.doc.toString());
             }}
             onBlur={handleRawBlur}
             className="border rounded-md shadow-sm"
           />
         </Grid>
-        <Grid item xs={12} sx={{ fontSize: "16px" }}>
+        <Grid item xs={12} sx={{ fontSize: '16px' }}>
           <CodeMirror
             value={formattedText}
             height="60vh"
@@ -256,7 +267,7 @@ const FormulaPage: React.FC = () => {
               lintKeymap: true,
               tabSize: 2,
             }}
-            onUpdate={(viewUpdate) => {
+            onUpdate={viewUpdate => {
               handleFormattedUpdate(viewUpdate.state.doc.toString());
             }}
             onBlur={handleFormattedBlur}

@@ -1,6 +1,6 @@
 import { createRoot } from 'react-dom/client';
 import '@src/index.css';
-import { HashRouter } from "react-router-dom"
+import { HashRouter } from 'react-router-dom';
 import SidePanel from '@src/SidePanel';
 import { AppProvider } from '@chrome-extension-boilerplate/shared/lib/context/AppContext';
 
@@ -15,7 +15,7 @@ function init() {
       <HashRouter>
         <SidePanel />
       </HashRouter>
-    </AppProvider >
+    </AppProvider>,
   );
 }
 

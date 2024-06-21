@@ -1,6 +1,6 @@
 const handleShortcuts = () => {
   // console.info('Handling shortcuts');
-  chrome.commands.onCommand.addListener(async (command) => {
+  chrome.commands.onCommand.addListener(async command => {
     console.log(`Command: ${command}`);
     switch (command) {
       case 'Open Shortcuts': {
@@ -16,6 +16,6 @@ const handleShortcuts = () => {
     }
   });
   // console.log('Shortcuts handled');
-}
+};
 
 export default handleShortcuts;

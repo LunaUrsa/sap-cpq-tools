@@ -28,7 +28,7 @@ const AppProvider: FC<AppProviderProps> = ({ children }) => {
   const [currentPage, setCurrentPage] = useState<Page>('shortcuts' as Page);
 
   useEffect(() => {
-    chrome.storage.local.get(["userOptions", "mods", "shortcuts", "currentPage", "codeMirrorOptions"], (result) => {
+    chrome.storage.local.get(['userOptions', 'mods', 'shortcuts', 'currentPage', 'codeMirrorOptions'], result => {
       if (result.userOptions) {
         setUserOptions(JSON.parse(result.userOptions));
       }
@@ -46,24 +46,23 @@ const AppProvider: FC<AppProviderProps> = ({ children }) => {
       }
     });
   }, []);
-  const value = useMemo(() => ({
-    mods,
-    setMods,
-    userOptions,
-    setUserOptions,
-    codeMirrorOptions,
-    setCodeMirrorOptions,
-    shortcuts,
-    setShortcuts,
-    currentPage,
-    setCurrentPage,
-  }), [mods, userOptions, codeMirrorOptions, shortcuts, currentPage]);
-
-  return (
-    <AppContext.Provider value={value}>
-      {children}
-    </AppContext.Provider>
+  const value = useMemo(
+    () => ({
+      mods,
+      setMods,
+      userOptions,
+      setUserOptions,
+      codeMirrorOptions,
+      setCodeMirrorOptions,
+      shortcuts,
+      setShortcuts,
+      currentPage,
+      setCurrentPage,
+    }),
+    [mods, userOptions, codeMirrorOptions, shortcuts, currentPage],
   );
+
+  return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };
 
 export { AppProvider, AppContext };

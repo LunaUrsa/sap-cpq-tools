@@ -11,7 +11,6 @@ export default function App() {
   const hostUrl = window.location.host;
   console.log('hostUrl:', hostUrl);
 
-
   const handleExpandEditor = () => {
     // Logic to expand editor
     console.log('Expand Editor button clicked');
@@ -26,11 +25,9 @@ export default function App() {
     element?.click();
   };
 
-
   // const handleOpenInVSCode = async () => {
   //   // Logic to open in VSCode
   //   console.log('Open in VSCode button clicked');
-
 
   //   // let saveDirectory: FileSystemDirectoryHandle;
   //   // if (userOptions.downloadLocations) {
@@ -97,7 +94,6 @@ export default function App() {
   //   const extension = type === 'text/x-python' ? 'py' : 'txt';
   //   const blob = new Blob([editorContent], { type });
   //   const url = URL.createObjectURL(blob);
-
 
   //   // // Get the name of the script
   //   // // We get the element with the id "demo" and then get the h2 inside of that section
@@ -264,12 +260,20 @@ export default function App() {
         </IconButton>
       </Tooltip> */}
       <Tooltip title="Expand Editor">
-        <IconButton id='expandEditorMUI' size="small" onClick={handleExpandEditor} style={{ width: '40px', height: '40px' }}>
+        <IconButton
+          id="expandEditorMUI"
+          size="small"
+          onClick={handleExpandEditor}
+          style={{ width: '40px', height: '40px' }}>
           <ZoomOutMap fontSize="small" style={{ color: 'blue' }} />
         </IconButton>
       </Tooltip>
       <Tooltip title="Full Screen Editor">
-        <IconButton id='fullScreenEditorMUI' size="small" onClick={handleFullScreenEditor} style={{ width: '40px', height: '40px' }}>
+        <IconButton
+          id="fullScreenEditorMUI"
+          size="small"
+          onClick={handleFullScreenEditor}
+          style={{ width: '40px', height: '40px' }}>
           <Fullscreen fontSize="small" style={{ color: 'blue' }} />
         </IconButton>
       </Tooltip>

@@ -23,5 +23,5 @@ document.head.appendChild(styleElement);
 createRoot(root).render(
   <AppProvider>
     <App />
-  </AppProvider>
+  </AppProvider>,
 );

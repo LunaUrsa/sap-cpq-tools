@@ -1,10 +1,6 @@
-// import CodeMirror, { useCodeMirror } from "@uiw/react-codemirror";
-import { python } from "@codemirror/lang-python"
-// import { basicSetup } from 'codemirror'
+import { python } from '@codemirror/lang-python';
 import { dracula } from '@uiw/codemirror-theme-dracula';
-import {
-  EditorState,
-} from "@codemirror/state"
+import { EditorState } from '@codemirror/state';
 import {
   EditorView,
   lineNumbers,
@@ -35,22 +31,10 @@ import {
 import { indentWithTab, history, defaultKeymap, historyKeymap } from '@codemirror/commands';
 import { search, highlightSelectionMatches, searchKeymap } from '@codemirror/search';
 import { closeBrackets, autocompletion, closeBracketsKeymap, completionKeymap } from '@codemirror/autocomplete';
-import { linter, lintGutter, lintKeymap, LintSource } from '@codemirror/lint';
-import { vscodeKeymap } from "@replit/codemirror-vscode-keymap";
+import { lintGutter, lintKeymap } from '@codemirror/lint';
+import { vscodeKeymap } from '@replit/codemirror-vscode-keymap';
 // import { oneDark, oneDarkTheme } from "@codemirror/theme-one-dark";
-import {
-  handleRunClick,
-  updateHiddenElement,
-  hideToastContainer,
-  autoScrollTrace,
-  repositionTraceWindow,
-  handleModeChange,
-  handlePythonClick,
-  handleAliasClick,
-  handleApiClick,
-  handleApiExplorerClick,
-  handleTraceClearClick
-} from './scriptWorkbench';
+import { updateHiddenElement } from './scriptWorkbench';
 
 export const logoString = `
       ⠀⠀⠀⠀⢀⣴⢿⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -73,10 +57,7 @@ export const logoString = `
       ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠐⠤⠴⣇⣠⣏⣰⠁⠀⠀⠀⠀
       `;
 
-export const editorState = (
-  userOptions: UserOptions,
-  editorViewRef: React.MutableRefObject<EditorView | null>
-) => {
+export const editorState = (userOptions: UserOptions, editorViewRef: React.MutableRefObject<EditorView | null>) => {
   return EditorState.create({
     doc: userOptions.workbenchCode || logoString,
     extensions: [
@@ -129,10 +110,14 @@ export const editorState = (
       // ## Presentation
       // oneDark, // Theme
       dracula, // Theme
+      EditorView.baseTheme({
+        '&light .cm-zebraStripe': { backgroundColor: '#d4fafa' },
+        '&dark .cm-zebraStripe': { backgroundColor: '#1a2727' },
+      }),
       EditorView.theme({
-        "&": { height: "100%", maxHeight: "100%" },
-        ".cm-scroller": { overflow: "auto" },
-        ".cm-content, .cm-gutter": { minHeight: "222px" }
+        '&': { height: '100%', maxHeight: '100%' },
+        '.cm-scroller': { overflow: 'auto' },
+        '.cm-content, .cm-gutter': { minHeight: '222px' },
       }), // Customization
 
       // ## Presentation Features
@@ -143,7 +128,7 @@ export const editorState = (
       scrollPastEnd(),
       bracketMatching(),
       highlightSelectionMatches(),
-      placeholder("Enter your code here..."),
+      placeholder('Enter your code here...'),
 
       // ## Gutters
       lineNumbers(),
@@ -157,21 +142,21 @@ export const editorState = (
       // Input Handling
       dropCursor(),
       keymap.of([
-        ...defaultKeymap as any,
-        ...closeBracketsKeymap as any,
-        ...searchKeymap as any,
-        ...historyKeymap as any,
-        ...foldKeymap as any,
-        ...completionKeymap as any,
-        ...lintKeymap as any,
-        ...vscodeKeymap as any,
-        indentWithTab as any,
+        ...defaultKeymap,
+        ...closeBracketsKeymap,
+        ...searchKeymap,
+        ...historyKeymap,
+        ...foldKeymap,
+        ...completionKeymap,
+        ...lintKeymap,
+        ...vscodeKeymap,
+        indentWithTab,
       ]),
       // EditorView.dragMovesSelection, // TODO: Figure this out
       rectangularSelection(),
       crosshairCursor(),
 
-      // Language 
+      // Language
       syntaxHighlighting(defaultHighlightStyle, { fallback: true }),
       // linter(source: null),
 
@@ -182,14 +167,14 @@ export const editorState = (
         }
       }),
     ],
-  })
-}
+  });
+};
 
 export const handleFoldClick = (
   setIsFolded: React.Dispatch<React.SetStateAction<boolean>>,
-  editorViewRef: React.MutableRefObject<EditorView | null>
+  editorViewRef: React.MutableRefObject<EditorView | null>,
 ) => {
-  setIsFolded((prevValue) => {
+  setIsFolded(prevValue => {
     if (editorViewRef.current) {
       if (prevValue) {
         // console.log('unfolding code');

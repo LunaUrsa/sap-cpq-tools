@@ -12,7 +12,7 @@ function init() {
   root.render(
     <AppProvider>
       <Options />
-    </AppProvider >
+    </AppProvider>,
   );
 }
 

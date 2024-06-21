@@ -1,8 +1,8 @@
 import '@src/SidePanel.css';
-import { useEffect } from "react";
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-import EnhancedToolbar from "../../popup/src/components/Toolbar";
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import EnhancedToolbar from '../../popup/src/components/Toolbar';
 import { Routing } from '../../popup/src/routes';
 import { withErrorBoundary, withSuspense } from '@chrome-extension-boilerplate/shared';
 import useAppContext from '@chrome-extension-boilerplate/shared/lib/hooks/useAppContext';

@@ -2,14 +2,27 @@ import { Button, FormControl, Grid, InputLabel, MenuItem, Select, Typography } f
 import {
   KeyboardArrowUp,
   KeyboardArrowDown,
-  PlayArrow, Clear, Code, Functions, Api, Search
+  PlayArrow,
+  Clear,
+  Code,
+  Functions,
+  Api,
+  Search,
 } from '@mui/icons-material';
 import '@mui/material/styles';
-import { handleRunClick, handleModeChange, handlePythonClick, handleAliasClick, handleApiClick, handleApiExplorerClick, handleTraceClearClick } from '../util/scriptWorkbench';
+import {
+  handleRunClick,
+  handleModeChange,
+  handlePythonClick,
+  handleAliasClick,
+  handleApiClick,
+  handleApiExplorerClick,
+  handleTraceClearClick,
+} from '../util/scriptWorkbench';
 import { useEffect, useRef, useState } from 'react';
 import useAppContext from '@chrome-extension-boilerplate/shared/lib/hooks/useAppContext';
 import { handleFoldClick } from '../util/codeMirror';
-import { EditorView, } from '@codemirror/view';
+import { EditorView } from '@codemirror/view';
 
 interface ToolbarProps {
   editorViewRef: React.MutableRefObject<EditorView | null>;
@@ -19,12 +32,10 @@ const Toolbar: React.FC<ToolbarProps> = ({ editorViewRef }) => {
   const { userOptions, setUserOptions } = useAppContext();
   const scriptToolbarRef = useRef<HTMLElement | null>(null);
 
-
   useEffect(() => {
     console.log('content ui loaded');
     scriptToolbarRef.current = document.querySelector('.script-toolbar') as HTMLElement;
   }, []);
-
 
   const [isFolded, setIsFolded] = useState(false);
 
@@ -34,7 +45,7 @@ const Toolbar: React.FC<ToolbarProps> = ({ editorViewRef }) => {
     <Grid container direction="row" spacing={2} alignItems="center" sx={{ paddingBottom: '10px' }}>
       <Grid item>
         <Button
-          onClick={(e) => handleRunClick(e, scriptToolbarRef)}
+          onClick={e => handleRunClick(e, scriptToolbarRef)}
           tabIndex={0}
           variant="contained"
           color="primary"
@@ -47,8 +58,7 @@ const Toolbar: React.FC<ToolbarProps> = ({ editorViewRef }) => {
             lineHeight: 'normal',
             fontSize: '14px',
           }}
-          startIcon={<PlayArrow />}
-        >
+          startIcon={<PlayArrow />}>
           <Typography sx={{ textTransform: 'none', fontSize: 'inherit' }}>Run</Typography>
         </Button>
       </Grid>
@@ -59,7 +69,7 @@ const Toolbar: React.FC<ToolbarProps> = ({ editorViewRef }) => {
             labelId="modePickSlctLabel"
             id="modePickSlct"
             value={scriptingMode}
-            onChange={(e) => handleModeChange(e, scriptToolbarRef, setScriptingMode)}
+            onChange={e => handleModeChange(e, scriptToolbarRef, setScriptingMode, userOptions, setUserOptions)}
             label="Mode"
             sx={{
               height: '30px',
@@ -71,10 +81,13 @@ const Toolbar: React.FC<ToolbarProps> = ({ editorViewRef }) => {
                   padding: '0px',
                 },
               },
-            }}
-          >
-            <MenuItem key="standard" value="Standard">Standard</MenuItem>
-            <MenuItem key="test" value="Test">Test</MenuItem>
+            }}>
+            <MenuItem key="standard" value="Standard">
+              Standard
+            </MenuItem>
+            <MenuItem key="test" value="Test">
+              Test
+            </MenuItem>
           </Select>
         </FormControl>
       </Grid>
@@ -93,8 +106,7 @@ const Toolbar: React.FC<ToolbarProps> = ({ editorViewRef }) => {
             lineHeight: 'normal',
             fontSize: '14px',
           }}
-          startIcon={<Clear />}
-        >
+          startIcon={<Clear />}>
           <Typography sx={{ textTransform: 'none', fontSize: 'inherit' }}>Clear Trace</Typography>
         </Button>
       </Grid>
@@ -112,9 +124,10 @@ const Toolbar: React.FC<ToolbarProps> = ({ editorViewRef }) => {
             lineHeight: 'normal',
             fontSize: '14px',
           }}
-          startIcon={isFolded ? <KeyboardArrowUp /> : <KeyboardArrowDown />}
-        >
-          <Typography sx={{ textTransform: 'none', fontSize: 'inherit' }}>{isFolded ? 'Unfold Code' : 'Fold Code'}</Typography>
+          startIcon={isFolded ? <KeyboardArrowUp /> : <KeyboardArrowDown />}>
+          <Typography sx={{ textTransform: 'none', fontSize: 'inherit' }}>
+            {isFolded ? 'Unfold Code' : 'Fold Code'}
+          </Typography>
         </Button>
       </Grid>
       {/* <Grid item>
@@ -188,8 +201,7 @@ const Toolbar: React.FC<ToolbarProps> = ({ editorViewRef }) => {
             fontSize: '12px',
             backgroundColor: '#e0e0e0',
           }}
-          startIcon={<Code />}
-        >
+          startIcon={<Code />}>
           <Typography sx={{ textTransform: 'none', fontSize: 'inherit' }}>Python</Typography>
         </Button>
         <Button
@@ -206,8 +218,7 @@ const Toolbar: React.FC<ToolbarProps> = ({ editorViewRef }) => {
             fontSize: '12px',
             backgroundColor: '#e0e0e0',
           }}
-          startIcon={<Functions />}
-        >
+          startIcon={<Functions />}>
           <Typography sx={{ textTransform: 'none', fontSize: 'inherit' }}>Alias</Typography>
         </Button>
         <Button
@@ -224,8 +235,7 @@ const Toolbar: React.FC<ToolbarProps> = ({ editorViewRef }) => {
             fontSize: '12px',
             backgroundColor: '#e0e0e0',
           }}
-          startIcon={<Api />}
-        >
+          startIcon={<Api />}>
           <Typography sx={{ textTransform: 'none', fontSize: 'inherit' }}>API</Typography>
         </Button>
         <Button
@@ -242,12 +252,10 @@ const Toolbar: React.FC<ToolbarProps> = ({ editorViewRef }) => {
             fontSize: '12px',
             backgroundColor: '#e0e0e0',
           }}
-          startIcon={<Search />}
-        >
+          startIcon={<Search />}>
           <Typography sx={{ textTransform: 'none', fontSize: 'inherit' }}>Explorer</Typography>
         </Button>
       </Grid>
-
     </Grid>
   );
 };

@@ -29,10 +29,10 @@ export default defineConfig({
       // https://github.com/vitejs/vite/issues/15012
       onwarn(warning, defaultHandler) {
         if (warning.code === 'SOURCEMAP_ERROR') {
-          return
+          return;
         }
 
-        defaultHandler(warning)
+        defaultHandler(warning);
       },
     },
   },
