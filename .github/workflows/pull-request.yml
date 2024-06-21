@@ -27,19 +27,19 @@ jobs:
         run: pnpm install
 
       # - name: Run Tests
-      #   run: npm run test
+      #   run: pnpm run test
         
       - name: Type-Check
-        run: npm run type-check
+        run: pnpm run type-check
         
       - name: Lint
-        run: npm run lint
+        run: pnpm run lint
 
       - name: Prettier 
-        run: npm run prettier
+        run: pnpm run prettier
 
       - name: Build Project
-        run: npm run build
+        run: pnpm run build
 
       - name: Zip Build Folder
         run: zip -r build.zip ./dist/
