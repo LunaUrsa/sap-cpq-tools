@@ -613,7 +613,7 @@ export default async function codeMirrorMods() {
   // // Needs to happen after the scripts are loaded
   // await applyCodeMirrorOptions(editor);
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+   
   // console.log('codeMirrorMods ended with options:', (editor as any).options)
   return true;
 }

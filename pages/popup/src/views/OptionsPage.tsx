@@ -1,4 +1,3 @@
-/* eslint-disable import/namespace */
 import '../Popup.css';
 import { Restore, SettingsBackupRestore } from '@mui/icons-material';
 import type { SelectChangeEvent } from '@mui/material';

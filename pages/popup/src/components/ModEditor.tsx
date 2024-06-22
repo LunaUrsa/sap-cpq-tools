@@ -1,4 +1,3 @@
-/* eslint-disable import/namespace */
 import React from 'react';
 import CodeMirror from '@uiw/react-codemirror';
 import { css } from '@codemirror/lang-css';

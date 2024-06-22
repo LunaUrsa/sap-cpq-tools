@@ -14,7 +14,7 @@
     "build": "pnpm build:tailwindcss && pnpm run clean && tsc --noEmit && vite build",
     "build:watch": "cross-env __DEV__=true vite build -w --mode development",
     "dev": "pnpm build:watch",
-    "lint": "eslint . --ext .ts,.tsx",
+    "lint": "eslint .",
     "lint:fix": "pnpm lint --fix",
     "prettier": "prettier . --write",
     "type-check": "tsc --noEmit"
