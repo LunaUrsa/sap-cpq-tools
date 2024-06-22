@@ -5,7 +5,7 @@ import '@mui/material/styles';
 import useAppContext from '@chrome-extension-boilerplate/shared/lib/hooks/useAppContext';
 import Toolbar from './components/Toolbar';
 import { useTraceManagement } from './hooks/useTraceManagement';
-import { useCodeMirror } from './hooks/useCodeMirror';
+import { useCodeMirror } from './util/codeMirror';
 
 const App = () => {
   const { userOptions, setUserOptions } = useAppContext();

@@ -1,6 +1,7 @@
 import { python } from '@codemirror/lang-python';
 import { dracula } from '@uiw/codemirror-theme-dracula';
 import { EditorState } from '@codemirror/state';
+import { useEffect, useRef } from 'react';
 import {
   EditorView,
   lineNumbers,
@@ -35,12 +36,13 @@ import { lintGutter, lintKeymap } from '@codemirror/lint';
 import { vscodeKeymap } from '@replit/codemirror-vscode-keymap';
 // import { oneDark, oneDarkTheme } from "@codemirror/theme-one-dark";
 import { updateHiddenElement } from './scriptWorkbench';
+import { zebraStripes } from './zebraStripes';
 
 export const logoString = `
       ⠀⠀⠀⠀⢀⣴⢿⠇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
       ⠀⠀⠀⢀⡾⠁⡞⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
       ⠀⠀⢠⢺⠃⢸⡇⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
-      ⠀⢠⠏⢸⡄⠈⣇⠀⠀Daedalus⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
+      ⠀⢠⠏⢸⡄⠈⣇⠀⠀Daedalus⠀⠀⠀⠀⠀⠀⠀⠀
       ⠀⢸⡀⢸⡄⠀⠹⡄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
       ⢀⡜⡇⠈⣿⡀⠀⠙⢄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
       ⢸⠀⢳⠄⠹⣿⡄⠀⠈⢦⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -91,7 +93,7 @@ export const editorState = (userOptions: UserOptions, editorViewRef: React.Mutab
 
       // ### Whitespace
       EditorState.tabSize.of(4), // Default: 4
-      EditorState.lineSeparator.of('\n'), // Default: '\n'
+      // EditorState.lineSeparator.of('\n'), // Default: '\n'
       indentUnit.of('    '), // Default: '  ' (two spaces)
       indentOnInput(),
 
@@ -108,17 +110,14 @@ export const editorState = (userOptions: UserOptions, editorViewRef: React.Mutab
       search(),
 
       // ## Presentation
-      // oneDark, // Theme
       dracula, // Theme
-      EditorView.baseTheme({
-        '&light .cm-zebraStripe': { backgroundColor: '#d4fafa' },
-        '&dark .cm-zebraStripe': { backgroundColor: '#1a2727' },
-      }),
-      EditorView.theme({
+      zebraStripes({ step: 2 }), // Zebra stripes
+
+      EditorView.theme({ // Change height of editor
         '&': { height: '100%', maxHeight: '100%' },
         '.cm-scroller': { overflow: 'auto' },
         '.cm-content, .cm-gutter': { minHeight: '222px' },
-      }), // Customization
+      }),
 
       // ## Presentation Features
       drawSelection(),
@@ -168,6 +167,22 @@ export const editorState = (userOptions: UserOptions, editorViewRef: React.Mutab
       }),
     ],
   });
+};
+
+export const useCodeMirror = (userOptions: UserOptions) => {
+  const editorViewRef = useRef<EditorView | null>(null);
+
+  useEffect(() => {
+    if (!editorViewRef.current) {
+      editorViewRef.current = new EditorView({
+        state: editorState(userOptions, editorViewRef),
+        parent: document.getElementById('custom-editor') as HTMLElement,
+      });
+      console.log('editorView', editorViewRef.current);
+    }
+  }, [userOptions]);
+
+  return editorViewRef;
 };
 
 export const handleFoldClick = (
