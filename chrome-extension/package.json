@@ -18,9 +18,8 @@
   },
   "type": "module",
   "dependencies": {
-    "codemirror": "5.65.16",
     "common-tags": "^1.8.2",
-    "webextension-polyfill": "^0.11.0"
+    "webextension-polyfill": "^0.12.0"
   },
   "devDependencies": {
     "@chrome-extension-boilerplate/dev-utils": "workspace:*",
@@ -28,7 +27,6 @@
     "@chrome-extension-boilerplate/shared": "workspace:*",
     "@chrome-extension-boilerplate/tsconfig": "workspace:*",
     "@laynezh/vite-plugin-lib-assets": "^0.5.21",
-    "@types/codemirror": "^5.60.15",
     "@types/common-tags": "^1.8.4",
     "@types/ws": "^8.5.10",
     "magic-string": "^0.30.10",

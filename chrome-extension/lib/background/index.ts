@@ -71,13 +71,14 @@ async function injectCode() {
     const storage = await chrome.storage.local.get('codeMirrorOptions');
     // console.log('Storage:', storage)
     if (!storage.codeMirrorOptions) return;
-    const codeMirrorOptions = JSON.parse(storage.codeMirrorOptions) as CodeMirrorOptions;
+    // const codeMirrorOptions = JSON.parse(storage.codeMirrorOptions) as CodeMirrorOptions;
     // console.log('CodeMirror options:', codeMirrorOptions)
     chrome.scripting.executeScript({
       target: { tabId: activeTab.id, allFrames: true },
       world: 'MAIN', // This is VERY important, otherwise it doesn't work
       func: customCode,
-      args: [codeMirrorOptions],
+      // args: [codeMirrorOptions],
+      args: [],
     });
     // .then(() => console.log("injected a function"));
   });

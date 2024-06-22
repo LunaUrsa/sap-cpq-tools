@@ -18,10 +18,13 @@
     "type-check": "turbo type-check",
     "lint": "turbo lint",
     "lint:fix": "turbo lint:fix",
-    "prettier": "turbo prettier"
+    "prettier": "turbo prettier",
+    "updateCheck": "npm-check-updates --deep",
+    "updatePush": "npm-check-updates --deep -u"
   },
   "type": "module",
   "dependencies": {
+    "npm-check-updates": "^16.14.20",
     "react": "18.3.1",
     "react-dom": "18.3.1"
   },

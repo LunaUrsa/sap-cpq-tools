@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@chrome-extension-boilerplate/shared": "workspace:*",
-    "@mui/material": "^5.15.17",
+    "@mui/material": "^5.15.20",
     "react-router-dom": "^6.23.1"
   },
   "devDependencies": {
