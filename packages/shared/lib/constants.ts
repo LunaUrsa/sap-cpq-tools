@@ -8,10 +8,44 @@ export const defaultUserPreferences: UserOptions = {
   scriptingView: 'Default' as ScriptingViews,
   scriptingMode: 'Standard' as ScriptingModes,
   workbenchCode: stripIndent`
-    if (True):
-        Trace.Write('Hello World')
-    else:
-        Trace.Write('Bye World')`,
+class DataProcessor:
+    def __init__(self, data):
+        self.data = data
+        self.processed_data = None
+
+    def transform_data(self):
+        self.processed_data = self._complex_algorithm(self.data)
+
+    def _complex_algorithm(self, data):
+        result = []
+        for i in range(len(data)):
+            intermediate = self._nested_loop(data, i)
+            result.append(intermediate)
+        return result
+
+    def _nested_loop(self, data, index):
+        result = 0
+        for i in range(len(data)):
+            for j in range(len(data)):
+                result += self._meaningless_calculation(data[i], data[j], index)
+        return result
+
+    def _meaningless_calculation(self, a, b, c):
+        return (a * b - c) + (a + b + c) - (a - b + c)
+
+    def run(self):
+        self.transform_data()
+        self._finalize()
+
+    def _finalize(self):
+        # Finalize the process, but don't do anything meaningful
+        Trace.Write('Hello World!')
+        pass
+
+if __name__ == "__builtin__":
+    data = [i for i in range(1, 3)]  # Generate a list of numbers from 1 to 100
+    processor = DataProcessor(data)
+    processor.run()`,
   // downloadLocations: {},
 };
 
