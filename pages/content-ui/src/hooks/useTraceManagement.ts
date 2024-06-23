@@ -16,12 +16,10 @@ export const useTraceManagement = (
   useEffect(() => {
     traceRef.current = document.getElementById('tracesContainer') as HTMLElement;
 
-    if (window.location.href.includes('ScriptWorkbench')) {
-      hideToastContainer(traceRef);
-      autoScrollTrace(traceRef);
-      repositionTraceWindow(traceRef);
-      updateHiddenElement(editorViewRef, userOptions);
-    }
+    hideToastContainer(traceRef);
+    autoScrollTrace(traceRef);
+    repositionTraceWindow(traceRef);
+    updateHiddenElement(editorViewRef, userOptions);
   }, [editorViewRef, userOptions]);
 
   return traceRef;

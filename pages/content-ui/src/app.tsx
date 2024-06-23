@@ -3,9 +3,9 @@ import { withErrorBoundary, withSuspense } from '@chrome-extension-boilerplate/s
 import { Box, Grid } from '@mui/material';
 import '@mui/material/styles';
 import useAppContext from '@chrome-extension-boilerplate/shared/lib/hooks/useAppContext';
-import Toolbar from './components/Toolbar';
+import Toolbar from './components/ScriptToolbar';
 import { useTraceManagement } from './hooks/useTraceManagement';
-import { useCodeMirror } from './util/codeMirror';
+import { CodeMirrorMain } from './util/codeMirror';
 
 const App = () => {
   const { userOptions, setUserOptions } = useAppContext();
@@ -20,9 +20,10 @@ const App = () => {
     });
   }, [setUserOptions]);
 
-  const editorViewRef = useCodeMirror(userOptions);
+  const mainViewRef = CodeMirrorMain(userOptions);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const traceRef = useTraceManagement(editorViewRef, userOptions);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const traceRef = useTraceManagement(mainViewRef, userOptions);
 
   return (
     <Box
@@ -35,7 +36,7 @@ const App = () => {
         height: 'calc(100vh - 15px)',
         boxSizing: 'border-box',
       }}>
-      <Toolbar editorViewRef={editorViewRef} />
+      <Toolbar editorViewRef={mainViewRef} />
       {/* Editor */}
       <Grid
         container
@@ -45,7 +46,10 @@ const App = () => {
         <Grid item id="custom-editor" sx={{ width: '50%', height: '100%' }}>
           <textarea id="newCM" style={{ display: 'none' }}></textarea>
         </Grid>
-        <Grid item id="custom-trace" sx={{ width: '50%', height: '100%' }}></Grid>
+        <Grid item id="custom-editor2" sx={{ width: '50%', height: '100%' }}>
+          <textarea id="newCM2" style={{ display: 'none' }}></textarea>
+        </Grid>
+        <Grid item id="custom-trace" sx={{ height: '100%' }}></Grid>
       </Grid>
     </Box>
   );

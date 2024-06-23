@@ -111,6 +111,7 @@ interface UserOptions {
   scriptingView: ScriptingViews;
   scriptingMode: ScriptingModes;
   workbenchCode: string;
+  workbenchIsSplit: boolean;
   // downloadLocations: { [key: string]: string };
 }
 

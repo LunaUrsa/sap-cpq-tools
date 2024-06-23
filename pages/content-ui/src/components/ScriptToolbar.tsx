@@ -8,6 +8,11 @@ import {
   Functions,
   Api,
   Search,
+  // Fullscreen,
+  DashboardCustomize,
+  CallSplit,
+  CancelPresentation,
+  // FullscreenExit,
 } from '@mui/icons-material';
 import '@mui/material/styles';
 import {
@@ -18,32 +23,60 @@ import {
   handleApiClick,
   handleApiExplorerClick,
   handleTraceClearClick,
+  handleCustomClick,
 } from '../util/scriptWorkbench';
 import { useEffect, useRef, useState } from 'react';
-import useAppContext from '@chrome-extension-boilerplate/shared/lib/hooks/useAppContext';
-import { handleFoldClick } from '../util/codeMirror';
+// import useAppContext from '@chrome-extension-boilerplate/shared/lib/hooks/useAppContext';
+import {
+  handleFoldClick,
+  // handleFullScreenClick, 
+  handleSplitScreenClick
+} from '../util/codeMirror';
 import { EditorView } from '@codemirror/view';
+import { defaultUserPreferences } from '@chrome-extension-boilerplate/shared/lib/constants';
 
 interface ToolbarProps {
   editorViewRef: React.MutableRefObject<EditorView | null>;
 }
 
 const Toolbar: React.FC<ToolbarProps> = ({ editorViewRef }) => {
-  const { userOptions, setUserOptions } = useAppContext();
+  // const { userOptions, setUserOptions } = useAppContext();
+  const [userOptions, setUserOptions] = useState<UserOptions>(defaultUserPreferences);
+  // console.log('toolbar userOptions:', userOptions.workbenchIsSplit);
   const scriptToolbarRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
-    console.log('content ui loaded');
+    // console.log('Script Toolbar Loaded');
     scriptToolbarRef.current = document.querySelector('.script-toolbar') as HTMLElement;
-  }, []);
+    chrome.storage.local.get('userOptions', result => {
+      if (result.userOptions) {
+        const storedUserOptions = JSON.parse(result.userOptions);
+        console.log('storedUserOptions:', storedUserOptions.workbenchIsSplit);
+        setUserOptions(storedUserOptions);
+      }
+    });
+  }, [setUserOptions]);
 
-  const [isFolded, setIsFolded] = useState(false);
+  const [isFolded, setIsFolded] = useState<boolean>(false);
+  // const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
+  const [scriptingMode, setScriptingMode] = useState<ScriptingModes>(userOptions.scriptingMode || 'Default');
 
-  const [scriptingMode, setScriptingMode] = useState(userOptions.scriptingMode || 'Default');
+  useEffect(() => {
+    const splitEditor = document.getElementById('custom-editor2') as HTMLElement;
+    const traceEditor = document.getElementById('custom-trace') as HTMLElement;
+
+    if (userOptions.workbenchIsSplit) {
+      splitEditor.style.display = 'block';
+      traceEditor.style.width = '100%';
+    } else {
+      splitEditor.style.display = 'none';
+      traceEditor.style.width = '50%';
+    }
+  }, [userOptions.workbenchIsSplit]);
 
   return (
     <Grid container direction="row" spacing={2} alignItems="center" sx={{ paddingBottom: '10px' }}>
-      <Grid item>
+      <Grid item sx={{ display: 'flex', gap: 1 }}>
         <Button
           onClick={e => handleRunClick(e, scriptToolbarRef)}
           tabIndex={0}
@@ -61,8 +94,6 @@ const Toolbar: React.FC<ToolbarProps> = ({ editorViewRef }) => {
           startIcon={<PlayArrow />}>
           <Typography sx={{ textTransform: 'none', fontSize: 'inherit' }}>Run</Typography>
         </Button>
-      </Grid>
-      <Grid item>
         <FormControl variant="outlined" sx={{ minWidth: '120px', fontSize: '14px' }}>
           <InputLabel id="modePickSlctLabel">Mode</InputLabel>
           <Select
@@ -90,8 +121,6 @@ const Toolbar: React.FC<ToolbarProps> = ({ editorViewRef }) => {
             </MenuItem>
           </Select>
         </FormControl>
-      </Grid>
-      <Grid item>
         <Button
           onClick={handleTraceClearClick}
           tabIndex={0}
@@ -109,8 +138,6 @@ const Toolbar: React.FC<ToolbarProps> = ({ editorViewRef }) => {
           startIcon={<Clear />}>
           <Typography sx={{ textTransform: 'none', fontSize: 'inherit' }}>Clear Trace</Typography>
         </Button>
-      </Grid>
-      <Grid item>
         <Button
           onClick={() => handleFoldClick(setIsFolded, editorViewRef)}
           tabIndex={0}
@@ -129,64 +156,64 @@ const Toolbar: React.FC<ToolbarProps> = ({ editorViewRef }) => {
             {isFolded ? 'Unfold Code' : 'Fold Code'}
           </Typography>
         </Button>
-      </Grid>
-      {/* <Grid item>
-          <Button
-            onClick={handleFullScreenClick}
-            tabIndex={0}
-            variant="outlined"
-            sx={{
-              height: '30px',
-              padding: '0 16px',
-              borderRadius: '5px',
-              display: 'flex',
-              alignItems: 'center',
-              lineHeight: 'normal',
-              fontSize: '14px',
-            }}
-            startIcon={<Fullscreen />}
-          >
-            <Typography sx={{ textTransform: 'none', fontSize: 'inherit' }}>Fullscreen</Typography>
-          </Button>
-        </Grid> */}
-      {/* <Grid item>
-          <Button
-            onClick={handleSplitEditorClick}
-            tabIndex={0}
-            variant="outlined"
-            sx={{
-              height: '30px',
-              padding: '0 16px',
-              borderRadius: '5px',
-              display: 'flex',
-              alignItems: 'center',
-              lineHeight: 'normal',
-              fontSize: '14px',
-            }}
-            startIcon={<Fullscreen />}
-          >
-            <Typography sx={{ textTransform: 'none', fontSize: 'inherit' }}>Split Editor</Typography>
-          </Button>
-        </Grid> */}
-      <Grid item sx={{ marginLeft: 'auto', display: 'flex', gap: 1 }}>
         {/* <Button
-            onClick={handleCustomClick}
-            tabIndex={0}
-            variant="outlined"
-            sx={{
-              height: '30px',
-              padding: '0 8px',
-              borderRadius: '5px',
-              display: 'flex',
-              alignItems: 'center',
-              lineHeight: 'normal',
-              fontSize: '12px',
-              backgroundColor: '#e0e0e0',
-            }}
-            startIcon={<Code />}
-          >
-            <Typography sx={{ textTransform: 'none', fontSize: 'inherit' }}>Custom</Typography>
-          </Button> */}
+          onClick={() => handleFullScreenClick(setIsFullscreen)}
+          tabIndex={0}
+          variant="outlined"
+          sx={{
+            height: '30px',
+            padding: '0 16px',
+            borderRadius: '5px',
+            display: 'flex',
+            alignItems: 'center',
+            lineHeight: 'normal',
+            fontSize: '14px',
+          }}
+          startIcon={isFullscreen ? <FullscreenExit /> : <Fullscreen />}
+        >
+          <Typography sx={{ textTransform: 'none', fontSize: 'inherit' }}>
+            {isFullscreen ? 'Normal View' : 'Full Screen'}
+          </Typography>
+        </Button> */}
+        <Button
+          onClick={() => handleSplitScreenClick(userOptions, setUserOptions)}
+          tabIndex={0}
+          variant="outlined"
+          sx={{
+            height: '30px',
+            padding: '0 16px',
+            borderRadius: '5px',
+            display: 'flex',
+            alignItems: 'center',
+            lineHeight: 'normal',
+            fontSize: '14px',
+          }}
+          startIcon={userOptions.workbenchIsSplit ? <CancelPresentation /> : <CallSplit />}
+        >
+          <Typography sx={{ textTransform: 'none', fontSize: 'inherit' }}>
+            {userOptions.workbenchIsSplit ? 'Single Editor' : 'Split Editor'}
+          </Typography>
+        </Button>
+      </Grid>
+      <Grid item sx={{ marginLeft: 'auto', display: 'flex', gap: 1 }}>
+        <Button
+          onClick={handleCustomClick}
+          tabIndex={0}
+          variant="outlined"
+          sx={{
+            height: '30px',
+            padding: '0 8px',
+            borderRadius: '5px',
+            display: 'flex',
+            alignItems: 'center',
+            lineHeight: 'normal',
+            fontSize: '12px',
+            backgroundColor: '#e0e0e0',
+          }}
+          startIcon={<DashboardCustomize />}
+        >
+          <Typography sx={{ textTransform: 'none', fontSize: 'inherit' }}>Custom</Typography>
+        </Button>
         <Button
           onClick={handlePythonClick}
           tabIndex={0}

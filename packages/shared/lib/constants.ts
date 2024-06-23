@@ -7,6 +7,7 @@ export const defaultUserPreferences: UserOptions = {
   workbenchView: 'Default' as WorkbenchViews,
   scriptingView: 'Default' as ScriptingViews,
   scriptingMode: 'Standard' as ScriptingModes,
+  workbenchIsSplit: true,
   workbenchCode: stripIndent`
 class DataProcessor:
     def __init__(self, data):

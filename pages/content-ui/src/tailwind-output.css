@@ -596,6 +596,10 @@ video {
   position: absolute;
 }
 
+.block {
+  display: block;
+}
+
 .flex {
   display: flex;
 }
