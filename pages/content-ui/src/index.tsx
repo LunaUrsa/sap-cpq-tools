@@ -7,14 +7,9 @@ import { AppProvider } from '@chrome-extension-boilerplate/shared/lib/context/Ap
 
 const root = document.createElement('div');
 root.id = 'sap-cpq-tools';
+root.style.display = 'none';
 
-const toolbarElement = document.getElementsByClassName('dev-admin-page')[0];
-toolbarElement?.prepend(root);
-
-const sapPage = document.getElementById('scriptDebuggerContainer');
-if (sapPage) {
-  sapPage.style.display = 'None';
-}
+document.body.appendChild(root);
 
 const styleElement = document.createElement('style');
 styleElement.innerHTML = tailwindcssOutput;

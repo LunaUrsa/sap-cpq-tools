@@ -1,29 +1,17 @@
-import { useEffect } from 'react';
 import { withErrorBoundary, withSuspense } from '@chrome-extension-boilerplate/shared';
 import { Box, Grid } from '@mui/material';
 import '@mui/material/styles';
 import useAppContext from '@chrome-extension-boilerplate/shared/lib/hooks/useAppContext';
 import Toolbar from './components/ScriptToolbar';
-import { useTraceManagement } from './hooks/useTraceManagement';
-import { CodeMirrorMain } from './util/codeMirror';
+import { useWorkbenchLogic } from './hooks/useWorkbenchLogic';
+import { useFreshUserOptions } from './hooks/useFreshUserOptions';
 
 const App = () => {
   const { userOptions, setUserOptions } = useAppContext();
 
-  useEffect(() => {
-    console.log('content ui loaded');
-    chrome.storage.local.get('userOptions', result => {
-      if (result.userOptions) {
-        const storedUserOptions = JSON.parse(result.userOptions);
-        setUserOptions(storedUserOptions);
-      }
-    });
-  }, [setUserOptions]);
+  useFreshUserOptions(setUserOptions);
 
-  const mainViewRef = CodeMirrorMain(userOptions);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const traceRef = useTraceManagement(mainViewRef, userOptions);
+  const mainViewRef = useWorkbenchLogic(userOptions);
 
   return (
     <Box

@@ -110,7 +110,8 @@ const extensions = (userOptions: UserOptions, editorViewRef: React.MutableRefObj
   dracula, // Theme
   zebraStripes({ step: 2 }), // Zebra stripes
 
-  EditorView.theme({ // Change height of editor
+  EditorView.theme({
+    // Change height of editor
     '&': { height: '100%', maxHeight: '100%' },
     '.cm-scroller': { overflow: 'auto' },
     '.cm-content, .cm-gutter': { minHeight: '222px' },
@@ -163,29 +164,23 @@ const extensions = (userOptions: UserOptions, editorViewRef: React.MutableRefObj
   }),
 ];
 
-const syncAnnotation = Annotation.define<boolean>()
+const syncAnnotation = Annotation.define<boolean>();
 
 function syncDispatch(tr: Transaction, view: EditorView, other: EditorView) {
-  view.update([tr])
+  view.update([tr]);
   if (!tr.changes.empty && !tr.annotation(syncAnnotation)) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const annotations: Annotation<any>[] = [syncAnnotation.of(true)]
-    const userEvent = tr.annotation(Transaction.userEvent)
-    if (userEvent) annotations.push(Transaction.userEvent.of(userEvent))
-    other.dispatch({ changes: tr.changes, annotations })
+    const annotations: Annotation<any>[] = [syncAnnotation.of(true)];
+    const userEvent = tr.annotation(Transaction.userEvent);
+    if (userEvent) annotations.push(Transaction.userEvent.of(userEvent));
+    other.dispatch({ changes: tr.changes, annotations });
   }
 }
 
-export const mainState = (
-  userOptions: UserOptions,
-  editorViewRef: React.MutableRefObject<EditorView | null>,
-) => {
+export const mainState = (userOptions: UserOptions, editorViewRef: React.MutableRefObject<EditorView | null>) => {
   return EditorState.create({
     doc: userOptions.workbenchCode || logoString,
-    extensions: [
-      history(),
-      ...extensions(userOptions, editorViewRef),
-    ],
+    extensions: [history(), ...extensions(userOptions, editorViewRef)],
   });
 };
 
@@ -201,20 +196,17 @@ export const otherState = (
       ...extensions(userOptions, editorViewRef),
       keymap.of([
         ...defaultKeymap,
-        { key: "Mod-z", run: () => undo(startView) },
-        { key: "Mod-y", mac: "Mod-Shift-z", run: () => redo(startView) }
-      ])
+        { key: 'Mod-z', run: () => undo(startView) },
+        { key: 'Mod-y', mac: 'Mod-Shift-z', run: () => redo(startView) },
+      ]),
     ],
   });
 };
 
-
-
-export const CodeMirrorMain = (userOptions: UserOptions) => {
+export const useCodeMirror = (userOptions: UserOptions) => {
   const mainViewRef = useRef<EditorView | null>(null);
   const mainStateRef = useRef<EditorState | null>(null);
   const otherViewRef = useRef<EditorView | null>(null);
-
 
   // Create main state
   useEffect(() => {
@@ -230,7 +222,7 @@ export const CodeMirrorMain = (userOptions: UserOptions) => {
       mainViewRef.current = new EditorView({
         state: mainStateRef.current,
         parent: document.getElementById('custom-editor') as HTMLElement,
-        dispatch: tr => syncDispatch(tr, mainViewRef.current as EditorView, otherViewRef.current as EditorView)
+        dispatch: tr => syncDispatch(tr, mainViewRef.current as EditorView, otherViewRef.current as EditorView),
       });
       // console.log('mainViewRef', mainViewRef.current);
     }
@@ -244,12 +236,12 @@ export const CodeMirrorMain = (userOptions: UserOptions) => {
       otherViewRef.current = new EditorView({
         state: otherStateInstance,
         parent: document.getElementById('custom-editor2') as HTMLElement,
-        dispatch: tr => syncDispatch(tr, otherViewRef.current as EditorView, mainViewRef.current as EditorView)
+        dispatch: tr => syncDispatch(tr, otherViewRef.current as EditorView, mainViewRef.current as EditorView),
       });
     }
   }, [userOptions]);
 
-  return mainViewRef
+  return mainViewRef;
 };
 
 export const handleFoldClick = (
@@ -272,10 +264,8 @@ export const handleFoldClick = (
   });
 };
 
-export const handleFullScreenClick = (
-  setIsFullscreen: React.Dispatch<React.SetStateAction<boolean>>,
-) => {
-  console.log('Full screen button clicked')
+export const handleFullScreenClick = (setIsFullscreen: React.Dispatch<React.SetStateAction<boolean>>) => {
+  console.log('Full screen button clicked');
   setIsFullscreen(prevValue => {
     return !prevValue;
   });
@@ -316,7 +306,7 @@ export const handleSplitScreenClick = (
   setUserOptions(prevValues => {
     const newOptions = {
       ...prevValues,
-      workbenchIsSplit: !prevValues.workbenchIsSplit
+      workbenchIsSplit: !prevValues.workbenchIsSplit,
     };
     console.log('newOptions', newOptions);
     saveToStorage('userOptions', newOptions);

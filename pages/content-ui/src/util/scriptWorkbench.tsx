@@ -158,7 +158,6 @@ export const handleCustomClick = (event: React.MouseEvent) => {
   event.preventDefault();
 };
 
-
 export const handleAliasClick = (event: React.MouseEvent) => {
   console.log('Alias snippets button clicked');
   const scriptToolbarRef = document.querySelector('.script-toolbar') as HTMLElement;

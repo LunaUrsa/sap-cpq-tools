@@ -629,15 +629,22 @@ export const codeMirrorOptionsConfig: Option[] = [
 export const defaultMods: Mod[] = [
   {
     id: '1',
-    name: 'Edit Icon',
+    name: 'Embiggen Edit Icon',
     content: stripIndent`
       img[title="Edit"] {
-        width: 28px;
+        width: 40px;
+        outline: 2px solid black;
+      }
+
+      button[title="Edit"] {
+        width: 40px;
+        outline: 2px solid black;
       }
     `,
     isEnabled: true,
     isValidCode: true,
   },
+
   // {
   //   id: "2",
   //   name: "Add New Document Pop-up",
