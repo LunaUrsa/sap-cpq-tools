@@ -952,8 +952,8 @@ export const defaultShortcuts: Shortcut[] = [
 ];
 
 export const userOptionsConfig = [
-  { label: 'Dark Mode', key: 'isDarkMode', type: 'switch' },
-  { label: 'Language', key: 'language', type: 'select', options: ['en', 'es', 'fr'] },
+  // { label: 'Dark Mode', key: 'isDarkMode', type: 'switch' },
+  // { label: 'Language', key: 'language', type: 'select', options: ['en', 'es', 'fr'] },
   { label: 'Open app in side panel', key: 'openInSidePanel', type: 'switch' },
 ] as Option[];
 
@@ -1160,3 +1160,202 @@ export const cmFiles = {
     css: [],
   },
 };
+
+export const vscodeKeymap = [
+  {
+    keys: 'VSCode Keybinds',
+    command: 'Description',
+    link: 'https://code.visualstudio.com/docs/getstarted/keybindings',
+  },
+];
+
+export const defaultKeymap = [
+  {
+    keys: 'Alt-ArrowLeft (Ctrl-ArrowLeft on macOS)',
+    command: 'cursorSyntaxLeft',
+    link: 'https://codemirror.net/6/docs/ref/#commands.cursorSyntaxLeft',
+    withShift: 'selectSyntaxLeft',
+    withShiftLink: 'https://codemirror.net/6/docs/ref/#commands.selectSyntaxLeft',
+  },
+  {
+    keys: 'Alt-ArrowRight (Ctrl-ArrowRight on macOS)',
+    command: 'cursorSyntaxRight',
+    link: 'https://codemirror.net/6/docs/ref/#commands.cursorSyntaxRight',
+    withShift: 'selectSyntaxRight',
+    withShiftLink: 'https://codemirror.net/6/docs/ref/#commands.selectSyntaxRight',
+  },
+  { keys: 'Alt-ArrowUp', command: 'moveLineUp', link: 'https://codemirror.net/6/docs/ref/#commands.moveLineUp' },
+  { keys: 'Alt-ArrowDown', command: 'moveLineDown', link: 'https://codemirror.net/6/docs/ref/#commands.moveLineDown' },
+  { keys: 'Shift-Alt-ArrowUp', command: 'copyLineUp', link: 'https://codemirror.net/6/docs/ref/#commands.copyLineUp' },
+  {
+    keys: 'Shift-Alt-ArrowDown',
+    command: 'copyLineDown',
+    link: 'https://codemirror.net/6/docs/ref/#commands.copyLineDown',
+  },
+  {
+    keys: 'Escape',
+    command: 'simplifySelection',
+    link: 'https://codemirror.net/6/docs/ref/#commands.simplifySelection',
+  },
+  {
+    keys: 'Ctrl-Enter (Cmd-Enter on macOS)',
+    command: 'insertBlankLine',
+    link: 'https://codemirror.net/6/docs/ref/#commands.insertBlankLine',
+  },
+  {
+    keys: 'Alt-l (Ctrl-l on macOS)',
+    command: 'selectLine',
+    link: 'https://codemirror.net/6/docs/ref/#commands.selectLine',
+  },
+  {
+    keys: 'Ctrl-i (Cmd-i on macOS)',
+    command: 'selectParentSyntax',
+    link: 'https://codemirror.net/6/docs/ref/#commands.selectParentSyntax',
+  },
+  {
+    keys: 'Ctrl-[ (Cmd-[ on macOS)',
+    command: 'indentLess',
+    link: 'https://codemirror.net/6/docs/ref/#commands.indentLess',
+  },
+  {
+    keys: 'Ctrl-] (Cmd-] on macOS)',
+    command: 'indentMore',
+    link: 'https://codemirror.net/6/docs/ref/#commands.indentMore',
+  },
+  {
+    keys: 'Ctrl-Alt-\\ (Cmd-Alt-\\ on macOS)',
+    command: 'indentSelection',
+    link: 'https://codemirror.net/6/docs/ref/#commands.indentSelection',
+  },
+  {
+    keys: 'Shift-Ctrl-k (Shift-Cmd-k on macOS)',
+    command: 'deleteLine',
+    link: 'https://codemirror.net/6/docs/ref/#commands.deleteLine',
+  },
+  {
+    keys: 'Shift-Ctrl-\\ (Shift-Cmd-\\ on macOS)',
+    command: 'cursorMatchingBracket',
+    link: 'https://codemirror.net/6/docs/ref/#commands.cursorMatchingBracket',
+  },
+  {
+    keys: 'Ctrl-/ (Cmd-/ on macOS)',
+    command: 'toggleComment',
+    link: 'https://codemirror.net/6/docs/ref/#commands.toggleComment',
+  },
+  {
+    keys: 'Shift-Alt-a',
+    command: 'toggleBlockComment',
+    link: 'https://codemirror.net/6/docs/ref/#commands.toggleBlockComment',
+  },
+  {
+    keys: 'Ctrl-m (Alt-Shift-m on macOS)',
+    command: 'toggleTabFocusMode',
+    link: 'https://codemirror.net/6/docs/ref/#commands.toggleTabFocusMode',
+  },
+];
+
+export const closebraketKeymap = [
+  {
+    keys: 'Backspace',
+    command: 'deleteBracketPair',
+    link: 'https://codemirror.net/6/docs/ref/#autocomplete.deleteBracketPair',
+  },
+];
+
+export const searchKeymap = [
+  { keys: 'Ctrl-f', command: 'openSearchPanel', link: 'https://codemirror.net/6/docs/ref/#search.openSearchPanel' },
+  { keys: 'F3, Ctrl-g', command: 'findNext', link: 'https://codemirror.net/6/docs/ref/#search.findNext' },
+  {
+    keys: 'Shift-F3, Shift-Ctrl-g',
+    command: 'findPrevious',
+    link: 'https://codemirror.net/6/docs/ref/#search.findPrevious',
+  },
+  { keys: 'Ctrl-Alt-g', command: 'gotoLine', link: 'https://codemirror.net/6/docs/ref/#search.gotoLine' },
+  {
+    keys: 'Ctrl-d',
+    command: 'selectNextOccurrence',
+    link: 'https://codemirror.net/6/docs/ref/#search.selectNextOccurrence',
+  },
+];
+
+export const historyKeymap = [
+  { keys: 'Ctrl-z', command: 'undo', link: 'https://codemirror.net/6/docs/ref/#commands.undo' },
+  {
+    keys: 'Ctrl-y (Ctrl-Shift-z on macOS) + Ctrl-Shift-z on Linux',
+    command: 'redo',
+    link: 'https://codemirror.net/6/docs/ref/#commands.redo',
+  },
+  { keys: 'Ctrl-u', command: 'undoSelection', link: 'https://codemirror.net/6/docs/ref/#commands.undoSelection' },
+  {
+    keys: 'Alt-u (Ctrl-Shift-u on macOS)',
+    command: 'redoSelection',
+    link: 'https://codemirror.net/6/docs/ref/#commands.redoSelection',
+  },
+];
+
+export const foldKeymap = [
+  {
+    keys: 'Ctrl-Shift-[ (Cmd-Alt-[ on macOS)',
+    command: 'foldCode',
+    link: 'https://codemirror.net/6/docs/ref/#language.foldCode',
+  },
+  {
+    keys: 'Ctrl-Shift-] (Cmd-Alt-] on macOS)',
+    command: 'unfoldCode',
+    link: 'https://codemirror.net/6/docs/ref/#language.unfoldCode',
+  },
+  { keys: 'Ctrl-Alt-[', command: 'foldAll', link: 'https://codemirror.net/6/docs/ref/#language.foldAll' },
+  { keys: 'Ctrl-Alt-]', command: 'unfoldAll', link: 'https://codemirror.net/6/docs/ref/#language.unfoldAll' },
+];
+
+export const autocompleteKeymap = [
+  {
+    keys: 'Ctrl-Space',
+    command: 'startCompletion',
+    link: 'https://codemirror.net/6/docs/ref/#autocomplete.startCompletion',
+  },
+  {
+    keys: 'Escape',
+    command: 'closeCompletion',
+    link: 'https://codemirror.net/6/docs/ref/#autocomplete.closeCompletion',
+  },
+  {
+    keys: 'ArrowDown',
+    command: 'moveCompletionSelection',
+    link: 'https://codemirror.net/6/docs/ref/#autocomplete.moveCompletionSelection',
+  },
+  {
+    keys: 'ArrowUp',
+    command: 'moveCompletionSelection',
+    link: 'https://codemirror.net/6/docs/ref/#autocomplete.moveCompletionSelection',
+  },
+  {
+    keys: 'PageDown',
+    command: 'moveCompletionSelection',
+    link: 'https://codemirror.net/6/docs/ref/#autocomplete.moveCompletionSelection',
+  },
+  {
+    keys: 'PageUp',
+    command: 'moveCompletionSelection',
+    link: 'https://codemirror.net/6/docs/ref/#autocomplete.moveCompletionSelection',
+  },
+  {
+    keys: 'Enter',
+    command: 'acceptCompletion',
+    link: 'https://codemirror.net/6/docs/ref/#autocomplete.acceptCompletion',
+  },
+];
+
+export const lintKeymap = [
+  {
+    keys: 'Ctrl-Shift-m (Cmd-Shift-m on macOS)',
+    command: 'openLintPanel',
+    link: 'https://codemirror.net/6/docs/ref/#lint.openLintPanel',
+  },
+  { keys: 'F8', command: 'nextDiagnostic', link: 'https://codemirror.net/6/docs/ref/#lint.nextDiagnostic' },
+];
+
+export const tabindentKeymap = [
+  { keys: 'Tab', command: 'indentMore', link: 'https://codemirror.net/6/docs/ref/#commands.indentMore' },
+  { keys: 'Shift-Tab', command: 'indentLess', link: 'https://codemirror.net/6/docs/ref/#commands.indentLess' },
+];

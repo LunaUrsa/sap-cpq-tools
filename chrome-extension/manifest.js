@@ -30,7 +30,7 @@ const manifest = {
     service_worker: 'background.iife.js',
     type: 'module',
   },
-  host_permissions: ['*://*.cpq.cloud.sap/*', '*://*.workflow.cloud.sap/*', '*://*.codemirror.net/*'],
+  host_permissions: ['*://*.cpq.cloud.sap/*', '*://*.codemirror.net/*'],
   action: {
     default_popup: 'popup/index.html',
     default_icon: 'icon-34.png',
@@ -43,19 +43,19 @@ const manifest = {
   },
   content_scripts: [
     {
-      matches: ['*://*.cpq.cloud.sap/*', '*://*.workflow.cloud.sap/*', '*://*.codemirror.net/*'],
+      matches: ['*://*.cpq.cloud.sap/*', '*://*.codemirror.net/*'],
       js: ['content/index.iife.js'],
     },
     {
-      matches: ['*://*.cpq.cloud.sap/*', '*://*.workflow.cloud.sap/*', '*://*.codemirror.net/*'],
+      matches: ['*://*.cpq.cloud.sap/*', '*://*.codemirror.net/*'],
       js: ['content-ui/index.iife.js'],
     },
     {
-      matches: ['*://*.cpq.cloud.sap/*', '*://*.workflow.cloud.sap/*', '*://*.codemirror.net/*'],
+      matches: ['*://*.cpq.cloud.sap/*', '*://*.codemirror.net/*'],
       css: ['content.css'],
     },
   ],
-  devtools_page: 'devtools/index.html',
+  // devtools_page: 'devtools/index.html',
   web_accessible_resources: [
     {
       resources: ['*.js', '*.css', '*.svg', 'icon-128.png', 'icon-34.png'],
@@ -76,31 +76,31 @@ const manifest = {
       description: 'Opens the shortcut page.',
     },
     // "Open Mods": {
-    //   // suggested_key: {
-    //   //   default: 'Ctrl+Shift+M',
-    //   //   mac: 'Command+Shift+M',
-    //   // },
+    //   suggested_key: {
+    //     default: 'Ctrl+Shift+M',
+    //     mac: 'Command+Shift+M',
+    //   },
     //   "description": "Opens the mods page."
     // },
     // "Open Formulas": {
-    //   // suggested_key: {
-    //   //   default: 'Ctrl+Shift+F',
-    //   //   mac: 'Command+Shift+F',
-    //   // },
+    //   suggested_key: {
+    //     default: 'Ctrl+Shift+F',
+    //     mac: 'Command+Shift+F',
+    //   },
     //   "description": "Opens the formula formatter page."
     // },
     // "Open Options": {
-    //   // suggested_key: {
-    //   //   default: 'Ctrl+Shift+O',
-    //   //   mac: 'Command+Shift+O',
-    //   // },
+    //   suggested_key: {
+    //     default: 'Ctrl+Shift+O',
+    //     mac: 'Command+Shift+O',
+    //   },
     //   "description": "Opens the options page."
     // },
     // "Open Info": {
-    //   // suggested_key: {
-    //   //   default: 'Ctrl+Shift+I',
-    //   //   mac: 'Command+Shift+I',
-    //   // },
+    //   suggested_key: {
+    //     default: 'Ctrl+Shift+I',
+    //     mac: 'Command+Shift+I',
+    //   },
     //   "description": "Opens the info page."
     // },
   },

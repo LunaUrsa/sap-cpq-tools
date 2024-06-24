@@ -311,3 +311,15 @@ type CodeMirrorOptions = {
 // interface Window {
 //   showDirectoryPicker(options?: OpenFilePickerOptions): Promise<FileSystemDirectoryHandle>;
 // }
+
+interface KeymapItem {
+  keys: string;
+  command: string;
+  link: string;
+  withShift?: string;
+  withShiftLink?: string;
+}
+
+interface Keymaps {
+  [category: string]: KeymapItem[];
+}

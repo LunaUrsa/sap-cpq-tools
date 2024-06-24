@@ -138,6 +138,7 @@ const extensions = (userOptions: UserOptions, editorViewRef: React.MutableRefObj
   // Input Handling
   dropCursor(),
   keymap.of([
+    ...vscodeKeymap,
     ...defaultKeymap,
     ...closeBracketsKeymap,
     ...searchKeymap,
@@ -145,7 +146,6 @@ const extensions = (userOptions: UserOptions, editorViewRef: React.MutableRefObj
     ...foldKeymap,
     ...completionKeymap,
     ...lintKeymap,
-    ...vscodeKeymap,
     indentWithTab,
   ]),
   // EditorView.dragMovesSelection,
