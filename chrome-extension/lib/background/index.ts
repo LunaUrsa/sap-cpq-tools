@@ -14,14 +14,18 @@ import codeMirrorHook from './codeMirrorHook';
 import handleShortcuts from './shortcuts';
 
 
+
 function websiteCssCheck(activeTab: chrome.tabs.Tab): boolean {
   if (!activeTab?.url
     || activeTab.url.startsWith('chrome')
     || !activeTab.url.includes('cpq.cloud.sap')) {
     // console.debug(`Not applying mods to ${activeTab?.url}`)
+    chrome.action.setBadgeText({ text: '' });
     return false;
   }
 
+  chrome.action.setBadgeText({ text: 'ON' });
+  chrome.action.setBadgeBackgroundColor({ color: '#4688F1' });
   return true;
 }
 
@@ -31,9 +35,12 @@ function websiteScriptCheck(activeTab: chrome.tabs.Tab): boolean {
     || !activeTab.url.includes('cpq.cloud.sap')
     || !activeTab.url.includes('/scriptWorkbench')) {
     // console.debug(`Not applying mods to ${activeTab?.url}`)
+    chrome.action.setBadgeText({ text: '' });
     return false;
   }
 
+  chrome.action.setBadgeText({ text: 'ON' });
+  chrome.action.setBadgeBackgroundColor({ color: '#4688F1' });
   return true;
 }
 
