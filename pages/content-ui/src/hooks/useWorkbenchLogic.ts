@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import {
-  hideToastContainer,
+  // hideToastContainer,
   autoScrollTrace,
   repositionTraceWindow,
   updateHiddenElement,
@@ -56,7 +56,7 @@ export const useWorkbenchLogic = (userOptions: UserOptions) => {
 
       traceRef.current = document.getElementById('tracesContainer') as HTMLElement;
 
-      hideToastContainer(traceRef);
+      // hideToastContainer(traceRef);
       autoScrollTrace(traceRef);
       repositionTraceWindow(traceRef);
       updateHiddenElement(mainViewRef, userOptions);
